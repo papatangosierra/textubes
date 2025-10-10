@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.2.23"
   },
   "scripts": {
     "dev": "bun ./index.html",
@@ -14,7 +14,9 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@types/react-dom": "^19.2.1",
     "@xyflow/react": "^12.8.6",
-    "react": "^19.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

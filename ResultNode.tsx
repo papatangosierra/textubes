@@ -1,6 +1,16 @@
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useNodesData, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import type { NodeData } from './App';
 
-export default function ResultNode({ data }) {
+export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
+  const connections = useNodeConnections({ handleType: 'target' });
+  const sourceIds = connections.map((connection) => connection.source);
+  const nodesData = useNodesData(sourceIds);
+
+  // Get input from the first connected node
+  const firstNode = sourceIds.length > 0 ? nodesData[0] : null;
+  const inputData = firstNode?.data as NodeData | undefined;
+  const displayValue = inputData?.value ?? '';
+
   return (
     <div style={{
       padding: '10px',
@@ -23,7 +33,7 @@ export default function ResultNode({ data }) {
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word'
       }}>
-        {data.text || <span style={{ color: '#999' }}>No input connected</span>}
+        {displayValue || <span style={{ color: '#999' }}>No input connected</span>}
       </div>
     </div>
   );

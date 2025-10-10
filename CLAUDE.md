@@ -104,3 +104,73 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.md`.
+
+---
+
+# Textubes Project
+
+A visual text transformation pipeline using React Flow. Users can create nodes, connect them, and watch text flow through transformations.
+
+## Architecture
+
+- **Framework**: React 19 with TypeScript
+- **Flow Library**: @xyflow/react (React Flow v12)
+- **Dev Server**: Bun's built-in HTML dev server (`bun run dev`)
+- **Build**: Bun's bundler (`bun run build`)
+
+## Data Flow Pattern
+
+Following [React Flow's computing flows documentation](https://reactflow.dev/learn/advanced-use/computing-flows):
+
+- Each node manages its own data via `updateNodeData()`
+- Nodes use `useNodeConnections({ handleType: 'target' })` to get incoming connections
+- Nodes use `useNodesData(sourceIds)` to read data from connected source nodes
+- Data propagates automatically through the graph via React's reactivity
+
+### Node Data Structure
+
+```typescript
+export type NodeData = {
+  value: string;
+};
+```
+
+All nodes store their computed output in `data.value`.
+
+## Node Types
+
+### 1. SourceNode
+- User input via textarea
+- Updates its own data on change using `updateNodeData()`
+- Has one source handle (output on right)
+
+### 2. ResultNode
+- Displays input from connected nodes
+- Read-only display
+- Has one target handle (input on left)
+
+### 3. CapslockNode
+- Transformation node that converts text to uppercase
+- Reads from connected input via `useNodesData()`
+- Computes transformation in `useEffect`
+- Updates own data via `updateNodeData()`
+- Has both target (left) and source (right) handles
+
+## Adding New Transformation Nodes
+
+To add a new transformation:
+
+1. Create a new node component (e.g., `LowercaseNode.tsx`)
+2. Follow the pattern in `CapslockNode.tsx`:
+   - Use `useNodeConnections({ handleType: 'target' })` for inputs
+   - Use `useNodesData(sourceIds)` to read input data
+   - Compute transformation in `useEffect`
+   - Call `updateNodeData(id, { value: output })` with result
+3. Register in `App.tsx` nodeTypes
+4. Add to the "Add node..." dropdown menu
+
+## TypeScript Setup
+
+- `tsconfig.json` configured with DOM libraries for browser APIs
+- All nodes use `NodeProps<Node<NodeData>>` typing
+- React Flow hooks are fully typed
