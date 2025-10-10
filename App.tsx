@@ -13,9 +13,10 @@ import {
   type Connection,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import SourceNode from "./SourceNode";
-import ResultNode from "./ResultNode";
-import CapslockNode from "./CapslockNode";
+import SourceNode from "./components/SourceNode";
+import ResultNode from "./components/ResultNode";
+import CapslockNode from "./components/CapslockNode";
+import ReplaceNode from "./components/ReplaceNode";
 
 export type NodeData = {
   value: string;
@@ -25,6 +26,7 @@ const nodeTypes = {
   source: SourceNode,
   result: ResultNode,
   capslock: CapslockNode,
+  replace: ReplaceNode,
 } as const;
 
 const initialNodes: Node<NodeData>[] = [
@@ -107,6 +109,7 @@ export default function App() {
           </option>
           <option value="source">Source</option>
           <option value="capslock">Capslock</option>
+          <option value="replace">Replace</option>
           <option value="result">Result</option>
         </select>
       </div>
