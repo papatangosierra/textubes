@@ -180,16 +180,20 @@ All node components are in `components/` directory.
 
 ## Critical Pattern: Avoiding Infinite Update Loops
 
-**IMPORTANT**: React Flow nodes that use `useEffect` with `updateNodeData` can easily create infinite loops if not careful.
+**IMPORTANT**: React Flow nodes that use `useEffect` with `updateNodeData` can easily create loops and ResizeObserver errors if not careful.
 
 ### The Problem
 
-When you call `updateNodeData()`, it triggers a re-render. If your `useEffect` dependencies aren't carefully managed, this creates a loop:
+Calling `updateNodeData()` during component mount or with unstable dependencies causes "ResizeObserver loop completed with undelivered notifications" errors:
 
-1. Effect runs → calls `updateNodeData()`
-2. Node data updates → component re-renders
-3. Dependencies change → effect runs again
-4. **INFINITE LOOP** → "ResizeObserver loop completed with undelivered notifications"
+1. **Root cause**: Calling `updateNodeData()` during the initial render cycle causes React Flow to resize/recalculate layout during mount, triggering the ResizeObserver error
+2. **Secondary issue**: If your `useEffect` dependencies aren't carefully managed, this creates infinite loops:
+   - Effect runs → calls `updateNodeData()`
+   - Node data updates → component re-renders
+   - Dependencies change → effect runs again
+   - **INFINITE LOOP** → ResizeObserver error
+
+**Key insight**: Avoid calling `updateNodeData()` on initial mount. Pre-generate values when creating nodes in `App.tsx`.
 
 ### Solution Patterns
 
@@ -221,12 +225,42 @@ useEffect(() => {
 
 #### Pattern 2: For Non-Deterministic Generators (RandomNode)
 
-Use a `useRef` to track when to actually update, and **exclude `updateNodeData` from dependencies**:
+**CRITICAL**: Generator nodes must **pre-generate their initial value** in `App.tsx` when the node is created. The component should **skip `updateNodeData` on mount** and only update when control parameters change.
+
+In `App.tsx` `addNode()`:
+
+```typescript
+const addNode = useCallback((nodeType: string) => {
+  let initialData: any = { value: "" };
+
+  // Pre-generate value for generator nodes
+  if (nodeType === "random") {
+    const randomString = generateRandomString(10);
+    initialData = { value: randomString, length: 10 };
+  }
+
+  const newNode: Node<NodeData> = {
+    id: `${nodeType}-${Date.now()}`,
+    type: nodeType,
+    position: { x: Math.random() * 400, y: Math.random() * 400 },
+    data: initialData,
+  };
+  setNodes((nodes) => [...nodes, newNode]);
+}, []);
+```
+
+In the node component:
 
 ```typescript
 const lastLengthRef = useRef<number | null>(null);
 
 useEffect(() => {
+  // Skip on initial mount (value already pre-generated)
+  if (lastLengthRef.current === null) {
+    lastLengthRef.current = length;
+    return;
+  }
+
   // Only generate if the control parameter changed
   if (lastLengthRef.current === length) {
     return;
@@ -241,7 +275,10 @@ useEffect(() => {
 }, [length]); // Only depend on control params, NOT updateNodeData or id
 ```
 
-**Why this works**: The ref prevents redundant generations, and excluding `updateNodeData` from deps prevents the loop even if `updateNodeData` isn't stable.
+**Why this works**:
+- Pre-generating the value prevents any `updateNodeData` call during mount, which avoids the ResizeObserver error
+- The ref ensures updates only happen when control parameters change
+- Excluding `updateNodeData` from deps prevents loops even if `updateNodeData` isn't stable
 
 ### Common Mistakes
 
@@ -266,8 +303,17 @@ useEffect(() => {
 }, [length, id, updateNodeData]); // These cause infinite loops!
 ```
 
+❌ **DON'T**: Call `updateNodeData` during initial mount for generator nodes
+```typescript
+useEffect(() => {
+  // This will cause ResizeObserver error on mount!
+  updateNodeData(id, { value: generateRandom() });
+}, [length]);
+```
+
 ✅ **DO**: Extract values and compare outputs for transforms
-✅ **DO**: Use refs for generators and minimal dependencies
+✅ **DO**: Pre-generate initial values in App.tsx for generator nodes
+✅ **DO**: Use refs to skip mount and only update on parameter changes
 ✅ **DO**: Test by adding a node - if you see ResizeObserver errors, you have a loop
 
 ## Adding New Nodes
@@ -279,9 +325,10 @@ To add a new node:
    - **Input nodes**: Update on user interaction, no `useEffect`
    - **Display nodes**: Compute inline during render, no `useEffect`
    - **Transformation nodes**: Use Pattern 1 (compare before update)
-   - **Generator nodes**: Use Pattern 2 (ref + minimal deps)
-3. Register in `App.tsx` nodeTypes
-4. Add to the "Add node..." dropdown menu
+   - **Generator nodes**: Use Pattern 2 (pre-generate in App.tsx + ref + skip mount)
+3. If adding a generator node, add pre-generation logic in `App.tsx` `addNode()` function
+4. Register in `App.tsx` nodeTypes
+5. Add to the "Add node..." dropdown menu
 
 ### Multi-Handle Nodes
 

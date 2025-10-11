@@ -18,6 +18,7 @@ export default function SourceNode({ data, id }: NodeProps<Node<NodeData>>) {
     }}>
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Source</div>
       <textarea
+        className="nodrag"
         value={data.value || ''}
         onChange={handleChange}
         placeholder="Enter text here..."

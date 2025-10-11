@@ -77,6 +77,7 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
           Search for:
         </label>
         <input
+          className="nodrag"
           type="text"
           value={data.searchText ?? ''}
           onChange={(e) => updateNodeData(id, { searchText: e.target.value })}
@@ -99,6 +100,7 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
           Replace with:
         </label>
         <input
+          className="nodrag"
           type="text"
           value={data.replaceText ?? ''}
           onChange={(e) => updateNodeData(id, { replaceText: e.target.value })}

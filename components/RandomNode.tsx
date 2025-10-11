@@ -12,18 +12,14 @@ export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>
   const lastLengthRef = useRef<number | null>(null);
 
   useEffect(() => {
-    console.log('[RandomNode] useEffect triggered', { id, length, lastLength: lastLengthRef.current });
-
     // Skip on initial mount (value already generated in App.tsx)
     if (lastLengthRef.current === null) {
-      console.log('[RandomNode] Initial mount, setting lastLength');
       lastLengthRef.current = length;
       return;
     }
 
     // Only generate if length has changed
     if (lastLengthRef.current === length) {
-      console.log('[RandomNode] Length unchanged, skipping');
       return;
     }
     lastLengthRef.current = length;
@@ -34,7 +30,6 @@ export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>
     for (let i = 0; i < length; i++) {
       randomString += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    console.log('[RandomNode] Generated new random string', { id, length, randomString });
     updateNodeData(id, { value: randomString });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [length]);
@@ -54,6 +49,7 @@ export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>
           Length:
         </label>
         <input
+          className="nodrag"
           type="number"
           value={length}
           onChange={(e) => updateNodeData(id, { length: parseInt(e.target.value) || 0 })}
