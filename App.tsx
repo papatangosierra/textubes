@@ -52,11 +52,23 @@ export default function App() {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
   const addNode = useCallback((nodeType: string) => {
+    // Pre-generate random value for random nodes to avoid update on mount
+    let initialData: any = { value: "" };
+    if (nodeType === "random") {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomString = '';
+      const length = 10;
+      for (let i = 0; i < length; i++) {
+        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      initialData = { value: randomString, length };
+    }
+
     const newNode: Node<NodeData> = {
       id: `${nodeType}-${Date.now()}`,
       type: nodeType,
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      data: { value: "" },
+      data: initialData,
     };
     setNodes((nodes) => [...nodes, newNode]);
   }, []);
