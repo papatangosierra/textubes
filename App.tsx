@@ -18,6 +18,7 @@ import ResultNode from "./components/ResultNode";
 import CapslockNode from "./components/CapslockNode";
 import ReplaceNode from "./components/ReplaceNode";
 import RandomNode from "./components/RandomNode";
+import UnicodeStyleNode from "./components/UnicodeStyleNode";
 
 export type NodeData = {
   value: string;
@@ -29,6 +30,7 @@ const nodeTypes = {
   capslock: CapslockNode,
   replace: ReplaceNode,
   random: RandomNode,
+  unicode: UnicodeStyleNode
 } as const;
 
 const initialNodes: Node<NodeData>[] = [
@@ -36,7 +38,7 @@ const initialNodes: Node<NodeData>[] = [
     id: "source1",
     type: "source",
     position: { x: 50, y: 100 },
-    data: { value: "" },
+    data: { value: "I am seated in a room surrounded by heads and bodies." },
   },
   {
     id: "result1",
@@ -124,6 +126,7 @@ export default function App() {
           <option value="source">Source</option>
           <option value="random">Random</option>
           <option value="capslock">Capslock</option>
+          <option value="unicode">Unicode</option>
           <option value="replace">Replace</option>
           <option value="result">Result</option>
         </select>

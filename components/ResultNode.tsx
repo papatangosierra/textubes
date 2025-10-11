@@ -20,7 +20,7 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
       minWidth: '200px'
     }}>
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Result</div>
+      <div style={{ fontWeight: 'bold', marginBottom: '5px' }} >Result</div>
       <div style={{
         width: '100%',
         minHeight: '100px',
@@ -32,7 +32,7 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
         background: '#f9f9f9',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word'
-      }}>
+      }} className="nodrag">
         {displayValue || <span style={{ color: '#999' }}>No input connected</span>}
       </div>
     </div>
