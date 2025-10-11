@@ -74,6 +74,7 @@ export default function UnicodeStyleNode({ id, data }: NodeProps<Node<UnicodeSty
           Style:
         </label>
         <select
+          className="nodrag"
           value={style}
           onChange={(e) => updateNodeData(id, { style: e.target.value })}
           style={{

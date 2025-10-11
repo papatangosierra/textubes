@@ -13,25 +13,13 @@ import {
   type Connection,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import SourceNode from "./components/SourceNode";
-import ResultNode from "./components/ResultNode";
-import CapslockNode from "./components/CapslockNode";
-import ReplaceNode from "./components/ReplaceNode";
-import RandomNode from "./components/RandomNode";
-import UnicodeStyleNode from "./components/UnicodeStyleNode";
+import { NODE_REGISTRY, getNodeTypes, getInitialNodeData } from "./nodeRegistry";
 
 export type NodeData = {
   value: string;
 };
 
-const nodeTypes = {
-  source: SourceNode,
-  result: ResultNode,
-  capslock: CapslockNode,
-  replace: ReplaceNode,
-  random: RandomNode,
-  unicode: UnicodeStyleNode
-} as const;
+const nodeTypes = getNodeTypes();
 
 const initialNodes: Node<NodeData>[] = [
   {
@@ -54,23 +42,11 @@ export default function App() {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
   const addNode = useCallback((nodeType: string) => {
-    // Pre-generate random value for random nodes to avoid update on mount
-    let initialData: any = { value: "" };
-    if (nodeType === "random") {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let randomString = '';
-      const length = 10;
-      for (let i = 0; i < length; i++) {
-        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      initialData = { value: randomString, length };
-    }
-
     const newNode: Node<NodeData> = {
       id: `${nodeType}-${Date.now()}`,
       type: nodeType,
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      data: initialData,
+      data: getInitialNodeData(nodeType),
     };
     setNodes((nodes) => [...nodes, newNode]);
   }, []);
@@ -123,12 +99,11 @@ export default function App() {
           <option value="" disabled>
             Add node...
           </option>
-          <option value="source">Source</option>
-          <option value="random">Random</option>
-          <option value="capslock">Capslock</option>
-          <option value="unicode">Unicode</option>
-          <option value="replace">Replace</option>
-          <option value="result">Result</option>
+          {Object.entries(NODE_REGISTRY).map(([key, config]) => (
+            <option key={key} value={key}>
+              {config.label}
+            </option>
+          ))}
         </select>
       </div>
       <ReactFlow
