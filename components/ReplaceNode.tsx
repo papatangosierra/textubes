@@ -9,25 +9,38 @@ type ReplaceNodeData = NodeData & {
 
 export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData>>) {
   const { updateNodeData } = useReactFlow();
-  const connections = useNodeConnections({ handleType: 'target' });
-  const sourceIds = connections.map((connection) => connection.source);
-  const nodesData = useNodesData(sourceIds);
 
-  const searchText = data.searchText ?? '';
-  const replaceText = data.replaceText ?? '';
+  // Get connections for each input handle
+  const textConnections = useNodeConnections({ handleType: 'target', handleId: 'text' });
+  const searchConnections = useNodeConnections({ handleType: 'target', handleId: 'search' });
+  const replaceConnections = useNodeConnections({ handleType: 'target', handleId: 'replace' });
+
+  // Get node data for connected nodes
+  const textSourceIds = textConnections.map((c) => c.source);
+  const searchSourceIds = searchConnections.map((c) => c.source);
+  const replaceSourceIds = replaceConnections.map((c) => c.source);
+
+  const textNodesData = useNodesData(textSourceIds);
+  const searchNodesData = useNodesData(searchSourceIds);
+  const replaceNodesData = useNodesData(replaceSourceIds);
+
+  // Get input values from connected nodes or fall back to text fields
+  const connectedInputValue = textSourceIds.length > 0
+    ? ((textNodesData[0]?.data as NodeData | undefined)?.value ?? '')
+    : '';
+
+  const connectedSearchText = searchSourceIds.length > 0
+    ? ((searchNodesData[0]?.data as NodeData | undefined)?.value ?? '')
+    : '';
+
+  const connectedReplaceText = replaceSourceIds.length > 0
+    ? ((replaceNodesData[0]?.data as NodeData | undefined)?.value ?? '')
+    : '';
 
   useEffect(() => {
-    if (sourceIds.length === 0) {
-      if (data.value !== '') {
-        updateNodeData(id, { value: '' });
-      }
-      return;
-    }
-
-    // Get input from the first connected node
-    const firstNode = nodesData[0];
-    const inputData = firstNode?.data as NodeData | undefined;
-    const inputValue = inputData?.value ?? '';
+    const inputValue = connectedInputValue;
+    const searchText = connectedSearchText || (data.searchText ?? '');
+    const replaceText = connectedReplaceText || (data.replaceText ?? '');
 
     // Compute the transformation: replace all occurrences
     const outputValue = searchText ? inputValue.replaceAll(searchText, replaceText) : inputValue;
@@ -36,7 +49,7 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
     if (data.value !== outputValue) {
       updateNodeData(id, { value: outputValue });
     }
-  }, [nodesData, sourceIds.length, id, updateNodeData, data.value, searchText, replaceText]);
+  }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
   return (
     <div style={{
@@ -46,8 +59,18 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
       background: 'white',
       minWidth: '200px'
     }}>
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" position={Position.Left} id="text" style={{ top: '30px' }} />
+      <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
+      <Handle type="target" position={Position.Left} id="replace" style={{ top: '135px' }} />
+      <Handle type="source" position={Position.Right} />
+
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Replace</div>
+
+      <div style={{ marginBottom: '8px' }}>
+        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+          Text input
+        </label>
+      </div>
 
       <div style={{ marginBottom: '8px' }}>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
@@ -55,16 +78,18 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
         </label>
         <input
           type="text"
-          value={searchText}
+          value={data.searchText ?? ''}
           onChange={(e) => updateNodeData(id, { searchText: e.target.value })}
           placeholder="text to find"
+          disabled={searchSourceIds.length > 0}
           style={{
             width: '100%',
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
             border: '1px solid #ccc',
-            borderRadius: '3px'
+            borderRadius: '3px',
+            background: searchSourceIds.length > 0 ? '#f5f5f5' : 'white'
           }}
         />
       </div>
@@ -75,21 +100,21 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
         </label>
         <input
           type="text"
-          value={replaceText}
+          value={data.replaceText ?? ''}
           onChange={(e) => updateNodeData(id, { replaceText: e.target.value })}
           placeholder="replacement text"
+          disabled={replaceSourceIds.length > 0}
           style={{
             width: '100%',
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
             border: '1px solid #ccc',
-            borderRadius: '3px'
+            borderRadius: '3px',
+            background: replaceSourceIds.length > 0 ? '#f5f5f5' : 'white'
           }}
         />
       </div>
-
-      <Handle type="source" position={Position.Right} />
     </div>
   );
 }

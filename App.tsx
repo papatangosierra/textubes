@@ -17,6 +17,7 @@ import SourceNode from "./components/SourceNode";
 import ResultNode from "./components/ResultNode";
 import CapslockNode from "./components/CapslockNode";
 import ReplaceNode from "./components/ReplaceNode";
+import RandomNode from "./components/RandomNode";
 
 export type NodeData = {
   value: string;
@@ -27,6 +28,7 @@ const nodeTypes = {
   result: ResultNode,
   capslock: CapslockNode,
   replace: ReplaceNode,
+  random: RandomNode,
 } as const;
 
 const initialNodes: Node<NodeData>[] = [
@@ -108,6 +110,7 @@ export default function App() {
             Add node...
           </option>
           <option value="source">Source</option>
+          <option value="random">Random</option>
           <option value="capslock">Capslock</option>
           <option value="replace">Replace</option>
           <option value="result">Result</option>
