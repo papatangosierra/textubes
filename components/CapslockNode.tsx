@@ -1,6 +1,6 @@
 import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
-import type { NodeData } from './App';
+import type { NodeData } from '../App';
 
 export default function CapslockNode({ id, data }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();

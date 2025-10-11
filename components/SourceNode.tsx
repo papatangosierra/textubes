@@ -1,5 +1,5 @@
 import { Handle, Position, useReactFlow, type NodeProps, type Node } from '@xyflow/react';
-import type { NodeData } from './App';
+import type { NodeData } from '../App';
 
 export default function SourceNode({ data, id }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();

@@ -1,5 +1,5 @@
 import { Handle, Position, useNodesData, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
-import type { NodeData } from './App';
+import type { NodeData } from '../App';
 
 export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
   const connections = useNodeConnections({ handleType: 'target' });
