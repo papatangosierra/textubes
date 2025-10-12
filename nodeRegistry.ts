@@ -4,6 +4,11 @@ import CapslockNode from "./components/CapslockNode";
 import ReplaceNode from "./components/ReplaceNode";
 import RandomNode from "./components/RandomNode";
 import UnicodeStyleNode from "./components/UnicodeStyleNode";
+import ConcatenateNode from "./components/ConcatenateNode";
+import ReverseNode from "./components/ReverseNode";
+import TrimPadNode from "./components/TrimPadNode";
+import RepeatNode from "./components/RepeatNode";
+import CopypastaNode from "./components/CopypastaNode";
 import type { NodeData } from "./App";
 
 export type NodeConfig = {
@@ -31,6 +36,14 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       return { value: randomString, length };
     },
   },
+  copypasta: {
+    component: CopypastaNode,
+    label: "Copypasta",
+    initialData: () => {
+      const defaultPasta = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
+      return { value: defaultPasta, selected: 'lorem' };
+    },
+  },
   capslock: {
     component: CapslockNode,
     label: "Capslock",
@@ -42,6 +55,22 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   replace: {
     component: ReplaceNode,
     label: "Replace",
+  },
+  concatenate: {
+    component: ConcatenateNode,
+    label: "Concatenate",
+  },
+  reverse: {
+    component: ReverseNode,
+    label: "Reverse",
+  },
+  trimpad: {
+    component: TrimPadNode,
+    label: "Trim/Pad",
+  },
+  repeat: {
+    component: RepeatNode,
+    label: "Repeat",
   },
   result: {
     component: ResultNode,

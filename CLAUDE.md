@@ -137,46 +137,53 @@ export type NodeData = {
 
 All nodes store their computed output in `data.value`.
 
+## Node Registry System
+
+All nodes are registered in `nodeRegistry.ts`, which provides a centralized configuration for node types. To add a new node:
+
+1. Create the component in `components/` directory
+2. Import and add to `NODE_REGISTRY` in `nodeRegistry.ts` with:
+   - `component`: The React component
+   - `label`: Display name in the dropdown
+   - `initialData`: Optional function to pre-generate initial data (required for generator nodes)
+
+Example:
+```typescript
+mynewnode: {
+  component: MyNewNode,
+  label: "My New Node",
+  initialData: () => ({ value: "initial value" }), // optional
+}
+```
+
+The registry automatically:
+- Populates the "Add node..." dropdown
+- Handles node type registration with React Flow
+- Generates initial data when nodes are created
+
 ## Node Types
 
 All node components are in `components/` directory.
 
-### 1. SourceNode
-- **Type**: Input node
-- User input via textarea
-- Updates its own data on change using `updateNodeData()`
-- Has one source handle (output on right)
-- No `useEffect` needed - updates directly on user input
+### Input/Generator Nodes
+- **SourceNode** - Manual text input via textarea
+- **RandomNode** - Generates random alphanumeric strings (configurable length)
+- **CopypastaNode** - Dropdown selector for pre-written text samples (Lorem Ipsum, Bee Movie, etc.)
 
-### 2. ResultNode
-- **Type**: Display/output node
-- Displays input from connected nodes
-- Read-only display, computes inline during render
-- Has one target handle (input on left)
-- No `useEffect` needed - just reads and displays
+### Transformation Nodes
+- **CapslockNode** - Converts text to uppercase
+- **ReplaceNode** - Find/replace with three inputs (text, search, replace) - each can be connected or manually entered
+- **UnicodeStyleNode** - Applies Unicode text styles (bold, italic, circled, double-struck, etc.)
+- **ReverseNode** - Reverses string character order
+- **TrimPadNode** - Three modes: trim whitespace, pad start, or pad end
+- **RepeatNode** - Repeats input text N times
+- **ConcatenateNode** - Joins multiple inputs with optional separator
+  - **Dynamic handles**: Starts with 2 input handles, automatically adds more as they're connected
+  - Order matters: top-to-bottom determines concatenation order
+  - Connected handles are darker for visual feedback
 
-### 3. CapslockNode
-- **Type**: Single-input transformation node
-- Converts text to uppercase
-- Reads from connected input via `useNodesData()`
-- Computes transformation in `useEffect`
-- Updates own data via `updateNodeData()`
-- Has both target (left) and source (right) handles
-
-### 4. ReplaceNode
-- **Type**: Multi-input transformation node
-- Replaces text using search/replace strings
-- Has three target handles (text input, search, replace) with IDs
-- Each input can come from a connected node OR a text field
-- Text fields are disabled when nodes are connected
-- Handles positioned absolutely to sit on node border
-
-### 5. RandomNode
-- **Type**: Generator node (no inputs)
-- Generates random alphanumeric strings
-- Has numeric input field for length
-- Only has source handle (output on right)
-- Uses `useRef` to track when to regenerate (see critical pattern below)
+### Output Nodes
+- **ResultNode** - Display-only output node
 
 ## Critical Pattern: Avoiding Infinite Update Loops
 
@@ -312,37 +319,82 @@ useEffect(() => {
 ```
 
 ✅ **DO**: Extract values and compare outputs for transforms
-✅ **DO**: Pre-generate initial values in App.tsx for generator nodes
+✅ **DO**: Pre-generate initial values in nodeRegistry.ts for generator nodes
 ✅ **DO**: Use refs to skip mount and only update on parameter changes
 ✅ **DO**: Test by adding a node - if you see ResizeObserver errors, you have a loop
 
-## Adding New Nodes
+## Interactive Elements in Nodes
 
-To add a new node:
+All interactive elements (inputs, textareas, selects) inside nodes must have `className="nodrag"` to prevent React Flow's drag behavior from interfering with user interaction.
 
-1. Create component in `components/` directory
-2. Choose the right pattern based on node type:
-   - **Input nodes**: Update on user interaction, no `useEffect`
-   - **Display nodes**: Compute inline during render, no `useEffect`
-   - **Transformation nodes**: Use Pattern 1 (compare before update)
-   - **Generator nodes**: Use Pattern 2 (pre-generate in App.tsx + ref + skip mount)
-3. If adding a generator node, add pre-generation logic in `App.tsx` `addNode()` function
-4. Register in `App.tsx` nodeTypes
-5. Add to the "Add node..." dropdown menu
+```typescript
+<input className="nodrag" ... />
+<textarea className="nodrag" ... />
+<select className="nodrag" ... />
+```
 
-### Multi-Handle Nodes
+Without this, clicking/dragging in form fields will drag the entire node instead of allowing text selection/input.
 
-For nodes with multiple input handles (like ReplaceNode):
+## Multi-Handle Nodes
+
+### Static Multiple Handles (ReplaceNode)
+
+For nodes with a fixed number of input handles:
 
 ```typescript
 // Use handleId to differentiate connections
 const textConnections = useNodeConnections({ handleType: 'target', handleId: 'text' });
 const searchConnections = useNodeConnections({ handleType: 'target', handleId: 'search' });
 
-// Position handles absolutely at top of component
+// Position handles absolutely
 <Handle type="target" position={Position.Left} id="text" style={{ top: '30px' }} />
 <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
 ```
+
+### Dynamic Multiple Handles (ConcatenateNode)
+
+For nodes that grow to accommodate unlimited inputs:
+
+```typescript
+// Track connections by handle ID
+const allConnections = useNodeConnections({ handleType: 'target' });
+const handleConnections = new Map<string, string>();
+allConnections.forEach(conn => {
+  const handleId = conn.targetHandle || 'input-0';
+  handleConnections.set(handleId, conn.source);
+});
+
+// Always have one empty handle available
+const totalHandles = Math.max(2, handleConnections.size + 1);
+
+// Dynamically render handles with proper spacing
+{Array.from({ length: totalHandles }).map((_, i) => {
+  const handleId = `input-${i}`;
+  const isConnected = handleConnections.has(handleId);
+  return (
+    <Handle
+      key={handleId}
+      type="target"
+      position={Position.Left}
+      id={handleId}
+      style={{
+        top: `${HANDLE_START + i * HANDLE_SPACING}px`,
+        background: isConnected ? '#555' : '#999',
+      }}
+    />
+  );
+})}
+
+// Calculate node height based on handles
+const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
+```
+
+Key points:
+- Start with at least 2 handles
+- When all handles are connected, automatically add a new empty one
+- Node height grows dynamically via `minHeight` to accommodate new handles
+- Visual feedback: connected handles are darker
+- Handle order (top to bottom) determines concatenation order
 
 ## TypeScript Setup
 
