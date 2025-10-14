@@ -37,9 +37,8 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
   }, [inputValue, count, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected}>
+    <NodeContainer id={id} selected={selected} title="Repeat">
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Repeat</div>
 
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>

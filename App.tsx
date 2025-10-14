@@ -35,7 +35,13 @@ const initialNodes: Node<NodeData>[] = [
     data: { value: "" },
   },
 ];
-const initialEdges: Edge[] = [];
+const initialEdges: Edge[] = [
+  {
+    id: "e-source1-result1",
+    source: "source1",
+    target: "result1",
+  },
+];
 
 export default function App() {
   const [nodes, setNodes] = useState<Node<NodeData>[]>(initialNodes);
@@ -45,7 +51,7 @@ export default function App() {
     const newNode: Node<NodeData> = {
       id: `${nodeType}-${Date.now()}`,
       type: nodeType,
-      position: { x: Math.random() * 400, y: Math.random() * 400 },
+      position: { x: Math.random() * 200, y: Math.random() * 200 },
       data: getInitialNodeData(nodeType),
     };
     setNodes((nodes) => [...nodes, newNode]);

@@ -31,9 +31,8 @@ export default function ReverseNode({ id, data, selected }: NodeProps<Node<NodeD
   }, [inputValue, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected}>
+    <NodeContainer id={id} selected={selected} title="Reverse">
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Reverse</div>
       <Handle type="source" position={Position.Right} />
     </NodeContainer>
   );

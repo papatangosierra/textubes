@@ -9,6 +9,7 @@ import ReverseNode from "./components/ReverseNode";
 import TrimPadNode from "./components/TrimPadNode";
 import RepeatNode from "./components/RepeatNode";
 import CopypastaNode from "./components/CopypastaNode";
+import RandomSelectionNode from "./components/RandomSelectionNode";
 import type { NodeData } from "./App";
 
 export type NodeConfig = {
@@ -21,7 +22,7 @@ export type NodeConfig = {
 export const NODE_REGISTRY: Record<string, NodeConfig> = {
   source: {
     component: SourceNode,
-    label: "Source",
+    label: "Text",
   },
   random: {
     component: RandomNode,
@@ -71,6 +72,11 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   repeat: {
     component: RepeatNode,
     label: "Repeat",
+  },
+  randomselection: {
+    component: RandomSelectionNode,
+    label: "Random Selection",
+    initialData: () => ({ value: "", mode: "word" }),
   },
   result: {
     component: ResultNode,

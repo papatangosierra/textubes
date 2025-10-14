@@ -25,9 +25,7 @@ export default function SelectorNodeUI({
   onSelectionChange,
 }: SelectorNodeUIProps) {
   return (
-    <NodeContainer id={id} selected={selected_state} style={{ minWidth: '180px' }}>
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{title}</div>
-
+    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }}>
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
           Select:

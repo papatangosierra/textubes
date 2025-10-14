@@ -64,9 +64,7 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '180px', minHeight: `${minHeight}px` }}>
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Concatenate</div>
-
+    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }}>
       <div style={{ marginBottom: '5px', fontSize: '11px', color: '#666' }}>
         Inputs: {connectedHandleCount}
       </div>

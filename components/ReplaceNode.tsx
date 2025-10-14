@@ -53,13 +53,11 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
   }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
-      <Handle type="target" position={Position.Left} id="text" style={{ top: '30px' }} />
+    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }}>
+      <Handle type="target" position={Position.Left} id="text" style={{ top: '45px' }} />
       <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
-      <Handle type="target" position={Position.Left} id="replace" style={{ top: '135px' }} />
+      <Handle type="target" position={Position.Left} id="replace" style={{ top: '115px' }} />
       <Handle type="source" position={Position.Right} />
-
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Replace</div>
 
       <div style={{ marginBottom: '8px' }}>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>

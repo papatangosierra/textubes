@@ -10,8 +10,7 @@ export default function SourceNode({ data, id, selected }: NodeProps<Node<NodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Source</div>
+    <NodeContainer id={id} selected={selected} title="Text" style={{ minWidth: '200px' }}>
       <textarea
         className="nodrag"
         value={data.value || ''}

@@ -60,9 +60,8 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
   }, [inputValue, style, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '180px' }}>
+    <NodeContainer id={id} selected={selected} title="Unicode Style" style={{ minWidth: '180px' }}>
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Unicode Style</div>
 
       <div style={{ marginBottom: '5px' }} className="nodrag">
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>

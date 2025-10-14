@@ -33,9 +33,8 @@ export default function CapslockNode({ id, data, selected }: NodeProps<Node<Node
   }, [nodesData, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected}>
+    <NodeContainer id={id} selected={selected} title="CAPSLOCK">
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>CAPSLOCK</div>
       <div style={{
         fontSize: '11px',
         color: '#666',

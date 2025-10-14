@@ -36,10 +36,8 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
   }, [length]);
 
   return (
-    <NodeContainer id={id} selected={selected}>
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Random</div>
-
-      <div style={{ marginBottom: '5px' }}>
+    <NodeContainer id={id} selected={selected} title="Random">
+      <div>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
           Length:
         </label>

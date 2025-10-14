@@ -48,9 +48,8 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
   }, [inputValue, mode, padLength, padChar, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '180px' }}>
+    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }}>
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Trim/Pad</div>
 
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>

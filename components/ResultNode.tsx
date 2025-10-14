@@ -19,42 +19,39 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
+    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }}>
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span>Result</span>
-        <div style={{ display: 'flex', gap: '5px' }}>
-          <button
-            className="nodrag"
-            onClick={() => setWrap(!wrap)}
-            style={{
-              padding: '2px 8px',
-              fontSize: '11px',
-              cursor: 'pointer',
-              border: '1px solid #ccc',
-              borderRadius: '3px',
-              background: 'white'
-            }}
-          >
-            {wrap ? 'Raw' : 'Wrap'}
-          </button>
-          <button
-            className="nodrag"
-            onClick={copyToClipboard}
-            disabled={!displayValue}
-            style={{
-              padding: '2px 8px',
-              fontSize: '11px',
-              cursor: displayValue ? 'pointer' : 'not-allowed',
-              border: '1px solid #ccc',
-              borderRadius: '3px',
-              background: 'white',
-              opacity: displayValue ? 1 : 0.5
-            }}
-          >
-            Copy
-          </button>
-        </div>
+      <div style={{ marginBottom: '5px', display: 'flex', gap: '5px' }}>
+        <button
+          className="nodrag"
+          onClick={() => setWrap(!wrap)}
+          style={{
+            padding: '2px 8px',
+            fontSize: '11px',
+            cursor: 'pointer',
+            border: '1px solid #ccc',
+            borderRadius: '3px',
+            background: 'white'
+          }}
+        >
+          {wrap ? 'Raw' : 'Wrap'}
+        </button>
+        <button
+          className="nodrag"
+          onClick={copyToClipboard}
+          disabled={!displayValue}
+          style={{
+            padding: '2px 8px',
+            fontSize: '11px',
+            cursor: displayValue ? 'pointer' : 'not-allowed',
+            border: '1px solid #ccc',
+            borderRadius: '3px',
+            background: 'white',
+            opacity: displayValue ? 1 : 0.5
+          }}
+        >
+          Copy
+        </button>
       </div>
       <textarea
         readOnly
