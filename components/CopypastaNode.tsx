@@ -81,7 +81,7 @@ const COPYPASTA_OPTIONS: SelectorOption[] = [
   { key: 'bee_movie', label: 'Bee Movie', value: COPYPASTAS.bee_movie },
 ];
 
-export default function CopypastaNode({ id, data }: NodeProps<Node<CopypastaNodeData>>) {
+export default function CopypastaNode({ id, data, selected: selected_state }: NodeProps<Node<CopypastaNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const selected = data.selected ?? 'lorem';
   const lastSelectedRef = useRef<string | null>(null);
@@ -111,6 +111,8 @@ export default function CopypastaNode({ id, data }: NodeProps<Node<CopypastaNode
 
   return (
     <SelectorNodeUI
+      id={id}
+      selected_state={selected_state}
       title="Copypasta"
       options={COPYPASTA_OPTIONS}
       selected={selected}

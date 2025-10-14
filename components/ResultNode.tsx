@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Handle, Position, useNodesData, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
-export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
+export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeData>>) {
   const [wrap, setWrap] = useState(true);
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -18,13 +19,7 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
   };
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '200px'
-    }}>
+    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
       <Handle type="target" position={Position.Left} />
       <div style={{ fontWeight: 'bold', marginBottom: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span>Result</span>
@@ -79,6 +74,6 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
           color: displayValue ? 'inherit' : '#999'
         }}
       />
-    </div>
+    </NodeContainer>
   );
 }

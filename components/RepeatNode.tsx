@@ -1,12 +1,13 @@
 import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
 type RepeatNodeData = NodeData & {
   count?: number;
 };
 
-export default function RepeatNode({ id, data }: NodeProps<Node<RepeatNodeData>>) {
+export default function RepeatNode({ id, data, selected }: NodeProps<Node<RepeatNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -36,13 +37,7 @@ export default function RepeatNode({ id, data }: NodeProps<Node<RepeatNodeData>>
   }, [inputValue, count, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '150px'
-    }}>
+    <NodeContainer id={id} selected={selected}>
       <Handle type="target" position={Position.Left} />
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Repeat</div>
 
@@ -68,6 +63,6 @@ export default function RepeatNode({ id, data }: NodeProps<Node<RepeatNodeData>>
       </div>
 
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

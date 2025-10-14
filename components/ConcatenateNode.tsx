@@ -1,12 +1,13 @@
 import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
 type ConcatenateNodeData = NodeData & {
   separator?: string;
 };
 
-export default function ConcatenateNode({ id, data }: NodeProps<Node<ConcatenateNodeData>>) {
+export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<ConcatenateNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const allConnections = useNodeConnections({ handleType: 'target' });
 
@@ -63,15 +64,7 @@ export default function ConcatenateNode({ id, data }: NodeProps<Node<Concatenate
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '180px',
-      minHeight: `${minHeight}px`,
-      position: 'relative'
-    }}>
+    <NodeContainer id={id} selected={selected} style={{ minWidth: '180px', minHeight: `${minHeight}px` }}>
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Concatenate</div>
 
       <div style={{ marginBottom: '5px', fontSize: '11px', color: '#666' }}>
@@ -119,6 +112,6 @@ export default function ConcatenateNode({ id, data }: NodeProps<Node<Concatenate
       })}
 
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

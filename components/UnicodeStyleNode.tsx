@@ -2,6 +2,7 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import { translateString } from '../types/unicodeAbuse';
+import NodeContainer from './NodeContainer';
 
 type UnicodeStyleNodeData = NodeData & {
   style?: string;
@@ -28,7 +29,7 @@ const STYLES = [
   { value: 'dotbox', label: 'Dot Box' },
 ];
 
-export default function UnicodeStyleNode({ id, data }: NodeProps<Node<UnicodeStyleNodeData>>) {
+export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<UnicodeStyleNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -59,13 +60,7 @@ export default function UnicodeStyleNode({ id, data }: NodeProps<Node<UnicodeSty
   }, [inputValue, style, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '180px'
-    }}>
+    <NodeContainer id={id} selected={selected} style={{ minWidth: '180px' }}>
       <Handle type="target" position={Position.Left} />
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Unicode Style</div>
 
@@ -92,6 +87,6 @@ export default function UnicodeStyleNode({ id, data }: NodeProps<Node<UnicodeSty
       </div>
 
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

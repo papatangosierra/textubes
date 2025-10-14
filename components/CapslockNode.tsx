@@ -1,8 +1,9 @@
 import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
-export default function CapslockNode({ id, data }: NodeProps<Node<NodeData>>) {
+export default function CapslockNode({ id, data, selected }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -32,13 +33,7 @@ export default function CapslockNode({ id, data }: NodeProps<Node<NodeData>>) {
   }, [nodesData, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '150px'
-    }}>
+    <NodeContainer id={id} selected={selected}>
       <Handle type="target" position={Position.Left} />
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>CAPSLOCK</div>
       <div style={{
@@ -49,6 +44,6 @@ export default function CapslockNode({ id, data }: NodeProps<Node<NodeData>>) {
         Converts text to uppercase
       </div>
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

@@ -1,4 +1,5 @@
 import { Handle, Position } from '@xyflow/react';
+import NodeContainer from '../NodeContainer';
 
 export type SelectorOption = {
   key: string;
@@ -7,6 +8,8 @@ export type SelectorOption = {
 };
 
 type SelectorNodeUIProps = {
+  id: string;
+  selected_state?: boolean;
   title: string;
   options: SelectorOption[];
   selected: string;
@@ -14,19 +17,15 @@ type SelectorNodeUIProps = {
 };
 
 export default function SelectorNodeUI({
+  id,
+  selected_state,
   title,
   options,
   selected,
   onSelectionChange,
 }: SelectorNodeUIProps) {
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '180px'
-    }}>
+    <NodeContainer id={id} selected={selected_state} style={{ minWidth: '180px' }}>
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{title}</div>
 
       <div style={{ marginBottom: '5px' }}>
@@ -52,6 +51,6 @@ export default function SelectorNodeUI({
       </div>
 
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

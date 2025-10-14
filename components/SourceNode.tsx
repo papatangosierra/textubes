@@ -1,7 +1,8 @@
 import { Handle, Position, useReactFlow, type NodeProps, type Node } from '@xyflow/react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
-export default function SourceNode({ data, id }: NodeProps<Node<NodeData>>) {
+export default function SourceNode({ data, id, selected }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -9,13 +10,7 @@ export default function SourceNode({ data, id }: NodeProps<Node<NodeData>>) {
   };
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '200px'
-    }}>
+    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Source</div>
       <textarea
         className="nodrag"
@@ -33,6 +28,6 @@ export default function SourceNode({ data, id }: NodeProps<Node<NodeData>>) {
         }}
       />
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

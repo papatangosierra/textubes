@@ -1,12 +1,13 @@
 import { Handle, Position, useReactFlow, type NodeProps, type Node } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
 type RandomNodeData = NodeData & {
   length?: number;
 };
 
-export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>) {
+export default function RandomNode({ id, data, selected }: NodeProps<Node<RandomNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const length = data.length ?? 10;
   const lastLengthRef = useRef<number | null>(null);
@@ -35,13 +36,7 @@ export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>
   }, [length]);
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '150px'
-    }}>
+    <NodeContainer id={id} selected={selected}>
       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Random</div>
 
       <div style={{ marginBottom: '5px' }}>
@@ -66,6 +61,6 @@ export default function RandomNode({ id, data }: NodeProps<Node<RandomNodeData>>
       </div>
 
       <Handle type="source" position={Position.Right} />
-    </div>
+    </NodeContainer>
   );
 }

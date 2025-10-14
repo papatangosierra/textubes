@@ -1,13 +1,14 @@
 import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
+import NodeContainer from './NodeContainer';
 
 type ReplaceNodeData = NodeData & {
   searchText?: string;
   replaceText?: string;
 };
 
-export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData>>) {
+export default function ReplaceNode({ id, data, selected }: NodeProps<Node<ReplaceNodeData>>) {
   const { updateNodeData } = useReactFlow();
 
   // Get connections for each input handle
@@ -52,13 +53,7 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
   }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
   return (
-    <div style={{
-      padding: '10px',
-      border: '1px solid #777',
-      borderRadius: '3px',
-      background: 'white',
-      minWidth: '200px'
-    }}>
+    <NodeContainer id={id} selected={selected} style={{ minWidth: '200px' }}>
       <Handle type="target" position={Position.Left} id="text" style={{ top: '30px' }} />
       <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
       <Handle type="target" position={Position.Left} id="replace" style={{ top: '135px' }} />
@@ -117,6 +112,6 @@ export default function ReplaceNode({ id, data }: NodeProps<Node<ReplaceNodeData
           }}
         />
       </div>
-    </div>
+    </NodeContainer>
   );
 }
