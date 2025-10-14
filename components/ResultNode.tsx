@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Handle, Position, useNodesData, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import type { NodeData } from '../App';
 
 export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
+  const [wrap, setWrap] = useState(true);
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
@@ -10,6 +12,10 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
   const firstNode = sourceIds.length > 0 ? nodesData[0] : null;
   const inputData = firstNode?.data as NodeData | undefined;
   const displayValue = inputData?.value ?? '';
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(displayValue);
+  };
 
   return (
     <div style={{
@@ -20,21 +26,59 @@ export default function ResultNode({ data }: NodeProps<Node<NodeData>>) {
       minWidth: '200px'
     }}>
       <Handle type="target" position={Position.Left} />
-      <div style={{ fontWeight: 'bold', marginBottom: '5px' }} >Result</div>
-      <div style={{
-        width: '100%',
-        minHeight: '100px',
-        fontFamily: 'monospace',
-        fontSize: '12px',
-        padding: '5px',
-        border: '1px solid #eee',
-        borderRadius: '3px',
-        background: '#f9f9f9',
-        whiteSpace: 'pre-wrap',
-        wordBreak: 'break-word'
-      }} className="nodrag">
-        {displayValue || <span style={{ color: '#999' }}>No input connected</span>}
+      <div style={{ fontWeight: 'bold', marginBottom: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span>Result</span>
+        <div style={{ display: 'flex', gap: '5px' }}>
+          <button
+            className="nodrag"
+            onClick={() => setWrap(!wrap)}
+            style={{
+              padding: '2px 8px',
+              fontSize: '11px',
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              borderRadius: '3px',
+              background: 'white'
+            }}
+          >
+            {wrap ? 'Raw' : 'Wrap'}
+          </button>
+          <button
+            className="nodrag"
+            onClick={copyToClipboard}
+            disabled={!displayValue}
+            style={{
+              padding: '2px 8px',
+              fontSize: '11px',
+              cursor: displayValue ? 'pointer' : 'not-allowed',
+              border: '1px solid #ccc',
+              borderRadius: '3px',
+              background: 'white',
+              opacity: displayValue ? 1 : 0.5
+            }}
+          >
+            Copy
+          </button>
+        </div>
       </div>
+      <textarea
+        readOnly
+        value={displayValue || 'No input connected'}
+        className="nodrag"
+        style={{
+          width: '100%',
+          minHeight: '100px',
+          fontFamily: 'monospace',
+          fontSize: '12px',
+          padding: '5px',
+          border: '1px solid #eee',
+          borderRadius: '3px',
+          background: '#f9f9f9',
+          whiteSpace: wrap ? 'pre-wrap' : 'pre',
+          overflow: 'auto',
+          color: displayValue ? 'inherit' : '#999'
+        }}
+      />
     </div>
   );
 }
