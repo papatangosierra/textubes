@@ -7,9 +7,10 @@ interface NodeContainerProps {
   title: string;
   children: ReactNode;
   style?: React.CSSProperties;
+  isDarkMode?: boolean;
 }
 
-export default function NodeContainer({ id, selected, title, children, style }: NodeContainerProps) {
+export default function NodeContainer({ id, selected, title, children, style, isDarkMode }: NodeContainerProps) {
   const { deleteElements } = useReactFlow();
 
   const handleDelete = () => {
@@ -18,9 +19,11 @@ export default function NodeContainer({ id, selected, title, children, style }: 
 
   return (
     <div style={{
-      border: selected ? '2px solid #555' : '1px solid #777',
+      border: selected
+        ? (isDarkMode ? '2px solid #888' : '2px solid #555')
+        : (isDarkMode ? '1px solid #555' : '1px solid #777'),
       borderRadius: '3px',
-      background: 'white',
+      background: isDarkMode ? '#2a2a2a' : 'white',
       minWidth: '150px',
       ...style
     }}>
@@ -30,8 +33,9 @@ export default function NodeContainer({ id, selected, title, children, style }: 
         alignItems: 'center',
         padding: '6px 8px',
         borderRadius: '3px 3px 0 0',
-        borderBottom: '1px solid #eee',
-        background: '#f9f9f9'
+        borderBottom: isDarkMode ? '1px solid #444' : '1px solid #eee',
+        background: isDarkMode ? '#333' : '#f9f9f9',
+        color: isDarkMode ? '#e0e0e0' : '#000'
       }}>
         <div style={{ fontWeight: 'bold', fontSize: '13px' }}>{title}</div>
         <button
@@ -41,16 +45,16 @@ export default function NodeContainer({ id, selected, title, children, style }: 
             width: '16px',
             height: '16px',
             padding: 0,
-            border: '1px solid #ccc',
+            border: isDarkMode ? '1px solid #555' : '1px solid #ccc',
             borderRadius: '3px',
-            background: 'white',
+            background: isDarkMode ? '#3a3a3a' : 'white',
             cursor: 'pointer',
             fontSize: '12px',
             lineHeight: '14px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#666',
+            color: isDarkMode ? '#aaa' : '#666',
             flexShrink: 0
           }}
           title="Delete node"

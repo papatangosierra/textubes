@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -17,6 +17,7 @@ import { NODE_REGISTRY, getNodeTypes, getInitialNodeData } from "./nodeRegistry"
 
 export type NodeData = {
   value: string;
+  isDarkMode?: boolean;
 };
 
 const nodeTypes = getNodeTypes();
@@ -46,6 +47,7 @@ const initialEdges: Edge[] = [
 export default function App() {
   const [nodes, setNodes] = useState<Node<NodeData>[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const addNode = useCallback((nodeType: string) => {
     const newNode: Node<NodeData> = {
@@ -72,18 +74,37 @@ export default function App() {
     []
   );
 
+  // Update all nodes' dark mode state whenever it changes
+  useEffect(() => {
+    setNodes((prevNodes) =>
+      prevNodes.map((node) => ({
+        ...node,
+        data: { ...node.data, isDarkMode },
+      }))
+    );
+  }, [isDarkMode]);
+
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{
+      width: "100vw",
+      height: "100vh",
+      background: isDarkMode ? "#1a1a1a" : "#ffffff",
+    }}>
       <div
         style={{
           position: "absolute",
           top: 10,
           left: 10,
           zIndex: 10,
-          background: "white",
+          background: isDarkMode ? "#2a2a2a" : "white",
           padding: "8px",
           borderRadius: "4px",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          boxShadow: isDarkMode
+            ? "0 2px 4px rgba(0,0,0,0.4)"
+            : "0 2px 4px rgba(0,0,0,0.1)",
+          display: "flex",
+          gap: "8px",
+          alignItems: "center",
         }}
       >
         <select
@@ -96,9 +117,11 @@ export default function App() {
           }}
           style={{
             padding: "6px 10px",
-            border: "1px solid #ccc",
+            border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
             borderRadius: "3px",
             cursor: "pointer",
+            background: isDarkMode ? "#3a3a3a" : "white",
+            color: isDarkMode ? "#e0e0e0" : "#000",
           }}
           defaultValue=""
         >
@@ -111,6 +134,20 @@ export default function App() {
             </option>
           ))}
         </select>
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          style={{
+            padding: "6px 12px",
+            border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
+            borderRadius: "3px",
+            cursor: "pointer",
+            background: isDarkMode ? "#3a3a3a" : "white",
+            color: isDarkMode ? "#e0e0e0" : "#000",
+          }}
+          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {isDarkMode ? "☀️" : "🌙"}
+        </button>
       </div>
       <ReactFlow
         nodes={nodes}
@@ -120,6 +157,7 @@ export default function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         fitView
+        colorMode={isDarkMode ? "dark" : "light"}
       >
         <MiniMap nodeStrokeWidth={3} />
         <Controls />

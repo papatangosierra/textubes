@@ -14,6 +14,7 @@ type SelectorNodeUIProps = {
   options: SelectorOption[];
   selected: string;
   onSelectionChange: (key: string) => void;
+  isDarkMode?: boolean;
 };
 
 export default function SelectorNodeUI({
@@ -23,11 +24,12 @@ export default function SelectorNodeUI({
   options,
   selected,
   onSelectionChange,
+  isDarkMode,
 }: SelectorNodeUIProps) {
   return (
-    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }}>
+    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }} isDarkMode={isDarkMode}>
       <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Select:
         </label>
         <select
@@ -38,8 +40,10 @@ export default function SelectorNodeUI({
             width: '100%',
             padding: '4px',
             fontSize: '12px',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: isDarkMode ? '#3a3a3a' : 'white',
+            color: isDarkMode ? '#e0e0e0' : '#000'
           }}
         >
           {options.map((opt) => (

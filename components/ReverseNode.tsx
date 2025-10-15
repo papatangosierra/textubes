@@ -31,7 +31,7 @@ export default function ReverseNode({ id, data, selected }: NodeProps<Node<NodeD
   }, [inputValue, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Reverse">
+    <NodeContainer id={id} selected={selected} title="Reverse" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
     </NodeContainer>

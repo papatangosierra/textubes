@@ -53,20 +53,20 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
   }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }}>
+    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} id="text" style={{ top: '45px' }} />
       <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
       <Handle type="target" position={Position.Left} id="replace" style={{ top: '115px' }} />
       <Handle type="source" position={Position.Right} />
 
       <div style={{ marginBottom: '8px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Text input
         </label>
       </div>
 
       <div style={{ marginBottom: '8px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Search for:
         </label>
         <input
@@ -81,15 +81,18 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
-            border: '1px solid #ccc',
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
             borderRadius: '3px',
-            background: searchSourceIds.length > 0 ? '#f5f5f5' : 'white'
+            background: searchSourceIds.length > 0
+              ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
+              : (data.isDarkMode ? '#3a3a3a' : 'white'),
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         />
       </div>
 
       <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Replace with:
         </label>
         <input
@@ -104,9 +107,12 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
-            border: '1px solid #ccc',
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
             borderRadius: '3px',
-            background: replaceSourceIds.length > 0 ? '#f5f5f5' : 'white'
+            background: replaceSourceIds.length > 0
+              ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
+              : (data.isDarkMode ? '#3a3a3a' : 'white'),
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         />
       </div>

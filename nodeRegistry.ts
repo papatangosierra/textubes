@@ -26,7 +26,7 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   },
   random: {
     component: RandomNode,
-    label: "Random",
+    label: "Random Alphanumeric Text",
     initialData: () => {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let randomString = '';
@@ -51,7 +51,7 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   },
   unicode: {
     component: UnicodeStyleNode,
-    label: "Unicode Style",
+    label: "Unicode Abuse",
   },
   replace: {
     component: ReplaceNode,

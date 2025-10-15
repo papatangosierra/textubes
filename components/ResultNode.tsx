@@ -19,7 +19,7 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }}>
+    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
       <div style={{ marginBottom: '5px', display: 'flex', gap: '5px' }}>
         <button
@@ -29,9 +29,10 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
             padding: '2px 8px',
             fontSize: '11px',
             cursor: 'pointer',
-            border: '1px solid #ccc',
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
             borderRadius: '3px',
-            background: 'white'
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         >
           {wrap ? 'Raw' : 'Wrap'}
@@ -44,13 +45,14 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
             padding: '2px 8px',
             fontSize: '11px',
             cursor: displayValue ? 'pointer' : 'not-allowed',
-            border: '1px solid #ccc',
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
             borderRadius: '3px',
-            background: 'white',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000',
             opacity: displayValue ? 1 : 0.5
           }}
         >
-          Copy
+          Copy to Clipboard
         </button>
       </div>
       <textarea
@@ -63,12 +65,12 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
           fontFamily: 'monospace',
           fontSize: '12px',
           padding: '5px',
-          border: '1px solid #eee',
+          border: data.isDarkMode ? '1px solid #555' : '1px solid #eee',
           borderRadius: '3px',
-          background: '#f9f9f9',
+          background: data.isDarkMode ? '#333' : '#f9f9f9',
           whiteSpace: wrap ? 'pre-wrap' : 'pre',
           overflow: 'auto',
-          color: displayValue ? 'inherit' : '#999'
+          color: displayValue ? (data.isDarkMode ? '#e0e0e0' : 'inherit') : '#999'
         }}
       />
     </NodeContainer>

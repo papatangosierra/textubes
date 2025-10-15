@@ -37,11 +37,11 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
   }, [inputValue, count, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Repeat">
+    <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
 
       <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Count:
         </label>
         <input
@@ -55,8 +55,10 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         />
       </div>

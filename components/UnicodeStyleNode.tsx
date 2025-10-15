@@ -60,11 +60,11 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
   }, [inputValue, style, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Unicode Style" style={{ minWidth: '180px' }}>
+    <NodeContainer id={id} selected={selected} title="Unicode Abuse" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
 
       <div style={{ marginBottom: '5px' }} className="nodrag">
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Style:
         </label>
         <select
@@ -75,8 +75,10 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
             width: '100%',
             padding: '4px',
             fontSize: '12px',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         >
           {STYLES.map(s => (

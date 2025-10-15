@@ -117,6 +117,7 @@ export default function CopypastaNode({ id, data, selected: selected_state }: No
       options={COPYPASTA_OPTIONS}
       selected={selected}
       onSelectionChange={handleSelectionChange}
+      isDarkMode={data.isDarkMode}
     />
   );
 }

@@ -48,11 +48,11 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
   }, [inputValue, mode, padLength, padChar, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }}>
+    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
 
       <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Mode:
         </label>
         <select
@@ -63,8 +63,10 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
             width: '100%',
             padding: '4px',
             fontSize: '12px',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         >
           <option value="trim">Trim whitespace</option>
@@ -76,7 +78,7 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
       {mode !== 'trim' && (
         <>
           <div style={{ marginBottom: '5px' }}>
-            <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+            <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
               Length:
             </label>
             <input
@@ -90,14 +92,16 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
                 padding: '4px',
                 fontSize: '12px',
                 fontFamily: 'monospace',
-                border: '1px solid #ccc',
-                borderRadius: '3px'
+                border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+                borderRadius: '3px',
+                background: data.isDarkMode ? '#3a3a3a' : 'white',
+                color: data.isDarkMode ? '#e0e0e0' : '#000'
               }}
             />
           </div>
 
           <div style={{ marginBottom: '5px' }}>
-            <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+            <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
               Pad character:
             </label>
             <input
@@ -112,8 +116,10 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
                 padding: '4px',
                 fontSize: '12px',
                 fontFamily: 'monospace',
-                border: '1px solid #ccc',
-                borderRadius: '3px'
+                border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+                borderRadius: '3px',
+                background: data.isDarkMode ? '#3a3a3a' : 'white',
+                color: data.isDarkMode ? '#e0e0e0' : '#000'
               }}
             />
           </div>

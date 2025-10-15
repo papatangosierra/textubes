@@ -36,9 +36,9 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
   }, [length]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Random">
+    <NodeContainer id={id} selected={selected} title="Random" isDarkMode={data.isDarkMode}>
       <div>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Length:
         </label>
         <input
@@ -52,8 +52,10 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         />
       </div>

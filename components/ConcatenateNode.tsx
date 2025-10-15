@@ -64,13 +64,13 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }}>
-      <div style={{ marginBottom: '5px', fontSize: '11px', color: '#666' }}>
+    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode}>
+      <div style={{ marginBottom: '5px', fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666' }}>
         Inputs: {connectedHandleCount}
       </div>
 
       <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Separator:
         </label>
         <input
@@ -84,8 +84,10 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
             padding: '4px',
             fontSize: '12px',
             fontFamily: 'monospace',
-            border: '1px solid #ccc',
-            borderRadius: '3px'
+            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+            borderRadius: '3px',
+            background: data.isDarkMode ? '#3a3a3a' : 'white',
+            color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
         />
       </div>

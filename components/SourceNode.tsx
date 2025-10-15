@@ -10,7 +10,7 @@ export default function SourceNode({ data, id, selected }: NodeProps<Node<NodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Text" style={{ minWidth: '200px' }}>
+    <NodeContainer id={id} selected={selected} title="Text" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
       <textarea
         className="nodrag"
         value={data.value || ''}
@@ -22,8 +22,10 @@ export default function SourceNode({ data, id, selected }: NodeProps<Node<NodeDa
           fontFamily: 'monospace',
           fontSize: '12px',
           padding: '5px',
-          border: '1px solid #ccc',
-          borderRadius: '3px'
+          border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
+          borderRadius: '3px',
+          background: data.isDarkMode ? '#3a3a3a' : 'white',
+          color: data.isDarkMode ? '#e0e0e0' : '#000'
         }}
       />
       <Handle type="source" position={Position.Right} />
