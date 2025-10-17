@@ -21,6 +21,9 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
   return (
     <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
+      <div className="node-description">
+        Display and copy final output
+      </div>
       <div style={{ marginBottom: '5px', display: 'flex', gap: '5px' }}>
         <button
           className="nodrag"

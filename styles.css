@@ -37,3 +37,15 @@ button:active {
 .react-flow__edge-path {
   stroke-width: 2.5 !important;
 }
+
+/* Node description text */
+.node-description {
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 1rem;
+}
+
+.dark-mode .node-description {
+  color: #aaa;
+}

@@ -11,6 +11,7 @@ type SelectorNodeUIProps = {
   id: string;
   selected_state?: boolean;
   title: string;
+  description?: string;
   options: SelectorOption[];
   selected: string;
   onSelectionChange: (key: string) => void;
@@ -21,6 +22,7 @@ export default function SelectorNodeUI({
   id,
   selected_state,
   title,
+  description,
   options,
   selected,
   onSelectionChange,
@@ -28,6 +30,11 @@ export default function SelectorNodeUI({
 }: SelectorNodeUIProps) {
   return (
     <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }} isDarkMode={isDarkMode}>
+      {description && (
+        <div className="node-description">
+          {description}
+        </div>
+      )}
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Select:

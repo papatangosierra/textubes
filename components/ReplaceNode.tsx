@@ -58,7 +58,9 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
       <Handle type="target" position={Position.Left} id="search" style={{ top: '75px' }} />
       <Handle type="target" position={Position.Left} id="replace" style={{ top: '115px' }} />
       <Handle type="source" position={Position.Right} />
-
+      <div className="node-description">
+        Find and replace text
+      </div>
       <div style={{ marginBottom: '8px' }}>
         <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Text input

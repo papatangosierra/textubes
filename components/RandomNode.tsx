@@ -37,6 +37,9 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
 
   return (
     <NodeContainer id={id} selected={selected} title="Random" isDarkMode={data.isDarkMode}>
+      <div className="node-description">
+        Generates random alphanumeric text
+      </div>
       <div>
         <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Length:

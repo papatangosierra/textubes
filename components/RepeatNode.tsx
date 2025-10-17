@@ -39,7 +39,9 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
   return (
     <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
-
+      <div className="node-description">
+        Repeats text multiple times
+      </div>
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Count:

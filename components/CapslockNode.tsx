@@ -35,11 +35,7 @@ export default function CapslockNode({ id, data, selected }: NodeProps<Node<Node
   return (
     <NodeContainer id={id} selected={selected} title="CAPSLOCK" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
-      <div style={{
-        fontSize: '11px',
-        color: data.isDarkMode ? '#aaa' : '#666',
-        fontStyle: 'italic'
-      }}>
+      <div className="node-description">
         Converts text to uppercase
       </div>
       <Handle type="source" position={Position.Right} />

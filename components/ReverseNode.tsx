@@ -33,6 +33,9 @@ export default function ReverseNode({ id, data, selected }: NodeProps<Node<NodeD
   return (
     <NodeContainer id={id} selected={selected} title="Reverse" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
+      <div className="node-description">
+        Reverses character order
+      </div>
       <Handle type="source" position={Position.Right} />
     </NodeContainer>
   );

@@ -50,7 +50,9 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
   return (
     <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
-
+      <div className="node-description">
+        Trim whitespace or add padding
+      </div>
       <div style={{ marginBottom: '5px' }}>
         <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Mode:

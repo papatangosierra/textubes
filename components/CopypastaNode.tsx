@@ -114,6 +114,7 @@ export default function CopypastaNode({ id, data, selected: selected_state }: No
       id={id}
       selected_state={selected_state}
       title="Copypasta"
+      description="Choose from pre-written text samples"
       options={COPYPASTA_OPTIONS}
       selected={selected}
       onSelectionChange={handleSelectionChange}

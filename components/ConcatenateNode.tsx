@@ -65,6 +65,9 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
 
   return (
     <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode}>
+      <div className="node-description">
+        Joins multiple inputs together
+      </div>
       <div style={{ marginBottom: '5px', fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666' }}>
         Inputs: {connectedHandleCount}
       </div>

@@ -11,6 +11,9 @@ export default function SourceNode({ data, id, selected }: NodeProps<Node<NodeDa
 
   return (
     <NodeContainer id={id} selected={selected} title="Text" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
+      <div className="node-description">
+        Enter text manually
+      </div>
       <textarea
         className="nodrag"
         value={data.value || ''}

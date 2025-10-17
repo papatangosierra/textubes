@@ -62,7 +62,9 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
   return (
     <NodeContainer id={id} selected={selected} title="Unicode Abuse" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
-
+      <div className="node-description">
+        Apply Unicode text styles
+      </div>
       <div style={{ marginBottom: '5px' }} className="nodrag">
         <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
           Style:
