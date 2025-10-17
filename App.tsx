@@ -70,7 +70,25 @@ export default function App() {
     []
   );
   const onConnect = useCallback(
-    (params: Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+    (params: Connection) => {
+      setEdges((edgesSnapshot) => {
+        // Remove any existing edges connected to the same target handle
+        // Note: handles without explicit IDs will have null/undefined as their handle ID
+        const filteredEdges = edgesSnapshot.filter((edge) => {
+          const sameTarget = edge.target === params.target;
+          // Compare handles, treating null/undefined as equivalent
+          const edgeHandle = edge.targetHandle ?? null;
+          const paramsHandle = params.targetHandle ?? null;
+          const sameTargetHandle = edgeHandle === paramsHandle;
+
+          // Keep edges that don't match both target AND handle
+          return !(sameTarget && sameTargetHandle);
+        });
+
+        // Add the new edge
+        return addEdge(params, filteredEdges);
+      });
+    },
     []
   );
 
@@ -156,6 +174,13 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onConnectStart={(_, params) => {
+          // When starting a connection, remove any existing edges on the target handle
+          if (params.handleType === 'source') {
+            // User is dragging from a source handle - we'll handle this in onConnect
+            return;
+          }
+        }}
         fitView
         colorMode={isDarkMode ? "dark" : "light"}
       >
