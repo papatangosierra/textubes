@@ -22,7 +22,11 @@ export type NodeData = {
 
 const nodeTypes = getNodeTypes();
 
-const initialNodes: Node<NodeData>[] = [
+const STORAGE_KEY_NODES = 'textubes-nodes';
+const STORAGE_KEY_EDGES = 'textubes-edges';
+const STORAGE_KEY_DARK_MODE = 'textubes-dark-mode';
+
+const defaultNodes: Node<NodeData>[] = [
   {
     id: "source1",
     type: "source",
@@ -36,7 +40,7 @@ const initialNodes: Node<NodeData>[] = [
     data: { value: "" },
   },
 ];
-const initialEdges: Edge[] = [
+const defaultEdges: Edge[] = [
   {
     id: "e-source1-result1",
     source: "source1",
@@ -44,10 +48,27 @@ const initialEdges: Edge[] = [
   },
 ];
 
+// Load from localStorage or use defaults
+const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : defaultValue;
+  } catch (error) {
+    console.error(`Error loading ${key} from localStorage:`, error);
+    return defaultValue;
+  }
+};
+
 export default function App() {
-  const [nodes, setNodes] = useState<Node<NodeData>[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [nodes, setNodes] = useState<Node<NodeData>[]>(() =>
+    loadFromStorage(STORAGE_KEY_NODES, defaultNodes)
+  );
+  const [edges, setEdges] = useState<Edge[]>(() =>
+    loadFromStorage(STORAGE_KEY_EDGES, defaultEdges)
+  );
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    loadFromStorage(STORAGE_KEY_DARK_MODE, false)
+  );
 
   const addNode = useCallback((nodeType: string) => {
     const newNode: Node<NodeData> = {
@@ -92,6 +113,31 @@ export default function App() {
     []
   );
 
+  // Save to localStorage whenever nodes, edges, or dark mode changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_NODES, JSON.stringify(nodes));
+    } catch (error) {
+      console.error('Error saving nodes to localStorage:', error);
+    }
+  }, [nodes]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_EDGES, JSON.stringify(edges));
+    } catch (error) {
+      console.error('Error saving edges to localStorage:', error);
+    }
+  }, [edges]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_DARK_MODE, JSON.stringify(isDarkMode));
+    } catch (error) {
+      console.error('Error saving dark mode to localStorage:', error);
+    }
+  }, [isDarkMode]);
+
   // Update all nodes' dark mode state whenever it changes
   useEffect(() => {
     setNodes((prevNodes) =>
@@ -115,7 +161,7 @@ export default function App() {
           left: 10,
           zIndex: 10,
           background: isDarkMode ? "#2a2a2a" : "white",
-          padding: "8px",
+          padding: "clamp(8px, 2vw, 12px)",
           borderRadius: "4px",
           boxShadow: isDarkMode
             ? "0 2px 4px rgba(0,0,0,0.4)"
@@ -123,6 +169,7 @@ export default function App() {
           display: "flex",
           gap: "8px",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <select
@@ -134,12 +181,14 @@ export default function App() {
             }
           }}
           style={{
-            padding: "6px 10px",
+            padding: "clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px)",
             border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
             borderRadius: "3px",
             cursor: "pointer",
             background: isDarkMode ? "#3a3a3a" : "white",
             color: isDarkMode ? "#e0e0e0" : "#000",
+            fontSize: "clamp(14px, 3vw, 16px)",
+            minHeight: "44px",
           }}
           defaultValue=""
         >
@@ -155,12 +204,15 @@ export default function App() {
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
           style={{
-            padding: "6px 12px",
+            padding: "clamp(8px, 2vw, 10px) clamp(12px, 3vw, 16px)",
             border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
             borderRadius: "3px",
             cursor: "pointer",
             background: isDarkMode ? "#3a3a3a" : "white",
             color: isDarkMode ? "#e0e0e0" : "#000",
+            fontSize: "clamp(16px, 3vw, 18px)",
+            minHeight: "44px",
+            minWidth: "44px",
           }}
           title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         >

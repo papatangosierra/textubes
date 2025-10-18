@@ -38,6 +38,32 @@ button:active {
   stroke-width: 2.5 !important;
 }
 
+/* Mobile/touch-friendly improvements */
+@media (max-width: 768px) {
+  .react-flow__handle {
+    width: 20px !important;
+    height: 20px !important;
+    border-width: 3px !important;
+  }
+
+  .react-flow__edge-path {
+    stroke-width: 4 !important;
+  }
+}
+
+/* Touch device improvements (including tablets) */
+@media (hover: none) and (pointer: coarse) {
+  .react-flow__handle {
+    width: 20px !important;
+    height: 20px !important;
+    border-width: 3px !important;
+  }
+
+  .react-flow__edge-path {
+    stroke-width: 4 !important;
+  }
+}
+
 /* Node description text */
 .node-description {
   font-size: 11px;
