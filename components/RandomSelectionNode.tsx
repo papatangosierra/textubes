@@ -66,7 +66,7 @@ export default function RandomSelectionNode({ id, data, selected }: NodeProps<No
     <NodeContainer id={id} selected={selected} title="Random Selection" isDarkMode={data.isDarkMode}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
-        Picks a random character, word, or line
+        Outputs a random selection from its input.
       </div>
       <div>
         <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>

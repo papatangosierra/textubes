@@ -11,6 +11,7 @@ import TrimPadNode from "./components/TrimPadNode";
 import RepeatNode from "./components/RepeatNode";
 import CopypastaNode from "./components/CopypastaNode";
 import RandomSelectionNode from "./components/RandomSelectionNode";
+import BoxNode from "./components/BoxNode";
 import type { NodeData } from "./App";
 
 export type NodeConfig = {
@@ -84,6 +85,10 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   repeat: {
     component: RepeatNode,
     label: "Repeat",
+  },
+  box: {
+    component: BoxNode,
+    label: "Box",
   },
   result: {
     component: ResultNode,
