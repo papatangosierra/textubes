@@ -75,3 +75,103 @@ button:active {
 .dark-mode .node-description {
   color: #aaa;
 }
+
+/* Node Picker */
+.node-picker {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.node-picker.dark-mode {
+  background: #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.node-picker-select {
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  background: white;
+  color: #000;
+  font-size: 16px;
+  min-height: 48px;
+  min-width: 180px;
+  font-family: inherit;
+}
+
+.node-picker.dark-mode .node-picker-select {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+.node-picker-button {
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  background: white;
+  color: #000;
+  font-size: 20px;
+  min-height: 48px;
+  min-width: 48px;
+}
+
+.node-picker.dark-mode .node-picker-button {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+/* Mobile improvements for node picker */
+@media (max-width: 768px) {
+  .node-picker {
+    padding: 14px;
+  }
+
+  .node-picker-select {
+    padding: 14px 18px;
+    font-size: 36px;
+    min-height: 52px;
+    min-width: 200px;
+  }
+
+  .node-picker-button {
+    padding: 14px 18px;
+    font-size: 24px;
+    min-height: 52px;
+    min-width: 52px;
+  }
+}
+
+/* Touch device improvements for node picker */
+@media (hover: none) and (pointer: coarse) {
+  .node-picker {
+    padding: 14px;
+  }
+
+  .node-picker-select {
+    padding: 14px 18px;
+    font-size: 36px;
+    min-height: 52px;
+    min-width: 200px;
+  }
+
+  .node-picker-button {
+    padding: 14px 18px;
+    font-size: 24px;
+    min-height: 52px;
+    min-width: 52px;
+  }
+}

@@ -13,7 +13,8 @@ import {
   type Connection,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { NODE_REGISTRY, getNodeTypes, getInitialNodeData } from "./nodeRegistry";
+import { getNodeTypes, getInitialNodeData } from "./nodeRegistry";
+import NodePicker from "./components/NodePicker";
 
 export type NodeData = {
   value: string;
@@ -154,71 +155,11 @@ export default function App() {
       height: "100vh",
       background: isDarkMode ? "#1a1a1a" : "#ffffff",
     }}>
-      <div
-        style={{
-          position: "absolute",
-          top: 10,
-          left: 10,
-          zIndex: 10,
-          background: isDarkMode ? "#2a2a2a" : "white",
-          padding: "clamp(8px, 2vw, 12px)",
-          borderRadius: "4px",
-          boxShadow: isDarkMode
-            ? "0 2px 4px rgba(0,0,0,0.4)"
-            : "0 2px 4px rgba(0,0,0,0.1)",
-          display: "flex",
-          gap: "8px",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <select
-          onChange={(e) => {
-            const target = e.target as HTMLSelectElement;
-            if (target.value) {
-              addNode(target.value);
-              target.value = "";
-            }
-          }}
-          style={{
-            padding: "clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px)",
-            border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
-            borderRadius: "3px",
-            cursor: "pointer",
-            background: isDarkMode ? "#3a3a3a" : "white",
-            color: isDarkMode ? "#e0e0e0" : "#000",
-            fontSize: "clamp(14px, 3vw, 16px)",
-            minHeight: "44px",
-          }}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Add node...
-          </option>
-          {Object.entries(NODE_REGISTRY).map(([key, config]) => (
-            <option key={key} value={key}>
-              {config.label}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={() => setIsDarkMode(!isDarkMode)}
-          style={{
-            padding: "clamp(8px, 2vw, 10px) clamp(12px, 3vw, 16px)",
-            border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
-            borderRadius: "3px",
-            cursor: "pointer",
-            background: isDarkMode ? "#3a3a3a" : "white",
-            color: isDarkMode ? "#e0e0e0" : "#000",
-            fontSize: "clamp(16px, 3vw, 18px)",
-            minHeight: "44px",
-            minWidth: "44px",
-          }}
-          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-        >
-          {isDarkMode ? "☀️" : "🌙"}
-        </button>
-      </div>
+      <NodePicker
+        onAddNode={addNode}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+      />
       <ReactFlow
         nodes={nodes}
         edges={edges}

@@ -3,6 +3,7 @@ import ResultNode from "./components/ResultNode";
 import CapslockNode from "./components/CapslockNode";
 import ReplaceNode from "./components/ReplaceNode";
 import RandomNode from "./components/RandomNode";
+import RandomNounNode from "./components/RandomNounNode";
 import UnicodeStyleNode from "./components/UnicodeStyleNode";
 import ConcatenateNode from "./components/ConcatenateNode";
 import ReverseNode from "./components/ReverseNode";
@@ -44,6 +45,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       const defaultPasta = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
       return { value: defaultPasta, selected: 'lorem' };
     },
+  },
+  randomnoun: {
+    component: RandomNounNode,
+    label: "Random Noun",
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
   },
   capslock: {
     component: CapslockNode,
