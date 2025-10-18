@@ -25,19 +25,6 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: SourceNode,
     label: "Text",
   },
-  random: {
-    component: RandomNode,
-    label: "Random Alphanumeric Text",
-    initialData: () => {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let randomString = '';
-      const length = 10;
-      for (let i = 0; i < length; i++) {
-        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return { value: randomString, length };
-    },
-  },
   copypasta: {
     component: CopypastaNode,
     label: "Copypasta",
@@ -45,12 +32,6 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       const defaultPasta = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
       return { value: defaultPasta, selected: 'lorem' };
     },
-  },
-  randomnoun: {
-    component: RandomNounNode,
-    label: "Random Noun",
-    // Value will be generated after word list loads
-    initialData: () => ({ value: "" }),
   },
   capslock: {
     component: CapslockNode,
@@ -68,6 +49,30 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: ConcatenateNode,
     label: "Concatenate",
   },
+    random: {
+    component: RandomNode,
+    label: "Random Alphanumeric Text",
+    initialData: () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomString = '';
+      const length = 10;
+      for (let i = 0; i < length; i++) {
+        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return { value: randomString, length };
+    },
+  },
+  randomnoun: {
+    component: RandomNounNode,
+    label: "Random Noun",
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
+  },
+  randomselection: {
+    component: RandomSelectionNode,
+    label: "Random Selection",
+    initialData: () => ({ value: "", mode: "word" }),
+  },
   reverse: {
     component: ReverseNode,
     label: "Reverse",
@@ -79,11 +84,6 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   repeat: {
     component: RepeatNode,
     label: "Repeat",
-  },
-  randomselection: {
-    component: RandomSelectionNode,
-    label: "Random Selection",
-    initialData: () => ({ value: "", mode: "word" }),
   },
   result: {
     component: ResultNode,
