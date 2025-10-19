@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Handle, Position, useNodeConnections, useNodesData, useReactFlow, type NodeProps, type Node } from "@xyflow/react";
 import type { NodeData } from "../App";
 import NodeContainer from "./NodeContainer";
+import { getNodeCategory } from "../nodeRegistry";
 
 const BOX_STYLES = {
   simple: {
@@ -67,7 +68,7 @@ function createBox(text: string, style: BoxStyle): string {
   return result.join('\n');
 }
 
-export default function BoxNode({ id, data, selected }: NodeProps<Node<BoxNodeData>>) {
+export default function BoxNode({ id, data, selected, type }: NodeProps<Node<BoxNodeData>>) {
   const { updateNodeData } = useReactFlow();
 
   const connections = useNodeConnections({ handleType: 'target' });
@@ -123,7 +124,7 @@ export default function BoxNode({ id, data, selected }: NodeProps<Node<BoxNodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Box" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Box" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
 
       <div style={{ marginBottom: '8px' }}>

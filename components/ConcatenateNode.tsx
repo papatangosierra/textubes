@@ -2,12 +2,13 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type ConcatenateNodeData = NodeData & {
   separator?: string;
 };
 
-export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<ConcatenateNodeData>>) {
+export default function ConcatenateNode({ id, data, selected, type }: NodeProps<Node<ConcatenateNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const allConnections = useNodeConnections({ handleType: 'target' });
 
@@ -64,7 +65,7 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <div className="node-description">
         Joins multiple inputs together
       </div>
@@ -88,7 +89,7 @@ export default function ConcatenateNode({ id, data, selected }: NodeProps<Node<C
             fontSize: '12px',
             fontFamily: 'monospace',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}

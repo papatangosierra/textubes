@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import { translateString } from '../types/unicodeAbuse';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type UnicodeStyleNodeData = NodeData & {
   style?: string;
@@ -29,7 +30,7 @@ const STYLES = [
   { value: 'dotbox', label: 'Dot Box' },
 ];
 
-export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<UnicodeStyleNodeData>>) {
+export default function UnicodeStyleNode({ id, data, selected, type }: NodeProps<Node<UnicodeStyleNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -60,7 +61,7 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
   }, [inputValue, style, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Unicode Abuse" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Unicode Abuse" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Apply Unicode text styles
@@ -78,7 +79,7 @@ export default function UnicodeStyleNode({ id, data, selected }: NodeProps<Node<
             padding: '4px',
             fontSize: '12px',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}

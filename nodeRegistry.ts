@@ -20,40 +20,29 @@ export type NodeConfig = {
   label: string;
   /** Function to generate initial data for the node */
   initialData?: () => Record<string, any>;
+  /** Category for organizing nodes in the picker */
+  category: 'source' | 'transformer' | 'destination';
 };
 
 export const NODE_REGISTRY: Record<string, NodeConfig> = {
   source: {
     component: SourceNode,
     label: "Text",
+    category: 'source',
   },
   copypasta: {
     component: CopypastaNode,
     label: "Copypasta",
+    category: 'source',
     initialData: () => {
       const defaultPasta = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
       return { value: defaultPasta, selected: 'lorem' };
     },
   },
-  capslock: {
-    component: CapslockNode,
-    label: "Capslock",
-  },
-  unicode: {
-    component: UnicodeStyleNode,
-    label: "Unicode Abuse",
-  },
-  replace: {
-    component: ReplaceNode,
-    label: "Replace",
-  },
-  concatenate: {
-    component: ConcatenateNode,
-    label: "Concatenate",
-  },
-    random: {
+  random: {
     component: RandomNode,
     label: "Random Alphanumeric Text",
+    category: 'source',
     initialData: () => {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let randomString = '';
@@ -67,33 +56,14 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   randomnoun: {
     component: RandomNounNode,
     label: "Random Noun",
+    category: 'source',
     // Value will be generated after word list loads
     initialData: () => ({ value: "" }),
-  },
-  randomselection: {
-    component: RandomSelectionNode,
-    label: "Random Selection",
-    initialData: () => ({ value: "", mode: "word" }),
-  },
-  reverse: {
-    component: ReverseNode,
-    label: "Reverse",
-  },
-  trimpad: {
-    component: TrimPadNode,
-    label: "Trim/Pad",
-  },
-  repeat: {
-    component: RepeatNode,
-    label: "Repeat",
-  },
-  box: {
-    component: BoxNode,
-    label: "Box",
   },
   help: {
     component: HelpNode,
     label: "Help",
+    category: 'source',
     initialData: () => ({
       value: `Welcome to Textubes!
 
@@ -120,9 +90,56 @@ Textubes automatically saves the canvas in local browser storage as you work.
 Textubes does not currently work very well on smartphones.`
     }),
   },
+  capslock: {
+    component: CapslockNode,
+    label: "Capslock",
+    category: 'transformer',
+  },
+  unicode: {
+    component: UnicodeStyleNode,
+    label: "Unicode Abuse",
+    category: 'transformer',
+  },
+  replace: {
+    component: ReplaceNode,
+    label: "Replace",
+    category: 'transformer',
+  },
+  concatenate: {
+    component: ConcatenateNode,
+    label: "Concatenate",
+    category: 'transformer',
+  },
+  randomselection: {
+    component: RandomSelectionNode,
+    label: "Random Selection",
+    category: 'transformer',
+    initialData: () => ({ value: "", mode: "word" }),
+  },
+  reverse: {
+    component: ReverseNode,
+    label: "Reverse",
+    category: 'transformer',
+  },
+  trimpad: {
+    component: TrimPadNode,
+    label: "Trim/Pad",
+    category: 'transformer',
+  },
+  repeat: {
+    component: RepeatNode,
+    label: "Repeat",
+    category: 'transformer',
+  },
+  box: {
+    component: BoxNode,
+    label: "Box",
+    category: 'transformer',
+  },
   result: {
     component: ResultNode,
     label: "Result",
+    category: 'destination',
   },
 };
 
@@ -140,4 +157,9 @@ export function getInitialNodeData(nodeType: string): NodeData {
     return config.initialData() as NodeData;
   }
   return { value: "" };
+}
+
+/** Get category for a node type */
+export function getNodeCategory(nodeType: string): 'source' | 'transformer' | 'destination' | undefined {
+  return NODE_REGISTRY[nodeType]?.category;
 }

@@ -16,6 +16,7 @@ type SelectorNodeUIProps = {
   selected: string;
   onSelectionChange: (key: string) => void;
   isDarkMode?: boolean;
+  category?: 'source' | 'transformer' | 'destination';
 };
 
 export default function SelectorNodeUI({
@@ -27,9 +28,10 @@ export default function SelectorNodeUI({
   selected,
   onSelectionChange,
   isDarkMode,
+  category,
 }: SelectorNodeUIProps) {
   return (
-    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }} isDarkMode={isDarkMode}>
+    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }} isDarkMode={isDarkMode} category={category}>
       {description && (
         <div className="node-description">
           {description}
@@ -48,7 +50,7 @@ export default function SelectorNodeUI({
             padding: '4px',
             fontSize: '12px',
             border: isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: isDarkMode ? '#3a3a3a' : 'white',
             color: isDarkMode ? '#e0e0e0' : '#000'
           }}

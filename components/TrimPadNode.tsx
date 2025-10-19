@@ -2,6 +2,7 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type TrimPadNodeData = NodeData & {
   mode?: 'trim' | 'padStart' | 'padEnd';
@@ -9,7 +10,7 @@ type TrimPadNodeData = NodeData & {
   padChar?: string;
 };
 
-export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimPadNodeData>>) {
+export default function TrimPadNode({ id, data, selected, type }: NodeProps<Node<TrimPadNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -48,7 +49,7 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
   }, [inputValue, mode, padLength, padChar, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Trim whitespace or add padding
@@ -66,7 +67,7 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
             padding: '4px',
             fontSize: '12px',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
@@ -95,7 +96,7 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
                 fontSize: '12px',
                 fontFamily: 'monospace',
                 border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-                borderRadius: '3px',
+                borderRadius: '.5rem',
                 background: data.isDarkMode ? '#3a3a3a' : 'white',
                 color: data.isDarkMode ? '#e0e0e0' : '#000'
               }}
@@ -119,7 +120,7 @@ export default function TrimPadNode({ id, data, selected }: NodeProps<Node<TrimP
                 fontSize: '12px',
                 fontFamily: 'monospace',
                 border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-                borderRadius: '3px',
+                borderRadius: '.5rem',
                 background: data.isDarkMode ? '#3a3a3a' : 'white',
                 color: data.isDarkMode ? '#e0e0e0' : '#000'
               }}

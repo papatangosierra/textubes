@@ -2,8 +2,9 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
-export default function ReverseNode({ id, data, selected }: NodeProps<Node<NodeData>>) {
+export default function ReverseNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -31,7 +32,7 @@ export default function ReverseNode({ id, data, selected }: NodeProps<Node<NodeD
   }, [inputValue, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Reverse" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Reverse" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Reverses character order

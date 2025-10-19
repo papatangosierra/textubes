@@ -2,8 +2,9 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
-export default function CapslockNode({ id, data, selected }: NodeProps<Node<NodeData>>) {
+export default function CapslockNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -33,7 +34,7 @@ export default function CapslockNode({ id, data, selected }: NodeProps<Node<Node
   }, [nodesData, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="CAPSLOCK" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="CAPSLOCK" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Converts text to uppercase

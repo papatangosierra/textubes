@@ -43,7 +43,7 @@ button:active {
   .react-flow__handle {
     width: 20px !important;
     height: 20px !important;
-    border-width: 3px !important;
+    border-width: 6px !important;
   }
 
   .react-flow__edge-path {
@@ -56,7 +56,7 @@ button:active {
   .react-flow__handle {
     width: 20px !important;
     height: 20px !important;
-    border-width: 3px !important;
+    border-width: 6px !important;
   }
 
   .react-flow__edge-path {
@@ -69,7 +69,7 @@ button:active {
   font-size: 11px;
   color: #666;
   font-style: italic;
-  padding-bottom: 1rem;
+  padding-bottom: .5rem;
 }
 
 .dark-mode .node-description {
@@ -84,7 +84,7 @@ button:active {
   z-index: 10;
   background: white;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: .5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   gap: 10px;
@@ -100,7 +100,7 @@ button:active {
 .node-picker-select {
   padding: 12px 16px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: .5rem;
   cursor: pointer;
   background: white;
   color: #000;
@@ -119,7 +119,7 @@ button:active {
 .node-picker-button {
   padding: 12px 16px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: .5rem;
   cursor: pointer;
   background: white;
   color: #000;
@@ -174,4 +174,59 @@ button:active {
     min-height: 52px;
     min-width: 52px;
   }
+}
+
+/* Node category colors - colorblind-safe palette */
+/* Sources: Blue */
+.node-header-source {
+  background: #0173b2 !important;
+  color: white !important;
+  border-bottom-color: #015a8c !important;
+}
+
+.dark-mode .node-header-source {
+  background: #0173b2 !important;
+  color: white !important;
+  border-bottom-color: #015a8c !important;
+}
+
+/* Transformers: Orange */
+.node-header-transformer {
+  background: #de8f05 !important;
+  color: white !important;
+  border-bottom-color: #b57204 !important;
+}
+
+.dark-mode .node-header-transformer {
+  background: #de8f05 !important;
+  color: white !important;
+  border-bottom-color: #b57204 !important;
+}
+
+/* Destinations: Green */
+.node-header-destination {
+  background: #029e73 !important;
+  color: white !important;
+  border-bottom-color: #027d5b !important;
+}
+
+.dark-mode .node-header-destination {
+  background: #029e73 !important;
+  color: white !important;
+  border-bottom-color: #027d5b !important;
+}
+
+/* Update delete button color for colored headers */
+.node-header-source button,
+.node-header-transformer button,
+.node-header-destination button {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.node-header-source button:hover,
+.node-header-transformer button:hover,
+.node-header-destination button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
 }

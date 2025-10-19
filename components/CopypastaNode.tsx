@@ -2,6 +2,7 @@ import { useReactFlow, type NodeProps, type Node } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
 import SelectorNodeUI, { type SelectorOption } from './shared/SelectorNodeUI';
+import { getNodeCategory } from '../nodeRegistry';
 
 type CopypastaNodeData = NodeData & {
   selected?: string;
@@ -81,7 +82,7 @@ const COPYPASTA_OPTIONS: SelectorOption[] = [
   { key: 'bee_movie', label: 'Bee Movie', value: COPYPASTAS.bee_movie },
 ];
 
-export default function CopypastaNode({ id, data, selected: selected_state }: NodeProps<Node<CopypastaNodeData>>) {
+export default function CopypastaNode({ id, data, selected: selected_state, type }: NodeProps<Node<CopypastaNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const selected = data.selected ?? 'lorem';
   const lastSelectedRef = useRef<string | null>(null);
@@ -119,6 +120,7 @@ export default function CopypastaNode({ id, data, selected: selected_state }: No
       selected={selected}
       onSelectionChange={handleSelectionChange}
       isDarkMode={data.isDarkMode}
+      category={getNodeCategory(type)}
     />
   );
 }

@@ -2,12 +2,13 @@ import { Handle, Position, useReactFlow, type NodeProps, type Node } from '@xyfl
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type RandomNodeData = NodeData & {
   length?: number;
 };
 
-export default function RandomNode({ id, data, selected }: NodeProps<Node<RandomNodeData>>) {
+export default function RandomNode({ id, data, selected, type }: NodeProps<Node<RandomNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const length = data.length ?? 10;
   const lastLengthRef = useRef<number | null>(null);
@@ -36,7 +37,7 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
   }, [length]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Random" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Random" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <div className="node-description">
         Generates random alphanumeric text
       </div>
@@ -56,7 +57,7 @@ export default function RandomNode({ id, data, selected }: NodeProps<Node<Random
             fontSize: '12px',
             fontFamily: 'monospace',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}

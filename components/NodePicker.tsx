@@ -7,6 +7,11 @@ type NodePickerProps = {
 };
 
 export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode }: NodePickerProps) {
+  // Group nodes by category
+  const sources = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'source');
+  const transformers = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'transformer');
+  const destinations = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'destination');
+
   return (
     <div className={`node-picker ${isDarkMode ? 'dark-mode' : ''}`}>
       <select
@@ -23,11 +28,27 @@ export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode }: 
         <option value="" disabled>
           Add node...
         </option>
-        {Object.entries(NODE_REGISTRY).map(([key, config]) => (
-          <option key={key} value={key}>
-            {config.label}
-          </option>
-        ))}
+        <optgroup label="Sources">
+          {sources.map(([key, config]) => (
+            <option key={key} value={key}>
+              {config.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label="Transformers">
+          {transformers.map(([key, config]) => (
+            <option key={key} value={key}>
+              {config.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label="Destinations">
+          {destinations.map(([key, config]) => (
+            <option key={key} value={key}>
+              {config.label}
+            </option>
+          ))}
+        </optgroup>
       </select>
       <button
         className="node-picker-button"

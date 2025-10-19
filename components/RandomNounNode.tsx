@@ -2,11 +2,12 @@ import { Handle, Position, useReactFlow, type NodeProps, type Node } from '@xyfl
 import { useEffect, useRef, useState } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 // Module-level cache so all instances share the same word list
 const wordListCache = new Map<string, string[]>();
 
-export default function RandomNounNode({ id, data, selected }: NodeProps<Node<NodeData>>) {
+export default function RandomNounNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
   const { updateNodeData } = useReactFlow();
   const [words, setWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +69,7 @@ export default function RandomNounNode({ id, data, selected }: NodeProps<Node<No
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Random Noun" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Random Noun" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <div className="node-description">
         Generates a random noun
       </div>
@@ -102,7 +103,7 @@ export default function RandomNounNode({ id, data, selected }: NodeProps<Node<No
             fontSize: '12px',
             cursor: 'pointer',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000',
             width: '100%'

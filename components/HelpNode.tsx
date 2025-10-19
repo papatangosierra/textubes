@@ -1,6 +1,7 @@
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 const HELP_TEXT = `Welcome to Textubes!
 
@@ -26,9 +27,9 @@ Textubes automatically saves the canvas in local browser storage as you work.
 
 Textubes does not currently work very well on smartphones.`;
 
-export default function HelpNode({ id, data, selected }: NodeProps<Node<NodeData>>) {
+export default function HelpNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
   return (
-    <NodeContainer id={id} selected={selected} title="Help" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Help" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <div className="node-description">
         Outputs helpful information about Textubes
       </div>

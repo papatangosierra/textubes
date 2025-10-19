@@ -2,12 +2,13 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type RepeatNodeData = NodeData & {
   count?: number;
 };
 
-export default function RepeatNode({ id, data, selected }: NodeProps<Node<RepeatNodeData>>) {
+export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<RepeatNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -37,7 +38,7 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
   }, [inputValue, count, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Repeats text multiple times
@@ -58,7 +59,7 @@ export default function RepeatNode({ id, data, selected }: NodeProps<Node<Repeat
             fontSize: '12px',
             fontFamily: 'monospace',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}

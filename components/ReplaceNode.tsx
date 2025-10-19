@@ -2,13 +2,14 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type ReplaceNodeData = NodeData & {
   searchText?: string;
   replaceText?: string;
 };
 
-export default function ReplaceNode({ id, data, selected }: NodeProps<Node<ReplaceNodeData>>) {
+export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node<ReplaceNodeData>>) {
   const { updateNodeData } = useReactFlow();
 
   // Get connections for each input handle
@@ -53,7 +54,7 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
   }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} id="text" style={{ top: '5.25rem' }} />
       <Handle type="target" position={Position.Left} id="search" style={{ top: '7.5rem' }} />
       <Handle type="target" position={Position.Left} id="replace" style={{ top: '10.5rem' }} />
@@ -84,7 +85,7 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
             fontSize: '12px',
             fontFamily: 'monospace',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: searchSourceIds.length > 0
               ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
               : (data.isDarkMode ? '#3a3a3a' : 'white'),
@@ -110,7 +111,7 @@ export default function ReplaceNode({ id, data, selected }: NodeProps<Node<Repla
             fontSize: '12px',
             fontFamily: 'monospace',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: replaceSourceIds.length > 0
               ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
               : (data.isDarkMode ? '#3a3a3a' : 'white'),

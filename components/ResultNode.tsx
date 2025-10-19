@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Handle, Position, useNodesData, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
-export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeData>>) {
+export default function ResultNode({ data, id, selected, type }: NodeProps<Node<NodeData>>) {
   const [wrap, setWrap] = useState(true);
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -19,7 +20,7 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Display and copy final output
@@ -33,7 +34,7 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
             fontSize: '11px',
             cursor: 'pointer',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000'
           }}
@@ -49,7 +50,7 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
             fontSize: '11px',
             cursor: displayValue ? 'pointer' : 'not-allowed',
             border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '3px',
+            borderRadius: '.5rem',
             background: data.isDarkMode ? '#3a3a3a' : 'white',
             color: data.isDarkMode ? '#e0e0e0' : '#000',
             opacity: displayValue ? 1 : 0.5
@@ -69,7 +70,7 @@ export default function ResultNode({ data, id, selected }: NodeProps<Node<NodeDa
           fontSize: '12px',
           padding: '5px',
           border: data.isDarkMode ? '1px solid #555' : '1px solid #eee',
-          borderRadius: '3px',
+          borderRadius: '.5rem',
           background: data.isDarkMode ? '#333' : '#f9f9f9',
           whiteSpace: wrap ? 'pre-wrap' : 'pre',
           overflow: 'auto',

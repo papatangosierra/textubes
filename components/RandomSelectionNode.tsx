@@ -2,12 +2,13 @@ import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import { getNodeCategory } from '../nodeRegistry';
 
 type RandomSelectionNodeData = NodeData & {
   mode?: 'character' | 'word' | 'line';
 };
 
-export default function RandomSelectionNode({ id, data, selected }: NodeProps<Node<RandomSelectionNodeData>>) {
+export default function RandomSelectionNode({ id, data, selected, type }: NodeProps<Node<RandomSelectionNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
@@ -63,7 +64,7 @@ export default function RandomSelectionNode({ id, data, selected }: NodeProps<No
   }, [nodesData, sourceIds.length, mode, id, updateNodeData, data.value]);
 
   return (
-    <NodeContainer id={id} selected={selected} title="Random Selection" isDarkMode={data.isDarkMode}>
+    <NodeContainer id={id} selected={selected} title="Random Selection" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Outputs a random selection from its input.
@@ -81,7 +82,7 @@ export default function RandomSelectionNode({ id, data, selected }: NodeProps<No
             padding: '4px',
             fontSize: '12px',
             border: '1px solid #ccc',
-            borderRadius: '3px'
+            borderRadius: '.5rem'
           }}
         >
           <option value="character">Random Character</option>
