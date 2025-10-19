@@ -31,7 +31,7 @@ Suddenly, a shrieky little voice rang out. A pasty dude wearing a trenchcoat and
 
 Dipshit: The fuck are you doing??!!!
 
-He yanked the $20 bill from the homeless man’s grip, slicing his fingers on the paper. He stuffed the bloody bill in my face.
+He yanked the $20 bill from the homeless man's grip, slicing his fingers on the paper. He stuffed the bloody bill in my face.
 
 Dipshit: No. NO. You worked for this money while he sat on his ass and jerked off. YOU KEEP IT.
 
@@ -39,11 +39,11 @@ He threw the money in my face.
 
 Me: What the fuck is your problem, asshole??
 
-Dipshit: Listen to me, you fucking useless female. I’m from New York City, where the homeless have the decency to try and work for money, whether it’s shining your shoes, cleaning your windshield, or just doing a little dance on the street corner. I once saw a man with one leg hop in a circle for hours to make $6 in change! That’s the difference between a classy homeless person... and a BUM.
+Dipshit: Listen to me, you fucking useless female. I'm from New York City, where the homeless have the decency to try and work for money, whether it's shining your shoes, cleaning your windshield, or just doing a little dance on the street corner. I once saw a man with one leg hop in a circle for hours to make $6 in change! That's the difference between a classy homeless person... and a BUM.
 
-Me: Well this is my money. I earned it. I’ll use it any way I like. How do you get your money if you’re so important?
+Me: Well this is my money. I earned it. I'll use it any way I like. How do you get your money if you're so important?
 
-Dipshit: I don’t need a job because my mom gives me money!
+Dipshit: I don't need a job because my mom gives me money!
 
 A crowd had formed. Everyone was glaring at this scumbag and a few were even cheering me on.
 
@@ -57,7 +57,7 @@ The crowd erupted. We all began to join in the dance, save for Dipshit, who turn
 
 Everyone: Op! Op! Op! Oppa homeless style!
 
-I threw my $20 at the homeless man’s feet. Everyone else followed suit, tossing money at him. A woman in a suit gave him her gold watch. Dipshit took off running while the rest of us danced into the night.`,
+I threw my $20 at the homeless man's feet. Everyone else followed suit, tossing money at him. A woman in a suit gave him her gold watch. Dipshit took off running while the rest of us danced into the night.`,
 
   bee_movie: `According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible.`,
 
@@ -70,6 +70,8 @@ I threw my $20 at the homeless man’s feet. Everyone else followed suit, tossin
 so the guy left to get full for the car. after two hours the girl say "where is my baby, he was supposed to be back by now". then the girl here a scratching sound and a voice say "LET ME IN"
 
 the girl doesn't do it and then after a while she goes to sleep. the next morning she wakes up and finds her boyfriend still not there. she gets out to check and man door hand hook car door.`,
+
+my_immortal: `Hi my name is Ebony Dark'ness Dementia Raven Way and I have long ebony black hair (that's how I got my name) with purple streaks and red tips that reaches my mid-back and icy blue eyes like limpid tears and a lot of people tell me I look like Amy Lee (AN: if u don't know who she is get da hell out of here!). I'm not related to Gerard Way but I wish I was because he's a major fucking hottie. I'm a vampire but my teeth are straight and white. I have pale white skin. I'm also a witch, and I go to a magic school called Hogwarts in England where I'm in the seventh year (I'm seventeen). I'm a goth (in case you couldn't tell) and I wear mostly black. I love Hot Topic and I buy all my clothes from there. For example today I was wearing a black corset with matching lace around it and a black leather miniskirt, pink fishnets and black combat boots. I was wearing black lipstick, white foundation, black eyeliner and red eye shadow. I was walking outside Hogwarts. It was snowing and raining so there was no sun, which I was very happy about. A lot of preps stared at me. I put up my middle finger at them.`,
 };
 
 const COPYPASTA_OPTIONS: SelectorOption[] = [
@@ -77,8 +79,9 @@ const COPYPASTA_OPTIONS: SelectorOption[] = [
   { key: 'pangrams', label: 'Pangrams', value: COPYPASTAS.pangrams },
   { key: 'every_morning', label: 'EVERY MORNING I WAKE UP', value:COPYPASTAS.every_morning },
   { key: 'navy_seals', label: 'Navy Seals', value: COPYPASTAS.navy_seals}, 
-  { key: 'oppa_homeless_style', label: 'I had a good day of waitressing for once...', value: COPYPASTAS.oppa_homeless_style}, 
-  { key: 'man_door_hand', label: 'man & girl go out to drive under moonlight.', value: COPYPASTAS.man_door_hand}, 
+  { key: 'oppa_homeless_style', label: 'Oppa homeless style', value: COPYPASTAS.oppa_homeless_style}, 
+  { key: 'man_door_hand', label: 'man door hand hook car door', value: COPYPASTAS.man_door_hand}, 
+    { key: 'my_immortal', label: 'My Immortal', value: COPYPASTAS.my_immortal}, 
   { key: 'bee_movie', label: 'Bee Movie', value: COPYPASTAS.bee_movie },
 ];
 

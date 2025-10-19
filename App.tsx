@@ -29,10 +29,10 @@ const STORAGE_KEY_DARK_MODE = 'textubes-dark-mode';
 
 const defaultNodes: Node<NodeData>[] = [
   {
-    id: "source1",
-    type: "source",
+    id: "help1",
+    type: "help",
     position: { x: 50, y: 100 },
-    data: { value: "I am seated in a room surrounded by heads and bodies." },
+    data: getInitialNodeData("help"),
   },
   {
     id: "result1",
@@ -43,8 +43,8 @@ const defaultNodes: Node<NodeData>[] = [
 ];
 const defaultEdges: Edge[] = [
   {
-    id: "e-source1-result1",
-    source: "source1",
+    id: "e-help1-result1",
+    source: "help1",
     target: "result1",
   },
 ];

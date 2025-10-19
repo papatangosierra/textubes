@@ -5,7 +5,9 @@ import { getNodeCategory } from '../nodeRegistry';
 
 const HELP_TEXT = `Welcome to Textubes!
 
-In Textubes, you connect boxes to each other to make text into different text.
+(Textubes does not currently work very well on smartphones.)
+
+In Textubes, you connect boxes to each other to make text into different text. Clicking and dragging on the background moves around. Use mousewheel or trackpad scrolling to zoom in and out. 
 
 There are three kinds of boxes:
 
@@ -24,8 +26,7 @@ You can delete a node by clicking on it and pressing "delete", or by clicking th
 You can delete a connection by clicking on it and pressing "delete", or by dragging a different output to its input.
 
 Textubes automatically saves the canvas in local browser storage as you work.
-
-Textubes does not currently work very well on smartphones.`;
+`;
 
 export default function HelpNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
   return (
