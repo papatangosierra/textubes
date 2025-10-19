@@ -31,16 +31,15 @@ export default function NodeContainer({
   return (
     <div
       style={{
-        border: selected
-          ? isDarkMode
-            ? "2px solid #888"
-            : "2px solid #555"
-          : isDarkMode
-          ? "1px solid #555"
-          : "1px solid #777",
-        borderRadius: ".5rem",
+        border: isDarkMode ? "2px solid #555" : "2px solid #777",
+        borderRadius: ".65rem",
         background: isDarkMode ? "#2a2a2a" : "white",
         minWidth: "150px",
+        boxShadow: selected
+          ? isDarkMode
+            ? "0 0 0 2px #888"
+            : "0 0 0 2px #555"
+          : "none",
         ...style,
       }}
     >

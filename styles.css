@@ -104,7 +104,7 @@ button:active {
   cursor: pointer;
   background: white;
   color: #000;
-  font-size: 16px;
+  font-size: .75rem;
   min-height: 48px;
   min-width: 180px;
   font-family: inherit;
@@ -117,15 +117,15 @@ button:active {
 }
 
 .node-picker-button {
-  padding: 12px 16px;
+  padding: .5rem;
   border: 1px solid #ccc;
   border-radius: .5rem;
   cursor: pointer;
   background: white;
   color: #000;
-  font-size: 20px;
-  min-height: 48px;
-  min-width: 48px;
+  font-size: 1rem;
+  /* min-height: 2rem;
+  min-width: 2rem; */
 }
 
 .node-picker.dark-mode .node-picker-button {
