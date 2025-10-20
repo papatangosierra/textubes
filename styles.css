@@ -13,7 +13,7 @@ body {
 
 textarea {
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
-font-weight: normal;
+  font-weight: normal;
 }
 
 button {
@@ -82,6 +82,8 @@ button:active {
 
 /* Node Picker */
 .node-picker {
+  font-family: system-ui, sans-serif;
+  font-weight: normal;
   position: absolute;
   top: 10px;
   left: 10px;
@@ -102,7 +104,7 @@ button:active {
 }
 
 .node-picker-select {
-  padding: 12px 16px;
+  padding: .5rem;
   border: 1px solid #ccc;
   border-radius: .5rem;
   cursor: pointer;
@@ -233,4 +235,269 @@ button:active {
 .node-header-transformer button:hover,
 .node-header-destination button:hover {
   background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Node container styles */
+.node-container {
+  border: 2px solid #777;
+  border-radius: .65rem;
+  background: white;
+  min-width: 150px;
+}
+
+.dark-mode .node-container {
+  border: 2px solid #555;
+  background: #2a2a2a;
+}
+
+.node-container.selected {
+  box-shadow: 0 0 0 2px #555;
+}
+
+.dark-mode .node-container.selected {
+  box-shadow: 0 0 0 2px #888;
+}
+
+/* Node header styles */
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: .5rem .5rem 0 0;
+  border-bottom: 1px solid #eee;
+  background: #f9f9f9;
+  color: #000;
+}
+
+.dark-mode .node-header {
+  border-bottom: 1px solid #444;
+  background: #333;
+  color: #e0e0e0;
+}
+
+.node-header-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Node delete button */
+.node-delete-button {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.dark-mode .node-delete-button {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #aaa;
+}
+
+/* Node body */
+.node-body {
+  padding: 10px;
+}
+
+/* Node input/textarea styles */
+.node-input,
+.node-textarea {
+  width: 100%;
+  padding: 4px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  background: white;
+  color: #000;
+}
+
+.dark-mode .node-input,
+.dark-mode .node-textarea {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+.node-textarea {
+  min-height: 100px;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+
+.node-input:disabled,
+.node-textarea:disabled {
+  background: #f5f5f5;
+}
+
+.dark-mode .node-input:disabled,
+.dark-mode .node-textarea:disabled {
+  background: #2a2a2a;
+}
+
+/* Node labels */
+.node-label {
+  font-size: 11px;
+  color: #666;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.dark-mode .node-label {
+  color: #aaa;
+}
+
+/* Node field wrapper */
+.node-field {
+  margin-bottom: 5px;
+}
+
+.node-field-with-spacing {
+  margin-bottom: 8px;
+}
+
+/* Node info text */
+.node-info {
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: #666;
+}
+
+.dark-mode .node-info {
+  color: #aaa;
+}
+
+/* Node buttons */
+.node-button {
+  padding: 2px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  background: white;
+  color: #000;
+}
+
+.dark-mode .node-button {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+.node-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.node-button-group {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+/* Node checkbox label */
+.node-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #000;
+}
+
+.dark-mode .node-checkbox-label {
+  color: #e0e0e0;
+}
+
+.node-checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Result node textarea */
+.result-textarea {
+  width: 100%;
+  min-height: 150px;
+  height: 300px;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: .5rem;
+  background: #f9f9f9;
+  overflow: auto;
+}
+
+.dark-mode .result-textarea {
+  border: 1px solid #555;
+  color: #e0e0e0;
+  background: #333;
+}
+
+.result-textarea.no-value {
+  color: #999;
+}
+
+.result-textarea.wrap {
+  white-space: pre-wrap;
+}
+
+.result-textarea.no-wrap {
+  white-space: pre;
+}
+
+/* App container */
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+}
+
+.dark-mode .app-container {
+  background: #1a1a1a;
+}
+
+/* Node status messages */
+.node-status {
+  font-size: 11px;
+  font-style: italic;
+}
+
+.node-status.loading {
+  color: #666;
+}
+
+.dark-mode .node-status.loading {
+  color: #aaa;
+}
+
+.node-status.error {
+  color: #d44;
+}
+
+/* Wider buttons */
+.node-button-wide {
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  background: white;
+  color: #000;
+  width: 100%;
+}
+
+.dark-mode .node-button-wide {
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: #e0e0e0;
 }

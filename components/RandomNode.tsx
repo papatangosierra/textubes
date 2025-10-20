@@ -41,26 +41,16 @@ export default function RandomNode({ id, data, selected, type }: NodeProps<Node<
       <div className="node-description">
         Generates random alphanumeric text
       </div>
-      <div>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Length:
         </label>
         <input
-          className="nodrag"
+          className="nodrag node-input"
           type="number"
           value={length}
           onChange={(e) => updateNodeData(id, { length: parseInt(e.target.value) || 0 })}
           min="0"
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            fontFamily: 'monospace',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         />
       </div>
 

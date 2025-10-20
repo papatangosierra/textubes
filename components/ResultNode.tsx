@@ -20,41 +20,25 @@ export default function ResultNode({ data, id, selected, type }: NodeProps<Node<
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
+    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '400px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Display and copy final output
       </div>
-      <div style={{ marginBottom: '5px', display: 'flex', gap: '5px' }}>
+      <div className="node-button-group">
+        <label className="nodrag node-checkbox-label">
+          <input
+            type="checkbox"
+            checked={wrap}
+            onChange={(e) => setWrap(e.target.checked)}
+            className="nodrag"
+          />
+          Soft Wrap
+        </label>
         <button
-          className="nodrag"
-          onClick={() => setWrap(!wrap)}
-          style={{
-            padding: '2px 8px',
-            fontSize: '11px',
-            cursor: 'pointer',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
-        >
-          {wrap ? 'Raw' : 'Wrap'}
-        </button>
-        <button
-          className="nodrag"
+          className="nodrag node-button"
           onClick={copyToClipboard}
           disabled={!displayValue}
-          style={{
-            padding: '2px 8px',
-            fontSize: '11px',
-            cursor: displayValue ? 'pointer' : 'not-allowed',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000',
-            opacity: displayValue ? 1 : 0.5
-          }}
         >
           Copy to Clipboard
         </button>
@@ -62,19 +46,7 @@ export default function ResultNode({ data, id, selected, type }: NodeProps<Node<
       <textarea
         readOnly
         value={displayValue || 'No input connected'}
-        className="nodrag"
-        style={{
-          width: '100%',
-          minHeight: '100px',
-          fontSize: '12px',
-          padding: '5px',
-          border: data.isDarkMode ? '1px solid #555' : '1px solid #eee',
-          borderRadius: '.5rem',
-          background: data.isDarkMode ? '#333' : '#f9f9f9',
-          whiteSpace: wrap ? 'pre-wrap' : 'pre',
-          overflow: 'auto',
-          color: displayValue ? (data.isDarkMode ? '#e0e0e0' : 'inherit') : '#999'
-        }}
+        className={`nodrag result-textarea ${wrap ? 'wrap' : 'no-wrap'} ${!displayValue ? 'no-value' : ''}`}
       />
     </NodeContainer>
   );

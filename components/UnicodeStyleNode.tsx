@@ -66,23 +66,14 @@ export default function UnicodeStyleNode({ id, data, selected, type }: NodeProps
       <div className="node-description">
         Apply Unicode text styles
       </div>
-      <div style={{ marginBottom: '5px' }} className="nodrag">
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field nodrag">
+        <label className="node-label">
           Style:
         </label>
         <select
-          className="nodrag"
+          className="nodrag node-input"
           value={style}
           onChange={(e) => updateNodeData(id, { style: e.target.value })}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         >
           {STYLES.map(s => (
             <option key={s.value} value={s.value}>{s.label}</option>

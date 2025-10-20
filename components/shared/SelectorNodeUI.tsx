@@ -37,23 +37,14 @@ export default function SelectorNodeUI({
           {description}
         </div>
       )}
-      <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Select:
         </label>
         <select
-          className="nodrag"
+          className="nodrag node-input"
           value={selected}
           onChange={(e) => onSelectionChange(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            border: isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: isDarkMode ? '#3a3a3a' : 'white',
-            color: isDarkMode ? '#e0e0e0' : '#000'
-          }}
         >
           {options.map((opt) => (
             <option key={opt.key} value={opt.key}>{opt.label}</option>

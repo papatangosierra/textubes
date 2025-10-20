@@ -27,61 +27,25 @@ export default function NodeContainer({
   };
 
   const headerClass = category ? `node-header-${category}` : "";
+  const containerClasses = [
+    'node-container',
+    isDarkMode ? 'dark-mode' : '',
+    selected ? 'selected' : '',
+  ].filter(Boolean).join(' ');
 
   return (
-    <div
-      style={{
-        border: isDarkMode ? "2px solid #555" : "2px solid #777",
-        borderRadius: ".65rem",
-        background: isDarkMode ? "#2a2a2a" : "white",
-        minWidth: "150px",
-        boxShadow: selected
-          ? isDarkMode
-            ? "0 0 0 2px #888"
-            : "0 0 0 2px #555"
-          : "none",
-        ...style,
-      }}
-    >
-      <div
-        className={headerClass}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "6px 8px",
-          borderRadius: ".5rem .5rem 0 0",
-          borderBottom: isDarkMode ? "1px solid #444" : "1px solid #eee",
-          background: isDarkMode ? "#333" : "#f9f9f9",
-          color: isDarkMode ? "#e0e0e0" : "#000",
-        }}
-      >
-        <div style={{ fontWeight: "bold", fontSize: "16px" }}>{title}</div>
+    <div className={containerClasses} style={style}>
+      <div className={`node-header ${headerClass}`}>
+        <div className="node-header-title">{title}</div>
         <button
-          className="nodrag"
+          className="nodrag node-delete-button"
           onClick={handleDelete}
-          style={{
-            width: "16px",
-            height: "16px",
-            padding: 0,
-            border: isDarkMode ? "1px solid #555" : "1px solid #ccc",
-            borderRadius: ".5rem",
-            background: isDarkMode ? "#3a3a3a" : "white",
-            cursor: "pointer",
-            fontSize: "12px",
-            lineHeight: "14px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: isDarkMode ? "#aaa" : "#666",
-            flexShrink: 0,
-          }}
           title="Delete node"
         >
           ×
         </button>
       </div>
-      <div style={{ padding: "10px" }}>{children}</div>
+      <div className="node-body">{children}</div>
     </div>
   );
 }

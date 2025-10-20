@@ -16,20 +16,10 @@ export default function SourceNode({ data, id, selected, type }: NodeProps<Node<
         Enter text manually
       </div>
       <textarea
-        className="nodrag"
+        className="nodrag node-textarea"
         value={data.value || ''}
         onChange={handleChange}
         placeholder="Enter text here..."
-        style={{
-          width: '100%',
-          minHeight: '100px',
-          fontSize: '12px',
-          padding: '5px',
-          border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-          borderRadius: '.5rem',
-          background: data.isDarkMode ? '#3a3a3a' : 'white',
-          color: data.isDarkMode ? '#e0e0e0' : '#000'
-        }}
       />
       <Handle type="source" position={Position.Right} />
     </NodeContainer>

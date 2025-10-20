@@ -75,39 +75,21 @@ export default function RandomNounNode({ id, data, selected, type }: NodeProps<N
       </div>
 
       {loading && (
-        <div style={{
-          fontSize: '11px',
-          color: data.isDarkMode ? '#aaa' : '#666',
-          fontStyle: 'italic'
-        }}>
+        <div className="node-status loading">
           Loading words...
         </div>
       )}
 
       {error && (
-        <div style={{
-          fontSize: '11px',
-          color: '#d44',
-          fontStyle: 'italic'
-        }}>
+        <div className="node-status error">
           {error}
         </div>
       )}
 
       {!loading && !error && (
         <button
-          className="nodrag"
+          className="nodrag node-button-wide"
           onClick={regenerate}
-          style={{
-            padding: '6px 12px',
-            fontSize: '12px',
-            cursor: 'pointer',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000',
-            width: '100%'
-          }}
         >
           Generate New
         </button>

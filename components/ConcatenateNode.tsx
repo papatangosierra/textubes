@@ -69,30 +69,20 @@ export default function ConcatenateNode({ id, data, selected, type }: NodeProps<
       <div className="node-description">
         Joins multiple inputs together
       </div>
-      <div style={{ marginBottom: '5px', fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666' }}>
+      <div className="node-info">
         Inputs: {connectedHandleCount}
       </div>
 
-      <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Separator:
         </label>
         <input
-          className="nodrag"
+          className="nodrag node-input"
           type="text"
           value={separator}
           onChange={(e) => updateNodeData(id, { separator: e.target.value })}
           placeholder="(none)"
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            fontFamily: 'monospace',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         />
       </div>
 

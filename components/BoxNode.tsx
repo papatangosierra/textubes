@@ -127,19 +127,14 @@ export default function BoxNode({ id, data, selected, type }: NodeProps<Node<Box
     <NodeContainer id={id} selected={selected} title="Box" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
 
-      <div style={{ marginBottom: '8px' }}>
-        <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>
-          Style:
-        </label>
+      <div className="node-description">
+        Outputs text enclosed in box-drawing characters
+      </div>
+      <div className="node-field-with-spacing">
         <select
-          className="nodrag"
+          className="nodrag node-input"
           value={currentStyle}
           onChange={handleStyleChange}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontFamily: 'monospace',
-          }}
         >
           <option value="simple">Simple (┌┐)</option>
           <option value="double">Double (╔╗)</option>

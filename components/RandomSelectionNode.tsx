@@ -69,21 +69,14 @@ export default function RandomSelectionNode({ id, data, selected, type }: NodePr
       <div className="node-description">
         Outputs a random selection from its input.
       </div>
-      <div>
-        <label style={{ fontSize: '11px', color: '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Select:
         </label>
         <select
-          className="nodrag"
+          className="nodrag node-input"
           value={mode}
           onChange={(e) => updateNodeData(id, { mode: e.target.value as 'character' | 'word' | 'line' })}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            border: '1px solid #ccc',
-            borderRadius: '.5rem'
-          }}
         >
           <option value="character">Random Character</option>
           <option value="word">Random Word</option>

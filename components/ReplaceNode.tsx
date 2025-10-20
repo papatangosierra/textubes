@@ -62,61 +62,37 @@ export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node
       <div className="node-description">
         Find and replace text
       </div>
-      <div style={{ marginBottom: '8px' }}>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field-with-spacing">
+        <label className="node-label">
           Text input
         </label>
       </div>
 
-      <div style={{ marginBottom: '8px' }}>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field-with-spacing">
+        <label className="node-label">
           Search for:
         </label>
         <input
-          className="nodrag"
+          className="nodrag node-input"
           type="text"
           value={data.searchText ?? ''}
           onChange={(e) => updateNodeData(id, { searchText: e.target.value })}
           placeholder="text to find"
           disabled={searchSourceIds.length > 0}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            fontFamily: 'monospace',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: searchSourceIds.length > 0
-              ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
-              : (data.isDarkMode ? '#3a3a3a' : 'white'),
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         />
       </div>
 
-      <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Replace with:
         </label>
         <input
-          className="nodrag"
+          className="nodrag node-input"
           type="text"
           value={data.replaceText ?? ''}
           onChange={(e) => updateNodeData(id, { replaceText: e.target.value })}
           placeholder="replacement text"
           disabled={replaceSourceIds.length > 0}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            fontFamily: 'monospace',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: replaceSourceIds.length > 0
-              ? (data.isDarkMode ? '#2a2a2a' : '#f5f5f5')
-              : (data.isDarkMode ? '#3a3a3a' : 'white'),
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         />
       </div>
     </NodeContainer>

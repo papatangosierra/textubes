@@ -54,23 +54,14 @@ export default function TrimPadNode({ id, data, selected, type }: NodeProps<Node
       <div className="node-description">
         Trim whitespace or add padding
       </div>
-      <div style={{ marginBottom: '5px' }}>
-        <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+      <div className="node-field">
+        <label className="node-label">
           Mode:
         </label>
         <select
-          className="nodrag"
+          className="nodrag node-input"
           value={mode}
           onChange={(e) => updateNodeData(id, { mode: e.target.value as any })}
-          style={{
-            width: '100%',
-            padding: '4px',
-            fontSize: '12px',
-            border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-            borderRadius: '.5rem',
-            background: data.isDarkMode ? '#3a3a3a' : 'white',
-            color: data.isDarkMode ? '#e0e0e0' : '#000'
-          }}
         >
           <option value="trim">Trim whitespace</option>
           <option value="padStart">Pad start</option>
@@ -80,50 +71,30 @@ export default function TrimPadNode({ id, data, selected, type }: NodeProps<Node
 
       {mode !== 'trim' && (
         <>
-          <div style={{ marginBottom: '5px' }}>
-            <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+          <div className="node-field">
+            <label className="node-label">
               Length:
             </label>
             <input
-              className="nodrag"
+              className="nodrag node-input"
               type="number"
               value={padLength}
               onChange={(e) => updateNodeData(id, { padLength: parseInt(e.target.value) || 0 })}
               min="0"
-              style={{
-                width: '100%',
-                padding: '4px',
-                fontSize: '12px',
-                fontFamily: 'monospace',
-                border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-                borderRadius: '.5rem',
-                background: data.isDarkMode ? '#3a3a3a' : 'white',
-                color: data.isDarkMode ? '#e0e0e0' : '#000'
-              }}
             />
           </div>
 
-          <div style={{ marginBottom: '5px' }}>
-            <label style={{ fontSize: '11px', color: data.isDarkMode ? '#aaa' : '#666', display: 'block', marginBottom: '2px' }}>
+          <div className="node-field">
+            <label className="node-label">
               Pad character:
             </label>
             <input
-              className="nodrag"
+              className="nodrag node-input"
               type="text"
               value={padChar}
               onChange={(e) => updateNodeData(id, { padChar: e.target.value })}
               placeholder=" "
               maxLength={1}
-              style={{
-                width: '100%',
-                padding: '4px',
-                fontSize: '12px',
-                fontFamily: 'monospace',
-                border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
-                borderRadius: '.5rem',
-                background: data.isDarkMode ? '#3a3a3a' : 'white',
-                color: data.isDarkMode ? '#e0e0e0' : '#000'
-              }}
             />
           </div>
         </>

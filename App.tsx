@@ -173,13 +173,7 @@ export default function App() {
   }, [isDarkMode]);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        background: isDarkMode ? "#1a1a1a" : "#ffffff",
-      }}
-    >
+    <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <NodePicker
         onAddNode={addNode}
         isDarkMode={isDarkMode}
