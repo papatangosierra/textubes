@@ -6,6 +6,7 @@ import { getNodeCategory } from '../nodeRegistry';
 
 type RepeatNodeData = NodeData & {
   count?: number;
+  separator?: string;
 };
 
 export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<RepeatNodeData>>) {
@@ -15,6 +16,7 @@ export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<
   const nodesData = useNodesData(sourceIds);
 
   const count = data.count ?? 3;
+  const separator = data.separator ?? '';
 
   // Extract input value
   const inputValue = sourceIds.length > 0
@@ -29,13 +31,13 @@ export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<
       return;
     }
 
-    // Repeat the string
-    const outputValue = inputValue.repeat(Math.max(0, count));
+    // Repeat the string with separator
+    const outputValue = Array(Math.max(0, count)).fill(inputValue).join(separator);
 
     if (data.value !== outputValue) {
       updateNodeData(id, { value: outputValue });
     }
-  }, [inputValue, count, sourceIds.length, id, updateNodeData, data.value]);
+  }, [inputValue, count, separator, sourceIds.length, id, updateNodeData, data.value]);
 
   return (
     <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
@@ -53,6 +55,19 @@ export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<
           value={count}
           onChange={(e) => updateNodeData(id, { count: parseInt(e.target.value) || 0 })}
           min="0"
+        />
+      </div>
+
+      <div className="node-field">
+        <label className="node-label">
+          Separator:
+        </label>
+        <input
+          className="nodrag node-input"
+          type="text"
+          value={separator}
+          onChange={(e) => updateNodeData(id, { separator: e.target.value })}
+          placeholder="(none)"
         />
       </div>
 

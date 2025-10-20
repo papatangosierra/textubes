@@ -147,16 +147,41 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
         const isConnected = handleConnections.has(t.handleId);
 
         return (
-          <Handle
+          <div
             key={t.handleId}
-            type="target"
-            position={Position.Left}
-            id={t.handleId}
             style={{
+              position: 'absolute',
+              height: '.3rem',
+              left: '-6px',
               top: `${HANDLE_START + (i + 1) * HANDLE_SPACING}px`,
-              background: isConnected ? '#555' : '#999',
+              display: 'flex',
+              alignItems: 'center',
             }}
-          />
+          >
+            <Handle
+              type="target"
+              position={Position.Left}
+              id={t.handleId}
+              style={{
+                position: 'relative',
+                left: '0',
+                top: '0',
+                transform: 'none',
+                background: isConnected ? '#555' : '#999',
+              }}
+            />
+            <span
+              style={{
+                marginLeft: '.5rem',
+                marginBottom: '.25rem',
+                fontSize: '.75rem',
+                fontWeight: 'bold',
+                color: data.isDarkMode ? '#ccc' : '#666',
+              }}
+            >
+              {t.token}
+            </span>
+          </div>
         );
       })}
     </NodeContainer>

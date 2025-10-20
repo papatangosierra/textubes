@@ -79,7 +79,16 @@ const defaultEdges: Edge[] = [
 const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
   try {
     const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored) : defaultValue;
+    if (!stored) return defaultValue;
+
+    const parsed = JSON.parse(stored);
+
+    // If we have an empty array (cleared canvas), use defaults
+    if (Array.isArray(parsed) && parsed.length === 0) {
+      return defaultValue;
+    }
+
+    return parsed;
   } catch (error) {
     console.error(`Error loading ${key} from localStorage:`, error);
     return defaultValue;
@@ -106,6 +115,76 @@ export default function App() {
     };
     setNodes((nodes) => [...nodes, newNode]);
   }, [isDarkMode]);
+
+  const exportFlow = useCallback(() => {
+    const flowData = {
+      version: 1,
+      nodes,
+      edges,
+      darkMode: isDarkMode,
+    };
+
+    const dataStr = JSON.stringify(flowData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `textubes-flow-${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, [nodes, edges, isDarkMode]);
+
+  const importFlow = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const flowData = JSON.parse(content);
+
+        // Basic validation
+        if (!flowData.nodes || !Array.isArray(flowData.nodes)) {
+          alert('Invalid flow file: missing nodes array');
+          return;
+        }
+        if (!flowData.edges || !Array.isArray(flowData.edges)) {
+          alert('Invalid flow file: missing edges array');
+          return;
+        }
+
+        // Update dark mode state for all nodes
+        const nodesWithDarkMode = flowData.nodes.map((node: Node<NodeData>) => ({
+          ...node,
+          data: { ...node.data, isDarkMode: flowData.darkMode ?? isDarkMode },
+        }));
+
+        setNodes(nodesWithDarkMode);
+        setEdges(flowData.edges);
+        if (typeof flowData.darkMode === 'boolean') {
+          setIsDarkMode(flowData.darkMode);
+        }
+      } catch (error) {
+        console.error('Error importing flow:', error);
+        alert('Error loading flow file. Please check the file format.');
+      }
+    };
+    reader.readAsText(file);
+
+    // Reset the input so the same file can be loaded again
+    event.target.value = '';
+  }, [isDarkMode]);
+
+  const clearCanvas = useCallback(() => {
+    if (confirm('Clear all nodes and connections? This cannot be undone.')) {
+      setNodes([]);
+      setEdges([]);
+    }
+  }, []);
 
   const onNodesChange = useCallback(
     (changes: NodeChange<Node<NodeData>>[]) =>
@@ -178,7 +257,16 @@ export default function App() {
         onAddNode={addNode}
         isDarkMode={isDarkMode}
         onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+        onExport={exportFlow}
+        onImport={importFlow}
       />
+      <button
+        className="clear-canvas-button"
+        onClick={clearCanvas}
+        title="Clear canvas"
+      >
+        🗑️
+      </button>
       <ReactFlow
         nodes={nodes}
         edges={edges}

@@ -1,12 +1,16 @@
 import { NODE_REGISTRY } from "../nodeRegistry";
+import { useRef } from "react";
 
 type NodePickerProps = {
   onAddNode: (nodeType: string) => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
+  onExport: () => void;
+  onImport: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode }: NodePickerProps) {
+export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, onExport, onImport }: NodePickerProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   // Group nodes by category
   const sources = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'source');
   const transformers = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'transformer');
@@ -50,6 +54,27 @@ export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode }: 
           ))}
         </optgroup>
       </select>
+      <button
+        className="node-picker-button"
+        onClick={onExport}
+        title="Export flow as JSON"
+      >
+        💾
+      </button>
+      <button
+        className="node-picker-button"
+        onClick={() => fileInputRef.current?.click()}
+        title="Import flow from JSON"
+      >
+        📂
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        onChange={onImport}
+        style={{ display: 'none' }}
+      />
       <button
         className="node-picker-button"
         onClick={onToggleDarkMode}
