@@ -65,7 +65,7 @@ export default function ConcatenateNode({ id, data, selected, type }: NodeProps<
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <NodeContainer id={id} selected={selected} title="Concatenate" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
+    <NodeContainer id={id} selected={selected} title="Join" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <div className="node-description">
         Joins multiple inputs together
       </div>

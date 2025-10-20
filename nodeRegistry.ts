@@ -86,7 +86,7 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   },
   concatenate: {
     component: ConcatenateNode,
-    label: "Concatenate",
+    label: "Join",
     category: 'transformer',
   },
   randomselection: {

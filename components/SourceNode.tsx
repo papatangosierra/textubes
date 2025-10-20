@@ -23,7 +23,6 @@ export default function SourceNode({ data, id, selected, type }: NodeProps<Node<
         style={{
           width: '100%',
           minHeight: '100px',
-          fontFamily: 'monospace',
           fontSize: '12px',
           padding: '5px',
           border: data.isDarkMode ? '1px solid #555' : '1px solid #ccc',
