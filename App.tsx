@@ -102,10 +102,10 @@ export default function App() {
       id: `${nodeType}-${Date.now()}`,
       type: nodeType,
       position: { x: Math.random() * 200, y: Math.random() * 200 },
-      data: getInitialNodeData(nodeType),
+      data: { ...getInitialNodeData(nodeType), isDarkMode },
     };
     setNodes((nodes) => [...nodes, newNode]);
-  }, []);
+  }, [isDarkMode]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange<Node<NodeData>>[]) =>
