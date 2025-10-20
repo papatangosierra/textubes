@@ -20,8 +20,8 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
     ? ((templateNodeData[0]?.data as NodeData | undefined)?.value ?? '')
     : '';
 
-  // Parse template for %%TOKEN%% patterns
-  const regex = /%%([^%]+)%%/g;
+  // Parse template for __TOKEN__ patterns
+  const regex = /__([^_]+)__/g;
   const matches = [...template.matchAll(regex)];
 
   // Build list of unique tokens and their handle IDs
@@ -83,7 +83,7 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
       return;
     }
 
-    // Replace all %%TOKEN%% with their values
+    // Replace all __TOKEN__ with their values
     let output = template;
 
     // Sort matches by position (descending) to avoid offset issues
@@ -91,7 +91,7 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
 
     sortedMatches.forEach((match) => {
       const token = match[1];
-      const replacement = tokenValues.get(token) ?? `%%${token}%%`;
+      const replacement = tokenValues.get(token) ?? `__${token}__`;
       const startPos = match.index ?? 0;
       const endPos = startPos + match[0].length;
 
@@ -115,21 +115,16 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
       id={id}
       selected={selected}
       title="Template"
-      style={{ minWidth: '250px', minHeight: `${minHeight}px` }}
+      style={{ minWidth: '200px', minHeight: `${minHeight}px` }}
       isDarkMode={data.isDarkMode}
       category={getNodeCategory(type)}
     >
       <Handle type="source" position={Position.Right} />
 
       <div className="node-description">
-        Replace %%TOKEN%% with inputs
+        Replace __TOKEN__ in main input with  <br />text from corresponding input
       </div>
 
-      {tokens.length > 0 && (
-        <div className="node-info" style={{ fontSize: '11px', marginTop: '5px' }}>
-          {tokens.length} token{tokens.length !== 1 ? 's' : ''}: {tokens.map(t => t.token).join(', ')}
-        </div>
-      )}
 
       {/* Template input handle (always first) */}
       <Handle
