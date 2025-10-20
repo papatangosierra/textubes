@@ -428,7 +428,7 @@ button:active {
 .result-textarea {
   width: 100%;
   min-height: 150px;
-  height: 300px;
+  height: 200px;
   font-size: 12px;
   padding: 5px;
   border: 1px solid #eee;

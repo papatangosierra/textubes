@@ -20,7 +20,7 @@ export default function ResultNode({ data, id, selected, type }: NodeProps<Node<
   };
 
   return (
-    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '400px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
+    <NodeContainer id={id} selected={selected} title="Result" style={{ minWidth: '300px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
       <Handle type="target" position={Position.Left} />
       <div className="node-description">
         Display and copy final output
