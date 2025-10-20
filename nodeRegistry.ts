@@ -13,6 +13,7 @@ import CopypastaNode from "./components/CopypastaNode";
 import RandomSelectionNode from "./components/RandomSelectionNode";
 import BoxNode from "./components/BoxNode";
 import HelpNode from "./components/HelpNode";
+import TemplateNode from "./components/TemplateNode";
 import { HELP_TEXT } from "./components/HelpNode";
 import type { NodeData } from "./App";
 
@@ -113,6 +114,11 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   box: {
     component: BoxNode,
     label: "Box",
+    category: 'transformer',
+  },
+  template: {
+    component: TemplateNode,
+    label: "Template",
     category: 'transformer',
   },
   result: {
