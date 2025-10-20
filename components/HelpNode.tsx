@@ -3,17 +3,17 @@ import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
 import { getNodeCategory } from '../nodeRegistry';
 
-const HELP_TEXT = `Welcome to Textubes!
+export const HELP_TEXT = `Welcome to Textubes!
+
+In Textubes, you connect boxes to each other to make text into different text. You can pan the view around by clicking and dragging on the background. Use mousewheel or trackpad scrolling to zoom in and out. 
 
 (Textubes does not currently work very well on smartphones.)
 
-In Textubes, you connect boxes to each other to make text into different text. Clicking and dragging on the background moves around. Use mousewheel or trackpad scrolling to zoom in and out. 
-
 There are three kinds of boxes:
 
-- Text Sources
-- Text Transformers
-- Text Destinations
+- Text Sources (Blue)
+- Text Transformers (Yellow)
+- Text Destinations (Green)
 
 Text STARTS in Sources, goes THROUGH Transformers, and FINISHES in Destinations.
 
