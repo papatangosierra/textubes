@@ -157,6 +157,15 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: TemplateNode,
     label: "Template",
     category: 'transformer',
+    help: {
+      description: "Replaces <code>__TOKEN__</code> placeholders in template text with values from connected inputs. Tokens are automatically detected and create new input handles.",
+      inputs: [
+        { label: "Template", description: "Text with __TOKEN__ placeholders" }
+      ],
+      outputs: [
+        { label: "Output", description: "Template with tokens replaced" }
+      ]
+    }
   },
   result: {
     component: ResultNode,

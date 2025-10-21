@@ -1,8 +1,9 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type TemplateNodeData = NodeData & {
   template?: string;
@@ -10,11 +11,16 @@ type TemplateNodeData = NodeData & {
 
 export default function TemplateNode({ id, data, selected, type }: NodeProps<Node<TemplateNodeData>>) {
   const { updateNodeData } = useReactFlow();
+  const helpInfo = getNodeHelp(type);
   const allConnections = useNodeConnections({ handleType: 'target' });
+
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
 
   // Get the template input connection (special handle 'template')
   const templateConnection = useNodeConnections({ handleType: 'target', handleId: 'template' });
-  const templateSourceId = templateConnection.length > 0 ? templateConnection[0].source : undefined;
+  const templateSourceId = templateConnection.length > 0 ? templateConnection[0]?.source : undefined;
   const templateNodeData = useNodesData(templateSourceId ? [templateSourceId] : []);
   const template = templateSourceId
     ? ((templateNodeData[0]?.data as NodeData | undefined)?.value ?? '')
@@ -103,82 +109,96 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
     }
   }, [template, tokenValuesString, templateSourceId, id, updateNodeData, data.value]);
 
-  const HANDLE_SPACING = 25;
-  const HANDLE_START = 75;
+  // set these assuming rem units!!
+  const HANDLE_START = 4;
+  const HANDLE_SPACING = 1.5;
 
   // Calculate minimum height based on number of handles (including template handle)
   const totalHandles = tokens.length + 1; // +1 for template handle
-  const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
+  const minHeight = (HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 1);
 
   return (
-    <NodeContainer
-      id={id}
-      selected={selected}
-      title="Template"
-      style={{ minWidth: '200px', minHeight: `${minHeight}px` }}
-      isDarkMode={data.isDarkMode}
-      category={getNodeCategory(type)}
-    >
-      <Handle type="source" position={Position.Right} />
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          {/* Description at the bottom */}
+          <div className="help-description">
+            {helpInfo.description}
+          </div>
+        </div>
+      )}
 
-      <div className="node-description">
-        Replace __TOKEN__ in main input with  <br />text from corresponding input
-      </div>
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Template"
+        style={{ minWidth: '200px', minHeight: `${minHeight}rem` }}
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+
+        <div className="node-description">
+          Replace __TOKEN__ in main input with  <br />text from corresponding input
+        </div>
 
 
-      {/* Template input handle (always first) */}
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="template"
-        style={{
-          top: `${HANDLE_START}px`,
-          background: templateSourceId ? '#555' : '#999',
-        }}
-      />
+        {/* Template input handle (always first) */}
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          id="template"
+          style={{
+            top: `${HANDLE_START}rem`,
+            background: templateSourceId ? '#555' : '#999',
+          }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
 
-      {/* Render dynamic handles for each unique token (offset by 1 for template handle) */}
-      {tokens.map((t, i) => {
-        const isConnected = handleConnections.has(t.handleId);
+        {/* Render dynamic handles for each unique token (offset by 1 for template handle) */}
+        {tokens.map((t, i) => {
+          const isConnected = handleConnections.has(t.handleId);
 
-        return (
-          <div
-            key={t.handleId}
-            style={{
-              position: 'absolute',
-              height: '.3rem',
-              left: '-6px',
-              top: `${HANDLE_START + (i + 1) * HANDLE_SPACING}px`,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Handle
-              type="target"
-              position={Position.Left}
-              id={t.handleId}
+          return (
+            <div
+              key={t.handleId}
+              className="template-token-handle"
               style={{
-                position: 'relative',
-                left: '0',
-                top: '0',
-                transform: 'none',
-                background: isConnected ? '#555' : '#999',
-              }}
-            />
-            <span
-              style={{
-                marginLeft: '.5rem',
-                marginBottom: '.25rem',
-                fontSize: '.75rem',
-                fontWeight: 'bold',
-                color: data.isDarkMode ? '#ccc' : '#666',
+                top: `${HANDLE_START + (i + 1) * HANDLE_SPACING}rem`,
               }}
             >
-              {t.token}
-            </span>
-          </div>
-        );
-      })}
-    </NodeContainer>
+              <HelpLabel
+                type="target"
+                position={Position.Left}
+                id={t.handleId}
+                style={{
+                  position: 'relative',
+                  left: '0',
+                  top: '0',
+                  transform: 'none',
+                  background: isConnected ? '#555' : '#999',
+                }}
+                helpActive={false}
+                helpLabel=""
+                helpDescription=""
+              />
+              <span className="template-token-label">
+                {t.token}
+              </span>
+            </div>
+          );
+        })}
+      </NodeContainer>
+    </div>
   );
 }
