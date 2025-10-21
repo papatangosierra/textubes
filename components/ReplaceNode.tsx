@@ -55,9 +55,9 @@ export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node
 
   return (
     <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} id="text" style={{ top: '5.25rem' }} />
-      <Handle type="target" position={Position.Left} id="search" style={{ top: '7.5rem' }} />
-      <Handle type="target" position={Position.Left} id="replace" style={{ top: '10.5rem' }} />
+      <Handle type="target" position={Position.Left} id="text" style={{ top: '4.45rem' }} />
+      <Handle type="target" position={Position.Left} id="search" style={{ top: '6.85rem' }} />
+      <Handle type="target" position={Position.Left} id="replace" style={{ top: '9.75rem' }} />
       <Handle type="source" position={Position.Right} />
       <div className="node-description">
         Find and replace text

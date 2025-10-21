@@ -176,11 +176,18 @@ All node components are in `components/` directory.
 - **UnicodeStyleNode** - Applies Unicode text styles (bold, italic, circled, double-struck, etc.)
 - **ReverseNode** - Reverses string character order
 - **TrimPadNode** - Three modes: trim whitespace, pad start, or pad end
-- **RepeatNode** - Repeats input text N times
+- **RepeatNode** - Repeats input text N times with optional separator
 - **ConcatenateNode** - Joins multiple inputs with optional separator
   - **Dynamic handles**: Starts with 2 input handles, automatically adds more as they're connected
   - Order matters: top-to-bottom determines concatenation order
   - Connected handles are darker for visual feedback
+- **TemplateNode** - Template-based text replacement with `__TOKEN__` syntax
+  - First input handle accepts the template text
+  - Parses template for `__TOKEN__` patterns (double underscore syntax)
+  - Automatically creates labeled input handles for each unique token found
+  - Replaces all occurrences of each token with text from corresponding input
+  - Token handles are visually labeled with the token name
+  - If a token handle is not connected, the original `__TOKEN__` remains in output
 
 ### Output Nodes
 - **ResultNode** - Display-only output node
@@ -395,6 +402,42 @@ Key points:
 - Node height grows dynamically via `minHeight` to accommodate new handles
 - Visual feedback: connected handles are darker
 - Handle order (top to bottom) determines concatenation order
+
+## Save/Load Functionality
+
+The application includes save/load functionality for persisting and restoring flow configurations:
+
+### Export Flow (💾 button)
+- Serializes current nodes, edges, and dark mode setting to JSON
+- Downloads as `textubes-flow-{timestamp}.json`
+- Format includes version field for future compatibility:
+  ```json
+  {
+    "version": 1,
+    "nodes": [...],
+    "edges": [...],
+    "darkMode": true/false
+  }
+  ```
+
+### Import Flow (📂 button)
+- Opens file picker for .json files
+- Validates file structure before loading
+- Restores nodes, edges, and dark mode setting
+- Shows error alerts if file format is invalid
+- File input is reset after loading to allow reloading same file
+
+### Clear Canvas (🗑️ button)
+- Positioned in top right corner
+- Shows confirmation dialog before clearing
+- Clears all nodes and edges
+- When canvas is empty and saved to localStorage, reloading shows default initial nodes
+
+### Auto-save to localStorage
+- Automatically saves nodes, edges, and dark mode to localStorage on every change
+- Keys: `textubes-nodes`, `textubes-edges`, `textubes-dark-mode`
+- Restores state on page load
+- Empty arrays are treated as "show defaults" rather than blank canvas
 
 ## TypeScript Setup
 

@@ -19,6 +19,7 @@ import NodePicker from "./components/NodePicker";
 export type NodeData = {
   value: string;
   isDarkMode?: boolean;
+  helpActive?: boolean;
 };
 
 const nodeTypes = getNodeTypes();

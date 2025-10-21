@@ -17,6 +17,12 @@ import TemplateNode from "./components/TemplateNode";
 import { HELP_TEXT } from "./components/HelpNode";
 import type { NodeData } from "./App";
 
+export type NodeHelp = {
+  description: string;
+  inputs?: Array<{ label: string; description: string }>;
+  outputs?: Array<{ label: string; description: string }>;
+};
+
 export type NodeConfig = {
   component: React.ComponentType<any>;
   label: string;
@@ -24,6 +30,8 @@ export type NodeConfig = {
   initialData?: () => Record<string, any>;
   /** Category for organizing nodes in the picker */
   category: 'source' | 'transformer' | 'destination';
+  /** Help documentation for the node */
+  help?: NodeHelp;
 };
 
 export const NODE_REGISTRY: Record<string, NodeConfig> = {
@@ -74,6 +82,15 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: CapslockNode,
     label: "Capslock",
     category: 'transformer',
+    help: {
+      description: "Converts all input text to uppercase letters.",
+      inputs: [
+        { label: "Input", description: "Text to convert to uppercase" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text converted to ALL CAPS" }
+      ]
+    }
   },
   unicode: {
     component: UnicodeStyleNode,
@@ -147,4 +164,9 @@ export function getInitialNodeData(nodeType: string): NodeData {
 /** Get category for a node type */
 export function getNodeCategory(nodeType: string): 'source' | 'transformer' | 'destination' | undefined {
   return NODE_REGISTRY[nodeType]?.category;
+}
+
+/** Get help documentation for a node type */
+export function getNodeHelp(nodeType: string): NodeHelp | undefined {
+  return NODE_REGISTRY[nodeType]?.help;
 }

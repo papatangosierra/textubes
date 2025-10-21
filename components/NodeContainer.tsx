@@ -9,6 +9,8 @@ interface NodeContainerProps {
   style?: React.CSSProperties;
   isDarkMode?: boolean;
   category?: "source" | "transformer" | "destination";
+  onHelpToggle?: () => void;
+  helpActive?: boolean;
 }
 
 export default function NodeContainer({
@@ -19,6 +21,8 @@ export default function NodeContainer({
   style,
   isDarkMode,
   category,
+  onHelpToggle,
+  helpActive,
 }: NodeContainerProps) {
   const { deleteElements } = useReactFlow();
 
@@ -37,13 +41,24 @@ export default function NodeContainer({
     <div className={containerClasses} style={style}>
       <div className={`node-header ${headerClass}`}>
         <div className="node-header-title">{title}</div>
-        <button
-          className="nodrag node-delete-button"
-          onClick={handleDelete}
-          title="Delete node"
-        >
-          ×
-        </button>
+        <div className="node-header-buttons">
+          {onHelpToggle && (
+            <button
+              className="nodrag node-help-button"
+              onClick={onHelpToggle}
+              title={helpActive ? "Hide help" : "Show help"}
+            >
+              ?
+            </button>
+          )}
+          <button
+            className="nodrag node-delete-button"
+            onClick={handleDelete}
+            title="Delete node"
+          >
+            ×
+          </button>
+        </div>
       </div>
       <div className="node-body">{children}</div>
     </div>
