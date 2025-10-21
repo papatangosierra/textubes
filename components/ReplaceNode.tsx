@@ -64,9 +64,10 @@ export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node
       {data.helpActive && helpInfo && (
         <div className="node-help-frame">
           {/* Description at the bottom */}
-          <div className="help-description">
-            {helpInfo.description}
-          </div>
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
         </div>
       )}
 

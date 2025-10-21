@@ -20,9 +20,6 @@ export default function HelpLabel({
   const isInput = type === 'target';
   const isOutput = type === 'source';
 
-
-  //style && style.top ? {top: (parseFloat(style.top.toString()) + 1.2) + 'rem'} : style
-
   return (
     <>
       {showHelp && isInput && (

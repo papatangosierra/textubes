@@ -1,19 +1,23 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type RepeatNodeData = NodeData & {
   count?: number;
   separator?: string;
 };
 
+const HANDLE_START = 4.45;
+
 export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<RepeatNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
+  const helpInfo = getNodeHelp(type);
 
   const count = data.count ?? 3;
   const separator = data.separator ?? '';
@@ -39,39 +43,75 @@ export default function RepeatNode({ id, data, selected, type }: NodeProps<Node<
     }
   }, [inputValue, count, separator, sourceIds.length, id, updateNodeData, data.value]);
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
-    <NodeContainer id={id} selected={selected} title="Repeat" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} />
-      <div className="node-description">
-        Repeats text multiple times
-      </div>
-      <div className="node-field">
-        <label className="node-label">
-          Count:
-        </label>
-        <input
-          className="nodrag node-input"
-          type="number"
-          value={count}
-          onChange={(e) => updateNodeData(id, { count: parseInt(e.target.value) || 0 })}
-          min="0"
-        />
-      </div>
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
+        </div>
+      )}
 
-      <div className="node-field">
-        <label className="node-label">
-          Separator:
-        </label>
-        <input
-          className="nodrag node-input"
-          type="text"
-          value={separator}
-          onChange={(e) => updateNodeData(id, { separator: e.target.value })}
-          placeholder="(none)"
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Repeat"
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          style={{ top: `${HANDLE_START}rem` }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
         />
-      </div>
+        <div className="node-description">
+          Repeats text multiple times
+        </div>
+        <div className="node-field">
+          <label className="node-label">
+            Count:
+          </label>
+          <input
+            className="nodrag node-input"
+            type="number"
+            value={count}
+            onChange={(e) => updateNodeData(id, { count: parseInt(e.target.value) || 0 })}
+            min="0"
+          />
+        </div>
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+        <div className="node-field">
+          <label className="node-label">
+            Separator:
+          </label>
+          <input
+            className="nodrag node-input"
+            type="text"
+            value={separator}
+            onChange={(e) => updateNodeData(id, { separator: e.target.value })}
+            placeholder="(none)"
+          />
+        </div>
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

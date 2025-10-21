@@ -110,7 +110,7 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
   }, [template, tokenValuesString, templateSourceId, id, updateNodeData, data.value]);
 
   // set these assuming rem units!!
-  const HANDLE_START = 4;
+  const HANDLE_START = 3.5;
   const HANDLE_SPACING = 1.5;
 
   // Calculate minimum height based on number of handles (including template handle)
@@ -122,9 +122,10 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
       {data.helpActive && helpInfo && (
         <div className="node-help-frame">
           {/* Description at the bottom */}
-          <div className="help-description">
-            {helpInfo.description}
-          </div>
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
         </div>
       )}
 

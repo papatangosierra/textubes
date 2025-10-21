@@ -1,9 +1,10 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import { translateString } from '../types/unicodeAbuse';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type UnicodeStyleNodeData = NodeData & {
   style?: string;
@@ -30,11 +31,14 @@ const STYLES = [
   { value: 'dotbox', label: 'Dot Box' },
 ];
 
+const HANDLE_START = 4.45;
+
 export default function UnicodeStyleNode({ id, data, selected, type }: NodeProps<Node<UnicodeStyleNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
+  const helpInfo = getNodeHelp(type);
 
   const style = data.style ?? 'bold';
 
@@ -60,28 +64,65 @@ export default function UnicodeStyleNode({ id, data, selected, type }: NodeProps
     }
   }, [inputValue, style, sourceIds.length, id, updateNodeData, data.value]);
 
-  return (
-    <NodeContainer id={id} selected={selected} title="Unicode Abuse" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} />
-      <div className="node-description">
-        Apply Unicode text styles
-      </div>
-      <div className="node-field nodrag">
-        <label className="node-label">
-          Style:
-        </label>
-        <select
-          className="nodrag node-input"
-          value={style}
-          onChange={(e) => updateNodeData(id, { style: e.target.value })}
-        >
-          {STYLES.map(s => (
-            <option key={s.value} value={s.value}>{s.label}</option>
-          ))}
-        </select>
-      </div>
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+  return (
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
+        </div>
+      )}
+
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Unicode Abuse"
+        style={{ minWidth: '180px' }}
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          style={{ top: `${HANDLE_START}rem` }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
+        <div className="node-description">
+          Apply Unicode text styles
+        </div>
+        <div className="node-field nodrag">
+          <label className="node-label">
+            Style:
+          </label>
+          <select
+            className="nodrag node-input"
+            value={style}
+            onChange={(e) => updateNodeData(id, { style: e.target.value })}
+          >
+            {STYLES.map(s => (
+              <option key={s.value} value={s.value}>{s.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

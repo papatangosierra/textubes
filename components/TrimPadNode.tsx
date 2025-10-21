@@ -1,8 +1,9 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type TrimPadNodeData = NodeData & {
   mode?: 'trim' | 'padStart' | 'padEnd';
@@ -10,11 +11,14 @@ type TrimPadNodeData = NodeData & {
   padChar?: string;
 };
 
+const HANDLE_START = 4.45;
+
 export default function TrimPadNode({ id, data, selected, type }: NodeProps<Node<TrimPadNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
+  const helpInfo = getNodeHelp(type);
 
   const mode = data.mode ?? 'trim';
   const padLength = data.padLength ?? 10;
@@ -48,59 +52,96 @@ export default function TrimPadNode({ id, data, selected, type }: NodeProps<Node
     }
   }, [inputValue, mode, padLength, padChar, sourceIds.length, id, updateNodeData, data.value]);
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
-    <NodeContainer id={id} selected={selected} title="Trim/Pad" style={{ minWidth: '180px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} />
-      <div className="node-description">
-        Trim whitespace or add padding
-      </div>
-      <div className="node-field">
-        <label className="node-label">
-          Mode:
-        </label>
-        <select
-          className="nodrag node-input"
-          value={mode}
-          onChange={(e) => updateNodeData(id, { mode: e.target.value as any })}
-        >
-          <option value="trim">Trim whitespace</option>
-          <option value="padStart">Pad start</option>
-          <option value="padEnd">Pad end</option>
-        </select>
-      </div>
-
-      {mode !== 'trim' && (
-        <>
-          <div className="node-field">
-            <label className="node-label">
-              Length:
-            </label>
-            <input
-              className="nodrag node-input"
-              type="number"
-              value={padLength}
-              onChange={(e) => updateNodeData(id, { padLength: parseInt(e.target.value) || 0 })}
-              min="0"
-            />
-          </div>
-
-          <div className="node-field">
-            <label className="node-label">
-              Pad character:
-            </label>
-            <input
-              className="nodrag node-input"
-              type="text"
-              value={padChar}
-              onChange={(e) => updateNodeData(id, { padChar: e.target.value })}
-              placeholder=" "
-              maxLength={1}
-            />
-          </div>
-        </>
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
+        </div>
       )}
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Trim/Pad"
+        style={{ minWidth: '180px' }}
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          style={{ top: `${HANDLE_START}rem` }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
+        <div className="node-description">
+          Trim whitespace or add padding
+        </div>
+        <div className="node-field">
+          <label className="node-label">
+            Mode:
+          </label>
+          <select
+            className="nodrag node-input"
+            value={mode}
+            onChange={(e) => updateNodeData(id, { mode: e.target.value as any })}
+          >
+            <option value="trim">Trim whitespace</option>
+            <option value="padStart">Pad start</option>
+            <option value="padEnd">Pad end</option>
+          </select>
+        </div>
+
+        {mode !== 'trim' && (
+          <>
+            <div className="node-field">
+              <label className="node-label">
+                Length:
+              </label>
+              <input
+                className="nodrag node-input"
+                type="number"
+                value={padLength}
+                onChange={(e) => updateNodeData(id, { padLength: parseInt(e.target.value) || 0 })}
+                min="0"
+              />
+            </div>
+
+            <div className="node-field">
+              <label className="node-label">
+                Pad character:
+              </label>
+              <input
+                className="nodrag node-input"
+                type="text"
+                value={padChar}
+                onChange={(e) => updateNodeData(id, { padChar: e.target.value })}
+                placeholder=" "
+                maxLength={1}
+              />
+            </div>
+          </>
+        )}
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

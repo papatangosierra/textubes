@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { Handle, Position, useNodeConnections, useNodesData, useReactFlow, type NodeProps, type Node } from "@xyflow/react";
+import { Position, useNodeConnections, useNodesData, useReactFlow, type NodeProps, type Node } from "@xyflow/react";
 import type { NodeData } from "../App";
 import NodeContainer from "./NodeContainer";
-import { getNodeCategory } from "../nodeRegistry";
+import HelpLabel from "./HelpLabel";
+import { getNodeCategory, getNodeHelp } from "../nodeRegistry";
 
 const BOX_STYLES = {
   simple: {
@@ -45,6 +46,8 @@ type BoxNodeData = NodeData & {
   style?: BoxStyle;
 };
 
+const HANDLE_START = 4.45;
+
 function createBox(text: string, style: BoxStyle): string {
   if (!text) return '';
 
@@ -74,6 +77,7 @@ export default function BoxNode({ id, data, selected, type }: NodeProps<Node<Box
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map(conn => conn.source);
   const nodesData = useNodesData(sourceIds);
+  const helpInfo = getNodeHelp(type);
 
   const currentStyle = data.style || 'simple';
 
@@ -123,27 +127,63 @@ export default function BoxNode({ id, data, selected, type }: NodeProps<Node<Box
     updateNodeData(id, { value: outputValue, style: newStyle });
   };
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
-    <NodeContainer id={id} selected={selected} title="Box" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} />
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
+        </div>
+      )}
 
-      <div className="node-description">
-        Outputs text enclosed in box-drawing characters
-      </div>
-      <div className="node-field-with-spacing">
-        <select
-          className="nodrag node-input"
-          value={currentStyle}
-          onChange={handleStyleChange}
-        >
-          <option value="simple">Simple (┌┐)</option>
-          <option value="double">Double (╔╗)</option>
-          <option value="rounded">Rounded (╭╮)</option>
-          <option value="bold">Bold (┏┓)</option>
-        </select>
-      </div>
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Box"
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          style={{ top: `${HANDLE_START}rem` }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+        <div className="node-description">
+          Outputs text enclosed in box-drawing characters
+        </div>
+        <div className="node-field-with-spacing">
+          <select
+            className="nodrag node-input"
+            value={currentStyle}
+            onChange={handleStyleChange}
+          >
+            <option value="simple">Simple (┌┐)</option>
+            <option value="double">Double (╔╗)</option>
+            <option value="rounded">Rounded (╭╮)</option>
+            <option value="bold">Bold (┏┓)</option>
+          </select>
+        </div>
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

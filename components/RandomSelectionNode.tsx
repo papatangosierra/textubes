@@ -1,18 +1,22 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type RandomSelectionNodeData = NodeData & {
   mode?: 'character' | 'word' | 'line';
 };
+
+const HANDLE_START = 4.45;
 
 export default function RandomSelectionNode({ id, data, selected, type }: NodeProps<Node<RandomSelectionNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
+  const helpInfo = getNodeHelp(type);
   const mode = data.mode ?? 'word';
   const lastInputRef = useRef<string>('');
   const lastModeRef = useRef<string>(mode);
@@ -63,27 +67,63 @@ export default function RandomSelectionNode({ id, data, selected, type }: NodePr
     updateNodeData(id, { value: outputValue });
   }, [nodesData, sourceIds.length, mode, id, updateNodeData, data.value]);
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
-    <NodeContainer id={id} selected={selected} title="Random Selection" isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} />
-      <div className="node-description">
-        Outputs a random selection from its input.
-      </div>
-      <div className="node-field">
-        <label className="node-label">
-          Select:
-        </label>
-        <select
-          className="nodrag node-input"
-          value={mode}
-          onChange={(e) => updateNodeData(id, { mode: e.target.value as 'character' | 'word' | 'line' })}
-        >
-          <option value="character">Random Character</option>
-          <option value="word">Random Word</option>
-          <option value="line">Random Line</option>
-        </select>
-      </div>
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
+        </div>
+      )}
+
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Random Selection"
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          style={{ top: `${HANDLE_START}rem` }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
+        <div className="node-description">
+          Outputs a random selection from its input.
+        </div>
+        <div className="node-field">
+          <label className="node-label">
+            Select:
+          </label>
+          <select
+            className="nodrag node-input"
+            value={mode}
+            onChange={(e) => updateNodeData(id, { mode: e.target.value as 'character' | 'word' | 'line' })}
+          >
+            <option value="character">Random Character</option>
+            <option value="word">Random Word</option>
+            <option value="line">Random Line</option>
+          </select>
+        </div>
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

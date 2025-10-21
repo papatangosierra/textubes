@@ -1,5 +1,7 @@
-import { Handle, Position } from '@xyflow/react';
+import { Position } from '@xyflow/react';
 import NodeContainer from '../NodeContainer';
+import HelpLabel from '../HelpLabel';
+import type { NodeHelp } from '../../nodeRegistry';
 
 export type SelectorOption = {
   key: string;
@@ -17,6 +19,9 @@ type SelectorNodeUIProps = {
   onSelectionChange: (key: string) => void;
   isDarkMode?: boolean;
   category?: 'source' | 'transformer' | 'destination';
+  helpInfo?: NodeHelp;
+  helpActive?: boolean;
+  onHelpToggle?: () => void;
 };
 
 export default function SelectorNodeUI({
@@ -29,30 +34,59 @@ export default function SelectorNodeUI({
   onSelectionChange,
   isDarkMode,
   category,
+  helpInfo,
+  helpActive,
+  onHelpToggle,
 }: SelectorNodeUIProps) {
   return (
-    <NodeContainer id={id} selected={selected_state} title={title} style={{ minWidth: '180px' }} isDarkMode={isDarkMode} category={category}>
-      {description && (
-        <div className="node-description">
-          {description}
+    <div className={`node-help-wrapper ${helpActive ? 'help-active' : ''}`}>
+      {helpActive && helpInfo && (
+        <div className="node-help-frame">
+          <div
+            className="help-description"
+            dangerouslySetInnerHTML={{ __html: helpInfo.description }}
+          />
         </div>
       )}
-      <div className="node-field">
-        <label className="node-label">
-          Select:
-        </label>
-        <select
-          className="nodrag node-input"
-          value={selected}
-          onChange={(e) => onSelectionChange(e.target.value)}
-        >
-          {options.map((opt) => (
-            <option key={opt.key} value={opt.key}>{opt.label}</option>
-          ))}
-        </select>
-      </div>
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+      <NodeContainer
+        id={id}
+        selected={selected_state}
+        title={title}
+        style={{ minWidth: '180px' }}
+        isDarkMode={isDarkMode}
+        category={category}
+        onHelpToggle={onHelpToggle}
+        helpActive={helpActive}
+      >
+        {description && (
+          <div className="node-description">
+            {description}
+          </div>
+        )}
+        <div className="node-field">
+          <label className="node-label">
+            Select:
+          </label>
+          <select
+            className="nodrag node-input"
+            value={selected}
+            onChange={(e) => onSelectionChange(e.target.value)}
+          >
+            {options.map((opt) => (
+              <option key={opt.key} value={opt.key}>{opt.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }

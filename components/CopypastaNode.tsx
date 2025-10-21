@@ -2,7 +2,7 @@ import { useReactFlow, type NodeProps, type Node } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
 import type { NodeData } from '../App';
 import SelectorNodeUI, { type SelectorOption } from './shared/SelectorNodeUI';
-import { getNodeCategory } from '../nodeRegistry';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type CopypastaNodeData = NodeData & {
   selected?: string;
@@ -89,6 +89,7 @@ export default function CopypastaNode({ id, data, selected: selected_state, type
   const { updateNodeData } = useReactFlow();
   const selected = data.selected ?? 'lorem';
   const lastSelectedRef = useRef<string | null>(null);
+  const helpInfo = getNodeHelp(type);
 
   useEffect(() => {
     // Skip on initial mount (value already pre-generated in nodeRegistry)
@@ -113,6 +114,10 @@ export default function CopypastaNode({ id, data, selected: selected_state, type
     updateNodeData(id, { selected: key });
   };
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
     <SelectorNodeUI
       id={id}
@@ -124,6 +129,9 @@ export default function CopypastaNode({ id, data, selected: selected_state, type
       onSelectionChange={handleSelectionChange}
       isDarkMode={data.isDarkMode}
       category={getNodeCategory(type)}
+      helpInfo={helpInfo}
+      helpActive={data.helpActive}
+      onHelpToggle={toggleHelp}
     />
   );
 }

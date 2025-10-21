@@ -39,6 +39,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: SourceNode,
     label: "Text",
     category: 'source',
+    help: {
+      description: "A text input node where you can manually type or paste text.",
+      outputs: [
+        { label: "Output", description: "The text you entered" }
+      ]
+    }
   },
   copypasta: {
     component: CopypastaNode,
@@ -48,6 +54,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       const defaultPasta = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`;
       return { value: defaultPasta, selected: 'lorem' };
     },
+    help: {
+      description: "Choose from a collection of classic copypastas and sample text.",
+      outputs: [
+        { label: "Output", description: "The selected copypasta text" }
+      ]
+    }
   },
   random: {
     component: RandomNode,
@@ -62,6 +74,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       }
       return { value: randomString, length };
     },
+    help: {
+      description: "Generates random alphanumeric text of a specified length.",
+      outputs: [
+        { label: "Output", description: "Random string of letters and numbers" }
+      ]
+    }
   },
   randomnoun: {
     component: RandomNounNode,
@@ -69,6 +87,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     category: 'source',
     // Value will be generated after word list loads
     initialData: () => ({ value: "" }),
+    help: {
+      description: "Generates a random noun from a curated word list.",
+      outputs: [
+        { label: "Output", description: "A randomly selected noun" }
+      ]
+    }
   },
   help: {
     component: HelpNode,
@@ -96,6 +120,15 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: UnicodeStyleNode,
     label: "Unicode Abuse",
     category: 'transformer',
+    help: {
+      description: "Applies Unicode text styles like bold, italic, circled, and more using special Unicode characters.",
+      inputs: [
+        { label: "Input", description: "Text to transform" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text in the selected Unicode style" }
+      ]
+    }
   },
   replace: {
     component: ReplaceNode,
@@ -132,33 +165,78 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     label: "Random Selection",
     category: 'transformer',
     initialData: () => ({ value: "", mode: "word" }),
+    help: {
+      description: "Randomly selects a character, word, or line from the input text.",
+      inputs: [
+        { label: "Input", description: "Text to select from" }
+      ],
+      outputs: [
+        { label: "Output", description: "Randomly selected item" }
+      ]
+    }
   },
   reverse: {
     component: ReverseNode,
     label: "Reverse",
     category: 'transformer',
+    help: {
+      description: "Reverses the order of characters in the input text.",
+      inputs: [
+        { label: "Input", description: "Text to reverse" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text with characters in reverse order" }
+      ]
+    }
   },
   trimpad: {
     component: TrimPadNode,
     label: "Trim/Pad",
     category: 'transformer',
+    help: {
+      description: "Trims whitespace from text or pads it to a specified length.",
+      inputs: [
+        { label: "Input", description: "Text to trim or pad" }
+      ],
+      outputs: [
+        { label: "Output", description: "Trimmed or padded text" }
+      ]
+    }
   },
   repeat: {
     component: RepeatNode,
     label: "Repeat",
     category: 'transformer',
+    help: {
+      description: "Repeats the input text a specified number of times with an optional separator.",
+      inputs: [
+        { label: "Input", description: "Text to repeat" }
+      ],
+      outputs: [
+        { label: "Output", description: "Repeated text" }
+      ]
+    }
   },
   box: {
     component: BoxNode,
     label: "Box",
     category: 'transformer',
+    help: {
+      description: "Surrounds text with box-drawing characters in various styles.",
+      inputs: [
+        { label: "Input", description: "Text to enclose in a box" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text surrounded by box characters" }
+      ]
+    }
   },
   template: {
     component: TemplateNode,
     label: "Template",
     category: 'transformer',
     help: {
-      description: "Replaces <code>__TOKEN__</code> placeholders in template text with values from connected inputs. Tokens are automatically detected and create new input handles.",
+      description: "Parses text found in the first input, and creates more inputs for any text found between pairs of two underscores, e.g. <code>__greeting__</code> or <code>__first name__</code>.",
       inputs: [
         { label: "Template", description: "Text with __TOKEN__ placeholders" }
       ],
@@ -171,6 +249,12 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: ResultNode,
     label: "Result",
     category: 'destination',
+    help: {
+      description: "Displays the final output text and provides a button to copy it to your clipboard.",
+      inputs: [
+        { label: "Input", description: "Text to display and copy" }
+      ]
+    }
   },
 };
 
