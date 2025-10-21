@@ -1,7 +1,8 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
+import HelpLabel from './HelpLabel';
 import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 export default function CapslockNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
@@ -42,22 +43,6 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
     <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
       {data.helpActive && helpInfo && (
         <div className="node-help-frame">
-          {/* Input labels on the left */}
-          {helpInfo.inputs && helpInfo.inputs.map((input, idx) => (
-            <div key={`input-${idx}`} className="help-label help-label-input" style={{ top: `${40 + idx * 30}px` }}>
-              <div className="help-label-title">{input.label}</div>
-              <div className="help-label-desc">{input.description}</div>
-            </div>
-          ))}
-
-          {/* Output labels on the right */}
-          {helpInfo.outputs && helpInfo.outputs.map((output, idx) => (
-            <div key={`output-${idx}`} className="help-label help-label-output" style={{ top: `${40 + idx * 30}px` }}>
-              <div className="help-label-title">{output.label}</div>
-              <div className="help-label-desc">{output.description}</div>
-            </div>
-          ))}
-
           {/* Description at the bottom */}
           <div className="help-description">
             {helpInfo.description}
@@ -74,11 +59,23 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
         onHelpToggle={toggleHelp}
         helpActive={data.helpActive}
       >
-        <Handle type="target" position={Position.Left} />
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
+        />
         <div className="node-description">
           Converts text to uppercase
         </div>
-        <Handle type="source" position={Position.Right} />
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
       </NodeContainer>
     </div>
   );

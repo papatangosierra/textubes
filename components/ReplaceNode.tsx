@@ -1,8 +1,9 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type ReplaceNodeData = NodeData & {
   searchText?: string;
@@ -11,6 +12,7 @@ type ReplaceNodeData = NodeData & {
 
 export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node<ReplaceNodeData>>) {
   const { updateNodeData } = useReactFlow();
+  const helpInfo = getNodeHelp(type);
 
   // Get connections for each input handle
   const textConnections = useNodeConnections({ handleType: 'target', handleId: 'text' });
@@ -53,48 +55,102 @@ export default function ReplaceNode({ id, data, selected, type }: NodeProps<Node
     }
   }, [connectedInputValue, connectedSearchText, connectedReplaceText, data.searchText, data.replaceText, id, updateNodeData, data.value]);
 
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
+
   return (
-    <NodeContainer id={id} selected={selected} title="Replace" style={{ minWidth: '200px' }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <Handle type="target" position={Position.Left} id="text" style={{ top: '4.45rem' }} />
-      <Handle type="target" position={Position.Left} id="search" style={{ top: '6.85rem' }} />
-      <Handle type="target" position={Position.Left} id="replace" style={{ top: '9.75rem' }} />
-      <Handle type="source" position={Position.Right} />
-      <div className="node-description">
-        Find and replace text
-      </div>
-      <div className="node-field-with-spacing">
-        <label className="node-label">
-          Text input
-        </label>
-      </div>
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          {/* Description at the bottom */}
+          <div className="help-description">
+            {helpInfo.description}
+          </div>
+        </div>
+      )}
 
-      <div className="node-field-with-spacing">
-        <label className="node-label">
-          Search for:
-        </label>
-        <input
-          className="nodrag node-input"
-          type="text"
-          value={data.searchText ?? ''}
-          onChange={(e) => updateNodeData(id, { searchText: e.target.value })}
-          placeholder="text to find"
-          disabled={searchSourceIds.length > 0}
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Replace"
+        style={{ minWidth: '200px' }}
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          id="text"
+          style={{ top: '4.45rem' }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[0]?.label}
+          helpDescription={helpInfo?.inputs?.[0]?.description}
         />
-      </div>
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          id="search"
+          style={{ top: '6.85rem' }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[1]?.label}
+          helpDescription={helpInfo?.inputs?.[1]?.description}
+        />
+        <HelpLabel
+          type="target"
+          position={Position.Left}
+          id="replace"
+          style={{ top: '9.75rem' }}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.inputs?.[2]?.label}
+          helpDescription={helpInfo?.inputs?.[2]?.description}
+        />
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+        <div className="node-description">
+          Find and replace text
+        </div>
+        <div className="node-field-with-spacing">
+          <label className="node-label">
+            Text input
+          </label>
+        </div>
 
-      <div className="node-field">
-        <label className="node-label">
-          Replace with:
-        </label>
-        <input
-          className="nodrag node-input"
-          type="text"
-          value={data.replaceText ?? ''}
-          onChange={(e) => updateNodeData(id, { replaceText: e.target.value })}
-          placeholder="replacement text"
-          disabled={replaceSourceIds.length > 0}
-        />
-      </div>
-    </NodeContainer>
+        <div className="node-field-with-spacing">
+          <label className="node-label">
+            Search for:
+          </label>
+          <input
+            className="nodrag node-input"
+            type="text"
+            value={data.searchText ?? ''}
+            onChange={(e) => updateNodeData(id, { searchText: e.target.value })}
+            placeholder="text to find"
+            disabled={searchSourceIds.length > 0}
+          />
+        </div>
+
+        <div className="node-field">
+          <label className="node-label">
+            Replace with:
+          </label>
+          <input
+            className="nodrag node-input"
+            type="text"
+            value={data.replaceText ?? ''}
+            onChange={(e) => updateNodeData(id, { replaceText: e.target.value })}
+            placeholder="replacement text"
+            disabled={replaceSourceIds.length > 0}
+          />
+        </div>
+      </NodeContainer>
+    </div>
   );
 }

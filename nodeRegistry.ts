@@ -101,6 +101,17 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: ReplaceNode,
     label: "Replace",
     category: 'transformer',
+    help: {
+      description: "Finds all occurrences of a search pattern and replaces them with new text.",
+      inputs: [
+        { label: "Text", description: "Text to search within" },
+        { label: "Search", description: "Pattern to find" },
+        { label: "Replace", description: "Replacement text" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text with replacements applied" }
+      ]
+    }
   },
   concatenate: {
     component: ConcatenateNode,
