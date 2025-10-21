@@ -117,6 +117,15 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: ConcatenateNode,
     label: "Join",
     category: 'transformer',
+    help: {
+      description: "Joins multiple text inputs together in order, with an optional separator between them. Automatically creates new empty inputs as necessary.",
+      inputs: [
+        { label: "Input", description: "Text to join (add more by connecting)" }
+      ],
+      outputs: [
+        { label: "Output", description: "All inputs joined together" }
+      ]
+    }
   },
   randomselection: {
     component: RandomSelectionNode,

@@ -1,8 +1,9 @@
-import { Handle, Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
+import { Position, useNodesData, useReactFlow, type NodeProps, type Node, useNodeConnections } from '@xyflow/react';
 import { useEffect } from 'react';
 import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
-import { getNodeCategory } from '../nodeRegistry';
+import HelpLabel from './HelpLabel';
+import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type ConcatenateNodeData = NodeData & {
   separator?: string;
@@ -10,9 +11,14 @@ type ConcatenateNodeData = NodeData & {
 
 export default function ConcatenateNode({ id, data, selected, type }: NodeProps<Node<ConcatenateNodeData>>) {
   const { updateNodeData } = useReactFlow();
+  const helpInfo = getNodeHelp(type);
   const allConnections = useNodeConnections({ handleType: 'target' });
 
   const separator = data.separator ?? '';
+
+  const toggleHelp = () => {
+    updateNodeData(id, { helpActive: !data.helpActive });
+  };
 
   // Group connections by handle ID and get their values
   const handleConnections = new Map<string, string>();
@@ -58,54 +64,84 @@ export default function ConcatenateNode({ id, data, selected, type }: NodeProps<
     }
   }, [inputsString, separator, sourceIdsByHandle.length, id, updateNodeData, data.value]);
 
-  const HANDLE_SPACING = 25;
-  const HANDLE_START = 55;
+  // in rem!!
+  const HANDLE_START = 3.5;
+  const HANDLE_SPACING = 2;
 
   // Calculate minimum height based on number of handles
   const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
 
   return (
-    <NodeContainer id={id} selected={selected} title="Join" style={{ minWidth: '180px', minHeight: `${minHeight}px` }} isDarkMode={data.isDarkMode} category={getNodeCategory(type)}>
-      <div className="node-description">
-        Joins multiple inputs together
-      </div>
-      <div className="node-info">
-        Inputs: {connectedHandleCount}
-      </div>
+    <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
+      {data.helpActive && helpInfo && (
+        <div className="node-help-frame">
+          {/* Description at the bottom */}
+          <div className="help-description">
+            {helpInfo.description}
+          </div>
+        </div>
+      )}
 
-      <div className="node-field">
-        <label className="node-label">
-          Separator:
-        </label>
-        <input
-          className="nodrag node-input"
-          type="text"
-          value={separator}
-          onChange={(e) => updateNodeData(id, { separator: e.target.value })}
-          placeholder="(none)"
-        />
-      </div>
+      <NodeContainer
+        id={id}
+        selected={selected}
+        title="Join"
+        style={{ minWidth: '180px', minHeight: `${minHeight}px` }}
+        isDarkMode={data.isDarkMode}
+        category={getNodeCategory(type)}
+        onHelpToggle={toggleHelp}
+        helpActive={data.helpActive}
+      >
+        <div className="node-description">
+          Joins multiple inputs together
+        </div>
+        <div className="node-info">
+          Inputs: {connectedHandleCount}
+        </div>
 
-      {/* Render dynamic handles */}
-      {Array.from({ length: totalHandles }).map((_, i) => {
-        const handleId = `input-${i}`;
-        const isConnected = handleConnections.has(handleId);
-
-        return (
-          <Handle
-            key={handleId}
-            type="target"
-            position={Position.Left}
-            id={handleId}
-            style={{
-              top: `${HANDLE_START + i * HANDLE_SPACING}px`,
-              background: isConnected ? '#555' : '#999',
-            }}
+        <div className="node-field">
+          <label className="node-label">
+            Separator:
+          </label>
+          <input
+            className="nodrag node-input"
+            type="text"
+            value={separator}
+            onChange={(e) => updateNodeData(id, { separator: e.target.value })}
+            placeholder="(none)"
           />
-        );
-      })}
+        </div>
 
-      <Handle type="source" position={Position.Right} />
-    </NodeContainer>
+        {/* Render dynamic handles */}
+        {Array.from({ length: totalHandles }).map((_, i) => {
+          const handleId = `input-${i}`;
+          const isConnected = handleConnections.has(handleId);
+
+          return (
+            <HelpLabel
+              key={handleId}
+              type="target"
+              position={Position.Left}
+              id={handleId}
+              style={{
+                top: `${HANDLE_START + i * HANDLE_SPACING}rem`,
+                background: isConnected ? '#555' : '#999',
+              }}
+              helpActive={data.helpActive}
+              helpLabel={i === 0 ? "Inputs" : ""}
+              helpDescription={i === 0 ? helpInfo?.inputs?.[0]?.description : ""}
+            />
+          );
+        })}
+
+        <HelpLabel
+          type="source"
+          position={Position.Right}
+          helpActive={data.helpActive}
+          helpLabel={helpInfo?.outputs?.[0]?.label}
+          helpDescription={helpInfo?.outputs?.[0]?.description}
+        />
+      </NodeContainer>
+    </div>
   );
 }
