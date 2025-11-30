@@ -4,6 +4,7 @@ import CapslockNode from "./components/CapslockNode";
 import ReplaceNode from "./components/ReplaceNode";
 import RandomNode from "./components/RandomNode";
 import RandomNounNode from "./components/RandomNounNode";
+import RandomAdjectiveNode from "./components/RandomAdjectiveNode";
 import UnicodeStyleNode from "./components/UnicodeStyleNode";
 import ConcatenateNode from "./components/ConcatenateNode";
 import ReverseNode from "./components/ReverseNode";
@@ -91,6 +92,19 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       description: "Generates a random noun from a curated word list.",
       outputs: [
         { label: "Output", description: "A randomly selected noun" }
+      ]
+    }
+  },
+  randomadjective: {
+    component: RandomAdjectiveNode,
+    label: "Random Adjective",
+    category: 'source',
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
+    help: {
+      description: "Generates a random adjective from a curated word list.",
+      outputs: [
+        { label: "Output", description: "A randomly selected adjective" }
       ]
     }
   },
