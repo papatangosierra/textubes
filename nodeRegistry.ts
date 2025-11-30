@@ -9,6 +9,7 @@ import UnicodeStyleNode from "./components/UnicodeStyleNode";
 import ConcatenateNode from "./components/ConcatenateNode";
 import ReverseNode from "./components/ReverseNode";
 import TrimPadNode from "./components/TrimPadNode";
+import WrapTextNode from "./components/WrapTextNode";
 import RepeatNode from "./components/RepeatNode";
 import CopypastaNode from "./components/CopypastaNode";
 import RandomSelectionNode from "./components/RandomSelectionNode";
@@ -218,6 +219,21 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       ]
     }
   },
+  wraptext: {
+    component: WrapTextNode,
+    label: "Wrap Text",
+    category: 'transformer',
+    initialData: () => ({ value: "", length: 80, alignment: "left" }),
+    help: {
+      description: "Hard-wraps text at the specified column width with optional alignment. Choose Left for standard wrapping, Full for justified text, or Right/Center for aligned text.",
+      inputs: [
+        { label: "Input", description: "Text to wrap and align" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text wrapped and aligned at specified width" }
+      ]
+    }
+  },
   repeat: {
     component: RepeatNode,
     label: "Repeat",
@@ -236,8 +252,9 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     component: BoxNode,
     label: "Box",
     category: 'transformer',
+    initialData: () => ({ value: "", style: "simple", horizontalPadding: 1, verticalPadding: 0 }),
     help: {
-      description: "Surrounds text with box-drawing characters in various styles.",
+      description: "Surrounds text with box-drawing characters in various styles. Horizontal padding adds spaces left and right of text. Vertical padding adds empty lines above and below text.",
       inputs: [
         { label: "Input", description: "Text to enclose in a box" }
       ],

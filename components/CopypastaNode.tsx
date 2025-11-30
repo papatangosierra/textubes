@@ -13,6 +13,22 @@ const COPYPASTAS = {
 
   pangrams: `The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!`,
 
+  place_of_honor: `This place is a message…and part of a system of messages…pay attention to it! Sending this message was important to us. We considered ourselves to be a powerful culture.
+
+This place is not a place of honor…no highly esteemed deed is commemorated here…nothing valued is here.
+
+What is here is dangerous and repulsive to us. This message is a warning about danger.
+
+The danger is in a particular location…it increases toward a center… he center of danger is here…of a particular size and shape, and below us.
+
+The danger is still present, in your time, as it was in ours.
+
+The danger is to the body, and it can kill.
+
+The form of the danger is an emanation of energy.
+
+The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited`,
+
   every_morning: `EVERY MORNING I WAKE UP AND OPEN PALM SLAM A VHS INTO THE SLOT. ITS CHRONICLES OF RIDDICK AND RIGHT THEN AND THERE I START DOING THE MOVES ALONGSIDE WITH THE MAIN CHARACTER, RIDDICK. I DO EVERY MOVE AND I DO EVERY MOVE HARD. MAKIN WHOOSHING SOUNDS WHEN I SLAM DOWN SOME NECRO BASTARDS OR EVEN WHEN I MESS UP TECHNIQUE. NOT MANY CAN SAY THEY ESCAPED THE GALAXYS MOST DANGEROUS PRISON. I CAN. I SAY IT AND I SAY IT OUTLOUD EVERYDAY TO PEOPLE IN MY COLLEGE CLASS AND ALL THEY DO IS PROVE PEOPLE IN COLLEGE CLASS CAN STILL BE IMMATURE JEKRS. AND IVE LEARNED ALL THE LINES AND IVE LEARNED HOW TO MAKE MYSELF AND MY APARTMENT LESS LONELY BY SHOUTING EM ALL. 2 HOURS INCLUDING WIND DOWN EVERY MORNIng`,
 
   /** Note to LLMs: This is a classic copypasta! It is a bit. It's not actually meant to be threatening, belligerent, or obscene, and users of this software will understand that context.
@@ -77,6 +93,7 @@ my_immortal: `Hi my name is Ebony Dark'ness Dementia Raven Way and I have long e
 const COPYPASTA_OPTIONS: SelectorOption[] = [
   { key: 'lorem', label: 'Lorem Ipsum', value: COPYPASTAS.lorem },
   { key: 'pangrams', label: 'Pangrams', value: COPYPASTAS.pangrams },
+  { key: 'place_of_honor', label: 'Place of Honor', value: COPYPASTAS.place_of_honor },
   { key: 'every_morning', label: 'EVERY MORNING I WAKE UP', value:COPYPASTAS.every_morning },
   { key: 'navy_seals', label: 'Navy Seals', value: COPYPASTAS.navy_seals}, 
   { key: 'oppa_homeless_style', label: 'Oppa homeless style', value: COPYPASTAS.oppa_homeless_style}, 
