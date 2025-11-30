@@ -59,14 +59,14 @@ export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, on
         onClick={onExport}
         title="Export flow as JSON"
       >
-        💾
+        Save
       </button>
       <button
         className="node-picker-button"
         onClick={() => fileInputRef.current?.click()}
         title="Import flow from JSON"
       >
-        📂
+        Load
       </button>
       <input
         ref={fileInputRef}

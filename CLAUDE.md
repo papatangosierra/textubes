@@ -407,7 +407,7 @@ Key points:
 
 The application includes save/load functionality for persisting and restoring flow configurations:
 
-### Export Flow (💾 button)
+### Export Flow (Save button)
 - Serializes current nodes, edges, and dark mode setting to JSON
 - Downloads as `textubes-flow-{timestamp}.json`
 - Format includes version field for future compatibility:
@@ -420,7 +420,7 @@ The application includes save/load functionality for persisting and restoring fl
   }
   ```
 
-### Import Flow (📂 button)
+### Import Flow (Load button)
 - Opens file picker for .json files
 - Validates file structure before loading
 - Restores nodes, edges, and dark mode setting

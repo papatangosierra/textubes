@@ -250,7 +250,7 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     label: "Result",
     category: 'destination',
     help: {
-      description: "Displays the final output text and provides a button to copy it to your clipboard.",
+      description: "Displays the final output text and provides a button to copy it to your clipboard. When random text generators are present in the flow, the Regenerate button refreshes their outputs.",
       inputs: [
         { label: "Input", description: "Text to display and copy" }
       ]

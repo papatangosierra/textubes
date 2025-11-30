@@ -7,13 +7,25 @@ import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type RandomNodeData = NodeData & {
   length?: number;
+  regenerateTimestamp?: number;
 };
 
 export default function RandomNode({ id, data, selected, type }: NodeProps<Node<RandomNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const length = data.length ?? 10;
   const lastLengthRef = useRef<number | null>(null);
+  const lastTimestampRef = useRef<number | undefined>(undefined);
   const helpInfo = getNodeHelp(type);
+
+  // Function to generate random string
+  const generateRandomString = (len: number) => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+    for (let i = 0; i < len; i++) {
+      randomString += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return randomString;
+  };
 
   useEffect(() => {
     // Skip on initial mount (value already generated in App.tsx)
@@ -28,15 +40,20 @@ export default function RandomNode({ id, data, selected, type }: NodeProps<Node<
     }
     lastLengthRef.current = length;
 
-    // Generate random string of specified length
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let randomString = '';
-    for (let i = 0; i < length; i++) {
-      randomString += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+    const randomString = generateRandomString(length);
     updateNodeData(id, { value: randomString });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [length]);
+
+  // Handle regenerate trigger from upstream
+  useEffect(() => {
+    if (data.regenerateTimestamp && data.regenerateTimestamp !== lastTimestampRef.current) {
+      lastTimestampRef.current = data.regenerateTimestamp;
+      const randomString = generateRandomString(length);
+      updateNodeData(id, { value: randomString });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.regenerateTimestamp]);
 
   const toggleHelp = () => {
     updateNodeData(id, { helpActive: !data.helpActive });

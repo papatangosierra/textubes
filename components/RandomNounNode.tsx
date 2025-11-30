@@ -8,12 +8,17 @@ import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 // Module-level cache so all instances share the same word list
 const wordListCache = new Map<string, string[]>();
 
-export default function RandomNounNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
+type RandomNounNodeData = NodeData & {
+  regenerateTimestamp?: number;
+};
+
+export default function RandomNounNode({ id, data, selected, type }: NodeProps<Node<RandomNounNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const [words, setWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const lastGenerateRef = useRef<boolean>(false);
+  const lastTimestampRef = useRef<number | undefined>(undefined);
   const helpInfo = getNodeHelp(type);
 
   // Load word list on mount
@@ -69,6 +74,15 @@ export default function RandomNounNode({ id, data, selected, type }: NodeProps<N
       updateNodeData(id, { value: randomNoun });
     }
   };
+
+  // Handle regenerate trigger from upstream
+  useEffect(() => {
+    if (data.regenerateTimestamp && data.regenerateTimestamp !== lastTimestampRef.current) {
+      lastTimestampRef.current = data.regenerateTimestamp;
+      regenerate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.regenerateTimestamp]);
 
   const toggleHelp = () => {
     updateNodeData(id, { helpActive: !data.helpActive });

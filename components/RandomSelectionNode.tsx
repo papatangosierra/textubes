@@ -7,6 +7,7 @@ import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
 type RandomSelectionNodeData = NodeData & {
   mode?: 'character' | 'word' | 'line';
+  regenerateTimestamp?: number;
 };
 
 const HANDLE_START = 4.45;
@@ -20,6 +21,7 @@ export default function RandomSelectionNode({ id, data, selected, type }: NodePr
   const mode = data.mode ?? 'word';
   const lastInputRef = useRef<string>('');
   const lastModeRef = useRef<string>(mode);
+  const lastTimestampRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (sourceIds.length === 0) {
@@ -66,6 +68,44 @@ export default function RandomSelectionNode({ id, data, selected, type }: NodePr
 
     updateNodeData(id, { value: outputValue });
   }, [nodesData, sourceIds.length, mode, id, updateNodeData, data.value]);
+
+  // Handle regenerate trigger from upstream
+  useEffect(() => {
+    if (data.regenerateTimestamp && data.regenerateTimestamp !== lastTimestampRef.current) {
+      lastTimestampRef.current = data.regenerateTimestamp;
+
+      // Force regeneration with current input
+      const firstNode = nodesData[0];
+      const inputData = firstNode?.data as NodeData | undefined;
+      const inputValue = inputData?.value ?? '';
+
+      if (!inputValue) {
+        return;
+      }
+
+      let outputValue = '';
+
+      if (mode === 'character') {
+        const randomIndex = Math.floor(Math.random() * inputValue.length);
+        outputValue = inputValue[randomIndex];
+      } else if (mode === 'word') {
+        const words = inputValue.split(/\s+/).filter(w => w.length > 0);
+        if (words.length > 0) {
+          const randomIndex = Math.floor(Math.random() * words.length);
+          outputValue = words[randomIndex];
+        }
+      } else if (mode === 'line') {
+        const lines = inputValue.split('\n').filter(l => l.length > 0);
+        if (lines.length > 0) {
+          const randomIndex = Math.floor(Math.random() * lines.length);
+          outputValue = lines[randomIndex];
+        }
+      }
+
+      updateNodeData(id, { value: outputValue });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.regenerateTimestamp]);
 
   const toggleHelp = () => {
     updateNodeData(id, { helpActive: !data.helpActive });
