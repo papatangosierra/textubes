@@ -118,15 +118,16 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
   },
   capslock: {
     component: CapslockNode,
-    label: "Capslock",
+    label: "Change Case",
     category: 'transformer',
+    initialData: () => ({ value: "", mode: "upper" }),
     help: {
-      description: "Converts all input text to uppercase letters.",
+      description: "Transforms text case. Choose from UPPERCASE, lowercase, Capitalized (each word), or aLtErNaTiNg (character by character).",
       inputs: [
-        { label: "Input", description: "Text to convert to uppercase" }
+        { label: "Input", description: "Text to transform" }
       ],
       outputs: [
-        { label: "Output", description: "Text converted to ALL CAPS" }
+        { label: "Output", description: "Text in the selected case style" }
       ]
     }
   },

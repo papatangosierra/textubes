@@ -33,6 +33,7 @@ export function isGeneratorNode(nodeType?: string): boolean {
   const generatorTypes = [
     'random',
     'randomnoun',
+    'randomadjective',
     'randomselection',
   ];
 

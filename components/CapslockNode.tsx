@@ -5,12 +5,36 @@ import NodeContainer from './NodeContainer';
 import HelpLabel from './HelpLabel';
 import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 
-export default function CapslockNode({ id, data, selected, type }: NodeProps<Node<NodeData>>) {
+type CaseMode = 'upper' | 'lower' | 'capitalized' | 'alternating';
+
+type CaseNodeData = NodeData & {
+  mode?: CaseMode;
+};
+
+function transformCase(text: string, mode: CaseMode): string {
+  switch (mode) {
+    case 'upper':
+      return text.toUpperCase();
+    case 'lower':
+      return text.toLowerCase();
+    case 'capitalized':
+      return text.replace(/\b\w/g, char => char.toUpperCase());
+    case 'alternating':
+      return text.split('').map((char, i) =>
+        i % 2 === 0 ? char.toLowerCase() : char.toUpperCase()
+      ).join('');
+    default:
+      return text;
+  }
+}
+
+export default function CapslockNode({ id, data, selected, type }: NodeProps<Node<CaseNodeData>>) {
   const { updateNodeData } = useReactFlow();
   const connections = useNodeConnections({ handleType: 'target' });
   const sourceIds = connections.map((connection) => connection.source);
   const nodesData = useNodesData(sourceIds);
   const helpInfo = getNodeHelp(type);
+  const mode: CaseMode = data.mode ?? 'upper';
 
   useEffect(() => {
     if (sourceIds.length === 0) {
@@ -27,13 +51,13 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
     const inputValue = inputData?.value ?? '';
 
     // Compute the transformation
-    const outputValue = inputValue.toUpperCase();
+    const outputValue = transformCase(inputValue, mode);
 
     // Only update if the value has actually changed
     if (data.value !== outputValue) {
       updateNodeData(id, { value: outputValue });
     }
-  }, [nodesData, sourceIds.length, id, updateNodeData, data.value]);
+  }, [nodesData, sourceIds.length, id, updateNodeData, data.value, mode]);
 
   const toggleHelp = () => {
     updateNodeData(id, { helpActive: !data.helpActive });
@@ -54,7 +78,7 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
       <NodeContainer
         id={id}
         selected={selected}
-        title="CAPSLOCK"
+        title="Change Case"
         isDarkMode={data.isDarkMode}
         category={getNodeCategory(type)}
         onHelpToggle={toggleHelp}
@@ -68,8 +92,18 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
           helpDescription={helpInfo?.inputs?.[0]?.description}
         />
         <div className="node-description">
-          Converts text to uppercase
+          Transform text case
         </div>
+        <select
+          className="nodrag node-select"
+          value={mode}
+          onChange={(e) => updateNodeData(id, { mode: e.target.value as CaseMode })}
+        >
+          <option value="upper">UPPERCASE</option>
+          <option value="lower">lowercase</option>
+          <option value="capitalized">Capitalized</option>
+          <option value="alternating">aLtErNaTiNg</option>
+        </select>
         <HelpLabel
           type="source"
           position={Position.Right}
