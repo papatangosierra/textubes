@@ -5,6 +5,7 @@ import NodeContainer from './NodeContainer';
 import HelpLabel from './HelpLabel';
 import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 import { findUpstreamNodes, isGeneratorNode } from '../utils/graphUtils';
+import { getSourceValue } from '../utils/nodeUtils';
 
 const HANDLE_START = 4.45;
 
@@ -20,10 +21,10 @@ export default function ResultNode({ data, id, selected, type }: NodeProps<Node<
   const nodes = useNodes();
   const edges = useEdges();
 
-  // Get input from the first connected node
+  // Get input from the first connected node (handles multi-output nodes like Split)
+  const firstConnection = connections[0];
   const firstNode = sourceIds.length > 0 ? nodesData[0] : null;
-  const inputData = firstNode?.data as NodeData | undefined;
-  const displayValue = inputData?.value ?? '';
+  const displayValue = getSourceValue(firstNode, firstConnection);
 
   // Check if there are any generator nodes upstream
   const hasUpstreamGenerators = useMemo(() => {

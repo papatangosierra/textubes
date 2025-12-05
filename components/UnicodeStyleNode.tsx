@@ -29,6 +29,8 @@ const STYLES = [
   { value: 'negbox', label: 'Negative Box' },
   { value: 'box', label: 'Box' },
   { value: 'dotbox', label: 'Dot Box' },
+  { value: 'superscript', label: 'Tiny (Superscript)' },
+  { value: 'subscript', label: 'Tiny (Subscript)' },
 ];
 
 const HANDLE_START = 4.45;

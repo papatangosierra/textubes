@@ -68,8 +68,8 @@ export default function ConcatenateNode({ id, data, selected, type }: NodeProps<
   const HANDLE_START = 3.5;
   const HANDLE_SPACING = 2;
 
-  // Calculate minimum height based on number of handles
-  const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 15;
+  // Calculate minimum height based on number of handles (in rem)
+  const minHeight = HANDLE_START + (totalHandles - 1) * HANDLE_SPACING + 1;
 
   return (
     <div className={`node-help-wrapper ${data.helpActive ? 'help-active' : ''}`}>
@@ -87,7 +87,7 @@ export default function ConcatenateNode({ id, data, selected, type }: NodeProps<
         id={id}
         selected={selected}
         title="Join"
-        style={{ minWidth: '180px', minHeight: `${minHeight}px` }}
+        style={{ minWidth: '180px', minHeight: `${minHeight}rem` }}
         isDarkMode={data.isDarkMode}
         category={getNodeCategory(type)}
         onHelpToggle={toggleHelp}

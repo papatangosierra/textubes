@@ -1,0 +1,355 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "result1",
+      "type": "result",
+      "position": {
+        "x": 400.96960954174784,
+        "y": -118.77851180519285
+      },
+      "data": {
+        "value": "",
+        "isDarkMode": true,
+        "helpActive": false
+      },
+      "measured": {
+        "width": 313,
+        "height": 403
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "copypasta-1764520886146",
+      "type": "copypasta",
+      "position": {
+        "x": -685.7657150265205,
+        "y": -487.04895146691564
+      },
+      "data": {
+        "value": "This place is a message…and part of a system of messages…pay attention to it! Sending this message was important to us. We considered ourselves to be a powerful culture.\n\nThis place is not a place of honor…no highly esteemed deed is commemorated here…nothing valued is here.\n\nWhat is here is dangerous and repulsive to us. This message is a warning about danger.\n\nThe danger is in a particular location…it increases toward a center… he center of danger is here…of a particular size and shape, and below us.\n\nThe danger is still present, in your time, as it was in ours.\n\nThe danger is to the body, and it can kill.\n\nThe form of the danger is an emanation of energy.\n\nThe danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited",
+        "selected": "place_of_honor",
+        "isDarkMode": true,
+        "helpActive": false
+      },
+      "measured": {
+        "width": 223,
+        "height": 116
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "capslock-1764520908607",
+      "type": "capslock",
+      "position": {
+        "x": -184.7217474773335,
+        "y": -486.2951395560271
+      },
+      "data": {
+        "value": "THIS PLACE IS A MESSAGE…AND PART OF A SYSTEM OF MESSAGES…PAY ATTENTION TO IT! SENDING THIS MESSAGE WAS IMPORTANT TO US. WE CONSIDERED OURSELVES TO BE A POWERFUL CULTURE.",
+        "mode": "upper",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 150,
+        "height": 97
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "repeat-1764523749167",
+      "type": "repeat",
+      "position": {
+        "x": -188.10377160433944,
+        "y": -53.942127376755614
+      },
+      "data": {
+        "value": "\n                ║\n                ║\n                ║",
+        "isDarkMode": true,
+        "separator": "",
+        "count": 3
+      },
+      "measured": {
+        "width": 187,
+        "height": 164
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "wraptext-1764523827494",
+      "type": "wraptext",
+      "position": {
+        "x": -185.98419040309813,
+        "y": -370.9720141574156
+      },
+      "data": {
+        "value": "THIS PLACE IS A MESSAGE…AND\nPART   OF   A   SYSTEM   OF\nMESSAGES…PAY  ATTENTION  TO\nIT!  SENDING  THIS  MESSAGE\nWAS  IMPORTANT  TO  US.  WE\nCONSIDERED  OURSELVES TO BE\nA POWERFUL CULTURE.",
+        "length": 27,
+        "alignment": "full",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 222,
+        "height": 149
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "box-1764524212485",
+      "type": "box",
+      "position": {
+        "x": 81.49151837120979,
+        "y": -288.4352605301676
+      },
+      "data": {
+        "value": "╔═══════════════════════════════╗\n║                               ║\n║  THIS PLACE IS A MESSAGE…AND  ║\n║  PART   OF   A   SYSTEM   OF  ║\n║  MESSAGES…PAY  ATTENTION  TO  ║\n║  IT!  SENDING  THIS  MESSAGE  ║\n║  WAS  IMPORTANT  TO  US.  WE  ║\n║  CONSIDERED  OURSELVES TO BE  ║\n║  A POWERFUL CULTURE.          ║\n║                               ║\n╚═══════════════════════════════╝",
+        "style": "double",
+        "horizontalPadding": 2,
+        "verticalPadding": 1,
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 277,
+        "height": 183
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "concatenate-1764524269606",
+      "type": "concatenate",
+      "position": {
+        "x": 120.52404836264424,
+        "y": -60.415840111643696
+      },
+      "data": {
+        "value": "╔═══════════════════════════════╗\n║                               ║\n║  THIS PLACE IS A MESSAGE…AND  ║\n║  PART   OF   A   SYSTEM   OF  ║\n║  MESSAGES…PAY  ATTENTION  TO  ║\n║  IT!  SENDING  THIS  MESSAGE  ║\n║  WAS  IMPORTANT  TO  US.  WE  ║\n║  CONSIDERED  OURSELVES TO BE  ║\n║  A POWERFUL CULTURE.          ║\n║                               ║\n╚═══════════════════════════════╝\n                ║\n                ║\n                ║\n         (\\__/) ║ \n  　      (•ㅅ•) ║ \n         / 　 づ",
+        "isDarkMode": true,
+        "helpActive": false
+      },
+      "measured": {
+        "width": 187,
+        "height": 137
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764524298963",
+      "type": "source",
+      "position": {
+        "x": -674.6575874646854,
+        "y": -145.34648569433404
+      },
+      "data": {
+        "value": "                ║",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "concatenate-1764524358236",
+      "type": "concatenate",
+      "position": {
+        "x": -188.56076679299815,
+        "y": -205.888160529372
+      },
+      "data": {
+        "value": "\n                ║",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 187,
+        "height": 137
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764524373068",
+      "type": "source",
+      "position": {
+        "x": -671.545739786299,
+        "y": -343.25183464059535
+      },
+      "data": {
+        "value": "\n",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "concatenate-1764524832162",
+      "type": "concatenate",
+      "position": {
+        "x": -185.5989936704379,
+        "y": 125.51516831247935
+      },
+      "data": {
+        "value": "\n                ║\n                ║\n                ║\n         (\\__/) ║ \n  　      (•ㅅ•) ║ \n         / 　 づ",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 187,
+        "height": 137
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764524842898",
+      "type": "source",
+      "position": {
+        "x": -678.0163825645681,
+        "y": 51.60030545314855
+      },
+      "data": {
+        "value": "\n         (\\__/) ║ \n  　      (•ㅅ•) ║ \n         / 　 づ",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "split-1764527284836",
+      "type": "split",
+      "position": {
+        "x": -413.14235525259517,
+        "y": -489.3625829122134
+      },
+      "data": {
+        "mode": "line",
+        "delimiter": ",",
+        "parts": [
+          "This place is a message…and part of a system of messages…pay attention to it! Sending this message was important to us. We considered ourselves to be a powerful culture.",
+          "",
+          "This place is not a place of honor…no highly esteemed deed is commemorated here…nothing valued is here.",
+          "",
+          "What is here is dangerous and repulsive to us. This message is a warning about danger.",
+          "",
+          "The danger is in a particular location…it increases toward a center… he center of danger is here…of a particular size and shape, and below us.",
+          "",
+          "The danger is still present, in your time, as it was in ours.",
+          "",
+          "The danger is to the body, and it can kill.",
+          "",
+          "The form of the danger is an emanation of energy.",
+          "",
+          "The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited"
+        ],
+        "isDarkMode": true,
+        "output-0": "This place is a message…and part of a system of messages…pay attention to it! Sending this message was important to us. We considered ourselves to be a powerful culture.",
+        "output-1": "",
+        "output-2": "This place is not a place of honor…no highly esteemed deed is commemorated here…nothing valued is here.",
+        "output-3": "",
+        "output-4": "What is here is dangerous and repulsive to us. This message is a warning about danger.",
+        "output-5": "",
+        "output-6": "The danger is in a particular location…it increases toward a center… he center of danger is here…of a particular size and shape, and below us.",
+        "output-7": "",
+        "output-8": "The danger is still present, in your time, as it was in ours.",
+        "output-9": "",
+        "output-10": "The danger is to the body, and it can kill.",
+        "output-11": "",
+        "output-12": "The form of the danger is an emanation of energy.",
+        "output-13": "",
+        "output-14": "The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited",
+        "helpActive": false
+      },
+      "measured": {
+        "width": 180,
+        "height": 568
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "wraptext-1764523827494",
+      "target": "box-1764524212485",
+      "id": "xy-edge__wraptext-1764523827494-box-1764524212485"
+    },
+    {
+      "source": "box-1764524212485",
+      "target": "concatenate-1764524269606",
+      "targetHandle": "input-0",
+      "id": "xy-edge__box-1764524212485-concatenate-1764524269606input-0"
+    },
+    {
+      "source": "concatenate-1764524269606",
+      "target": "result1",
+      "id": "xy-edge__concatenate-1764524269606-result1"
+    },
+    {
+      "source": "source-1764524298963",
+      "target": "concatenate-1764524358236",
+      "targetHandle": "input-1",
+      "id": "xy-edge__source-1764524298963-concatenate-1764524358236input-1"
+    },
+    {
+      "source": "concatenate-1764524358236",
+      "target": "repeat-1764523749167",
+      "id": "xy-edge__concatenate-1764524358236-repeat-1764523749167"
+    },
+    {
+      "source": "source-1764524373068",
+      "target": "concatenate-1764524358236",
+      "targetHandle": "input-0",
+      "id": "xy-edge__source-1764524373068-concatenate-1764524358236input-0"
+    },
+    {
+      "source": "repeat-1764523749167",
+      "target": "concatenate-1764524832162",
+      "targetHandle": "input-0",
+      "id": "xy-edge__repeat-1764523749167-concatenate-1764524832162input-0"
+    },
+    {
+      "source": "concatenate-1764524832162",
+      "target": "concatenate-1764524269606",
+      "targetHandle": "input-1",
+      "id": "xy-edge__concatenate-1764524832162-concatenate-1764524269606input-1"
+    },
+    {
+      "source": "source-1764524842898",
+      "target": "concatenate-1764524832162",
+      "targetHandle": "input-1",
+      "id": "xy-edge__source-1764524842898-concatenate-1764524832162input-1"
+    },
+    {
+      "source": "copypasta-1764520886146",
+      "target": "split-1764527284836",
+      "id": "xy-edge__copypasta-1764520886146-split-1764527284836"
+    },
+    {
+      "source": "split-1764527284836",
+      "sourceHandle": "output-0",
+      "target": "capslock-1764520908607",
+      "id": "xy-edge__split-1764527284836output-0-capslock-1764520908607"
+    },
+    {
+      "source": "capslock-1764520908607",
+      "target": "wraptext-1764523827494",
+      "id": "xy-edge__capslock-1764520908607-wraptext-1764523827494"
+    }
+  ],
+  "darkMode": true
+}

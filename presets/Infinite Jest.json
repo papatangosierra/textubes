@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "template-1764952307854",
+      "type": "template",
+      "position": {
+        "x": -235.62979204251806,
+        "y": -415.87235583024665
+      },
+      "data": {
+        "value": "I am seated in a room surrounded by eyebrows and torsos. ",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 203,
+        "height": 144
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764952379255",
+      "type": "source",
+      "position": {
+        "x": -590.8569002938852,
+        "y": -669.0280131390595
+      },
+      "data": {
+        "value": "I am __positioned__ in a room surrounded by __facial features__ and __limbs__. ",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764952528273",
+      "type": "source",
+      "position": {
+        "x": -913.6110341496567,
+        "y": -332.09437649226805
+      },
+      "data": {
+        "value": "heads\neyes\neyebrows\nnoses\nnostrils\nears\nforeheads",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764952529516",
+      "type": "source",
+      "position": {
+        "x": -910.7151720116697,
+        "y": -126.75884518795932
+      },
+      "data": {
+        "value": "trunks\ntorsos\nbodies\nchests\nmidsections\n",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "randomselection-1764952535781",
+      "type": "randomselection",
+      "position": {
+        "x": -596.3220942829873,
+        "y": -176.68198173898026
+      },
+      "data": {
+        "value": "torsos",
+        "mode": "line",
+        "isDarkMode": true,
+        "regenerateTimestamp": 1764952755749
+      },
+      "measured": {
+        "width": 217,
+        "height": 116
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "randomselection-1764952537566",
+      "type": "randomselection",
+      "position": {
+        "x": -600.4035271432308,
+        "y": -315.91938729585104
+      },
+      "data": {
+        "value": "eyebrows",
+        "mode": "line",
+        "isDarkMode": true,
+        "regenerateTimestamp": 1764952755749
+      },
+      "measured": {
+        "width": 217,
+        "height": 116
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1764952557870",
+      "type": "source",
+      "position": {
+        "x": -909.2101001745576,
+        "y": -543.0674375415621
+      },
+      "data": {
+        "value": "seated\nprone\nsupine\n",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "randomselection-1764952561582",
+      "type": "randomselection",
+      "position": {
+        "x": -603.1022504921816,
+        "y": -452.20303431700495
+      },
+      "data": {
+        "value": "seated",
+        "mode": "line",
+        "isDarkMode": true,
+        "regenerateTimestamp": 1764952755749
+      },
+      "measured": {
+        "width": 217,
+        "height": 116
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "result-1764952620254",
+      "type": "result",
+      "position": {
+        "x": 186.12350182430873,
+        "y": -376.6266025081778
+      },
+      "data": {
+        "value": "",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 300,
+        "height": 303
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "source-1764952379255",
+      "target": "template-1764952307854",
+      "targetHandle": "template",
+      "id": "xy-edge__source-1764952379255-template-1764952307854template",
+      "selected": false
+    },
+    {
+      "source": "source-1764952528273",
+      "target": "randomselection-1764952537566",
+      "id": "xy-edge__source-1764952528273-randomselection-1764952537566"
+    },
+    {
+      "source": "source-1764952529516",
+      "target": "randomselection-1764952535781",
+      "id": "xy-edge__source-1764952529516-randomselection-1764952535781"
+    },
+    {
+      "source": "source-1764952557870",
+      "target": "randomselection-1764952561582",
+      "id": "xy-edge__source-1764952557870-randomselection-1764952561582"
+    },
+    {
+      "source": "randomselection-1764952561582",
+      "target": "template-1764952307854",
+      "targetHandle": "token-positioned",
+      "id": "xy-edge__randomselection-1764952561582-template-1764952307854token-positioned"
+    },
+    {
+      "source": "randomselection-1764952537566",
+      "target": "template-1764952307854",
+      "targetHandle": "token-facial features",
+      "id": "xy-edge__randomselection-1764952537566-template-1764952307854token-facial features"
+    },
+    {
+      "source": "randomselection-1764952535781",
+      "target": "template-1764952307854",
+      "targetHandle": "token-limbs",
+      "id": "xy-edge__randomselection-1764952535781-template-1764952307854token-limbs"
+    },
+    {
+      "source": "template-1764952307854",
+      "target": "result-1764952620254",
+      "id": "xy-edge__template-1764952307854-result-1764952620254"
+    }
+  ],
+  "darkMode": true
+}

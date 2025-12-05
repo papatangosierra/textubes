@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "source-1764952891008",
+      "type": "source",
+      "position": {
+        "x": -685.6829320267293,
+        "y": -500.52441400970446
+      },
+      "data": {
+        "value": "The time has come, the walrus said,\nto speak of many things\nOf ships and shoes and sealing-wax,\nof cabbages and kings.",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "unicode-1764952893655",
+      "type": "unicode",
+      "position": {
+        "x": -361.5121362038374,
+        "y": -484.3684954589276
+      },
+      "data": {
+        "value": "𝒯𝒽ℯ 𝓉𝒾𝓂ℯ 𝒽𝒶𝓈 𝒸ℴ𝓂ℯ, 𝓉𝒽ℯ 𝓌𝒶𝓁𝓇𝓊𝓈 𝓈𝒶𝒾𝒹,\n𝓉ℴ 𝓈𝓅ℯ𝒶𝓀 ℴ𝒻 𝓂𝒶𝓃𝓎 𝓉𝒽𝒾𝓃ℊ𝓈\n𝒪𝒻 𝓈𝒽𝒾𝓅𝓈 𝒶𝓃𝒹 𝓈𝒽ℴℯ𝓈 𝒶𝓃𝒹 𝓈ℯ𝒶𝓁𝒾𝓃ℊ-𝓌𝒶𝓍,\nℴ𝒻 𝒸𝒶𝒷𝒷𝒶ℊℯ𝓈 𝒶𝓃𝒹 𝓀𝒾𝓃ℊ𝓈.",
+        "isDarkMode": true,
+        "style": "script"
+      },
+      "measured": {
+        "width": 180,
+        "height": 116
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "result-1764952900757",
+      "type": "result",
+      "position": {
+        "x": -52.76666028153254,
+        "y": -509.5218866573991
+      },
+      "data": {
+        "value": "",
+        "isDarkMode": true
+      },
+      "measured": {
+        "width": 300,
+        "height": 303
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "source-1764952891008",
+      "target": "unicode-1764952893655",
+      "id": "xy-edge__source-1764952891008-unicode-1764952893655"
+    },
+    {
+      "source": "unicode-1764952893655",
+      "target": "result-1764952900757",
+      "id": "xy-edge__unicode-1764952893655-result-1764952900757"
+    }
+  ],
+  "darkMode": true
+}

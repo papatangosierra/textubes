@@ -4,6 +4,7 @@ import type { NodeData } from '../App';
 import NodeContainer from './NodeContainer';
 import HelpLabel from './HelpLabel';
 import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
+import { getSourceValue } from '../utils/nodeUtils';
 
 type CaseMode = 'upper' | 'lower' | 'capitalized' | 'alternating';
 
@@ -45,10 +46,10 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
       return;
     }
 
-    // Get input from the first connected node
+    // Get input from the first connected node (handles multi-output nodes like Split)
+    const firstConnection = connections[0];
     const firstNode = nodesData[0];
-    const inputData = firstNode?.data as NodeData | undefined;
-    const inputValue = inputData?.value ?? '';
+    const inputValue = getSourceValue(firstNode, firstConnection);
 
     // Compute the transformation
     const outputValue = transformCase(inputValue, mode);

@@ -7,6 +7,7 @@ import RandomNounNode from "./components/RandomNounNode";
 import RandomAdjectiveNode from "./components/RandomAdjectiveNode";
 import UnicodeStyleNode from "./components/UnicodeStyleNode";
 import ConcatenateNode from "./components/ConcatenateNode";
+import SplitNode from "./components/SplitNode";
 import ReverseNode from "./components/ReverseNode";
 import TrimPadNode from "./components/TrimPadNode";
 import WrapTextNode from "./components/WrapTextNode";
@@ -173,6 +174,21 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       ],
       outputs: [
         { label: "Output", description: "All inputs joined together" }
+      ]
+    }
+  },
+  split: {
+    component: SplitNode,
+    label: "Split",
+    category: 'transformer',
+    initialData: () => ({ mode: "line", delimiter: ",", parts: [] }),
+    help: {
+      description: "Splits text into multiple parts by line, delimiter, or character. Each part gets its own output handle that can be connected separately.",
+      inputs: [
+        { label: "Input", description: "Text to split" }
+      ],
+      outputs: [
+        { label: "Outputs", description: "Each split part (connect to individual handles)" }
       ]
     }
   },

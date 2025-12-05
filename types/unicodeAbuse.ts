@@ -19,6 +19,8 @@ export function translateString(s: string) {
     negbox: '',
     box: '',
     dotbox: '',
+    superscript: '',
+    subscript: '',
   };
 
   const punctuation = "`,#$%&@()[]{}~*+-./\\:;<=>?!@^_'\" ";
@@ -122,6 +124,7 @@ export function translateString(s: string) {
   };
 
   // add number translations
+  const superscriptNums = [0x2070, 0x00b9, 0x00b2, 0x00b3, 0x2074, 0x2075, 0x2076, 0x2077, 0x2078, 0x2079];
   for (let j = 0; j < 10; j++) {
     translationObj[String.fromCodePoint(0x0030 + j)] = {
       fullPitch: String.fromCodePoint(0xff10 + j),
@@ -142,12 +145,24 @@ export function translateString(s: string) {
       negbox: String.fromCodePoint(0xff10 + j),
       box: String.fromCodePoint(0xff10 + j),
       dotbox: String.fromCodePoint(0xff10 + j),
+      superscript: String.fromCodePoint(superscriptNums[j]),
+      subscript: String.fromCodePoint(0x2080 + j),
     };
   }
 
   // add alphabet translations
+  // Superscript lowercase: a b c d e f g h i j k l m n o p q r s t u v w x y z
+  const superscriptLower = [0x1d43, 0x1d47, 0x1d9c, 0x1d48, 0x1d49, 0x1da0, 0x1d4d, 0x02b0, 0x2071, 0x02b2, 0x1d4f, 0x02e1, 0x1d50, 0x207f, 0x1d52, 0x1d56, 0x0071, 0x02b3, 0x02e2, 0x1d57, 0x1d58, 0x1d5b, 0x02b7, 0x02e3, 0x02b8, 0x1dbb];
+  // Superscript uppercase: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+  const superscriptUpper = [0x1d2c, 0x1d2e, 0x0043, 0x1d30, 0x1d31, 0x0046, 0x1d33, 0x1d34, 0x1d35, 0x1d36, 0x1d37, 0x1d38, 0x1d39, 0x1d3a, 0x1d3c, 0x1d3e, 0x0051, 0x1d3f, 0x0053, 0x1d40, 0x1d41, 0x2c7d, 0x1d42, 0x0058, 0x0059, 0x005a];
+  // Subscript lowercase: a e h i k l m n o p r s t u x (others fallback to normal)
+  const subscriptLowerMap: Record<number, number> = { 0: 0x2090, 4: 0x2091, 7: 0x2095, 10: 0x2096, 11: 0x2097, 12: 0x2098, 13: 0x2099, 14: 0x2092, 15: 0x209a, 17: 0x1d63, 18: 0x209b, 19: 0x209c, 23: 0x2093 };
+
   for (let j = 0; j < 26; j++) {
-    translationObj[String.fromCodePoint(0x0041 + j)] = {
+    const upperChar = String.fromCodePoint(0x0041 + j);
+    const lowerChar = String.fromCodePoint(0x0061 + j);
+
+    translationObj[upperChar] = {
       fullPitch: String.fromCodePoint(0xff21 + j),
       circled: String.fromCodePoint(0x24b6 + j),
       parens: String.fromCodePoint(0x1f110 + j),
@@ -166,8 +181,10 @@ export function translateString(s: string) {
       negbox: String.fromCodePoint(0x1f170 + j),
       box: String.fromCodePoint(0x1f130 + j),
       dotbox: String.fromCodePoint(0x1f1e6 + j) + String.fromCodePoint(0x200c), // add zero-width non-joiner character to prevent these guys from turning into flags!!!
+      superscript: String.fromCodePoint(superscriptUpper[j]),
+      subscript: upperChar, // No subscript uppercase
     };
-    translationObj[String.fromCodePoint(0x0061 + j)] = {
+    translationObj[lowerChar] = {
       fullPitch: String.fromCodePoint(0xff41 + j),
       circled: String.fromCodePoint(0x24d0 + j),
       parens: String.fromCodePoint(0x249c + j),
@@ -187,6 +204,8 @@ export function translateString(s: string) {
       negbox: String.fromCodePoint(0x1f170 + j),
       box: String.fromCodePoint(0x1f130 + j),
       dotbox: String.fromCodePoint(0x1f1e6 + j) + String.fromCodePoint(0x200c), // add zero-width non-joiner character to prevent these guys from turning into flags!!!
+      superscript: String.fromCodePoint(superscriptLower[j]),
+      subscript: subscriptLowerMap[j] ? String.fromCodePoint(subscriptLowerMap[j]) : lowerChar,
     };
   }
 
@@ -262,6 +281,8 @@ export function translateString(s: string) {
       res.fraktur += char;
       res.doublestruck += char;
       res.monospace += char;
+      res.superscript += char;
+      res.subscript += char;
       i++;
       continue;
     }
@@ -286,6 +307,8 @@ export function translateString(s: string) {
       res.negbox += translation.negbox || char;
       res.box += translation.box || char;
       res.dotbox += translation.dotbox || char;
+      res.superscript += translation.superscript || char;
+      res.subscript += translation.subscript || char;
     } else {
       // Character not in translation table, keep as-is
       res.fullPitch += char;
@@ -306,6 +329,8 @@ export function translateString(s: string) {
       res.negbox += char;
       res.box += char;
       res.dotbox += char;
+      res.superscript += char;
+      res.subscript += char;
     }
     i++;
   }
