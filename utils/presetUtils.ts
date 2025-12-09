@@ -2,9 +2,9 @@ import type { Node, Edge } from '@xyflow/react';
 import type { NodeData } from '../App';
 
 // Import preset files directly - they'll be compiled into the build
-import quickUnicodeConverter from '../presets/Quick Unicode Converter.json';
-import infiniteJest from '../presets/Infinite Jest.json';
-import wippSignBunny from '../presets/WIPP Sign Bunny.json';
+import quickUnicodeConverter from '../presets/quick-unicode-converter.json';
+import infiniteJest from '../presets/infinite-jest.json';
+import wippSignBunny from '../presets/wipp-sign-bunny.json';
 
 export type PresetMetadata = {
   id: string;
