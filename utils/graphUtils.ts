@@ -34,6 +34,9 @@ export function isGeneratorNode(nodeType?: string): boolean {
     'random',
     'randomnoun',
     'randomadjective',
+    'randomadverb',
+    'randomcountry',
+    'randominterjection',
     'randomselection',
   ];
 

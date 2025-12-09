@@ -6,7 +6,7 @@ import HelpLabel from './HelpLabel';
 import { getNodeCategory, getNodeHelp } from '../nodeRegistry';
 import { getSourceValue } from '../utils/nodeUtils';
 
-type CaseMode = 'upper' | 'lower' | 'capitalized' | 'alternating';
+type CaseMode = 'upper' | 'lower' | 'sentence' | 'capitalized' | 'alternating';
 
 type CaseNodeData = NodeData & {
   mode?: CaseMode;
@@ -18,7 +18,11 @@ function transformCase(text: string, mode: CaseMode): string {
       return text.toUpperCase();
     case 'lower':
       return text.toLowerCase();
+    case 'sentence':
+      // Capitalize only the first character
+      return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     case 'capitalized':
+      // Capitalize the first letter of each word
       return text.replace(/\b\w/g, char => char.toUpperCase());
     case 'alternating':
       return text.split('').map((char, i) =>
@@ -102,7 +106,8 @@ export default function CapslockNode({ id, data, selected, type }: NodeProps<Nod
         >
           <option value="upper">UPPERCASE</option>
           <option value="lower">lowercase</option>
-          <option value="capitalized">Capitalized</option>
+          <option value="sentence">Sentence case</option>
+          <option value="capitalized">Title Case</option>
           <option value="alternating">aLtErNaTiNg</option>
         </select>
         <HelpLabel
