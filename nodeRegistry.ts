@@ -5,6 +5,9 @@ import ReplaceNode from "./components/ReplaceNode";
 import RandomNode from "./components/RandomNode";
 import RandomNounNode from "./components/RandomNounNode";
 import RandomAdjectiveNode from "./components/RandomAdjectiveNode";
+import RandomAdverbNode from "./components/RandomAdverbNode";
+import RandomCountryNode from "./components/RandomCountryNode";
+import RandomInterjectionNode from "./components/RandomInterjectionNode";
 import UnicodeStyleNode from "./components/UnicodeStyleNode";
 import ConcatenateNode from "./components/ConcatenateNode";
 import SplitNode from "./components/SplitNode";
@@ -110,6 +113,45 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       ]
     }
   },
+  randomadverb: {
+    component: RandomAdverbNode,
+    label: "Random Adverb",
+    category: 'source',
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
+    help: {
+      description: "Generates a random adverb from a curated word list.",
+      outputs: [
+        { label: "Output", description: "A randomly selected adverb" }
+      ]
+    }
+  },
+  randomcountry: {
+    component: RandomCountryNode,
+    label: "Random Country",
+    category: 'source',
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
+    help: {
+      description: "Generates a random country name from a curated word list.",
+      outputs: [
+        { label: "Output", description: "A randomly selected country" }
+      ]
+    }
+  },
+  randominterjection: {
+    component: RandomInterjectionNode,
+    label: "Random Interjection",
+    category: 'source',
+    // Value will be generated after word list loads
+    initialData: () => ({ value: "" }),
+    help: {
+      description: "Generates a random interjection from a curated word list.",
+      outputs: [
+        { label: "Output", description: "A randomly selected interjection" }
+      ]
+    }
+  },
   help: {
     component: HelpNode,
     label: "Help",
@@ -124,7 +166,7 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
     category: 'transformer',
     initialData: () => ({ value: "", mode: "upper" }),
     help: {
-      description: "Transforms text case. Choose from UPPERCASE, lowercase, Capitalized (each word), or aLtErNaTiNg (character by character).",
+      description: "Transforms text case. Choose from UPPERCASE, lowercase, Sentence case (first character only), Title Case (each word), or aLtErNaTiNg (character by character).",
       inputs: [
         { label: "Input", description: "Text to transform" }
       ],
