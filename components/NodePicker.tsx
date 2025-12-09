@@ -1,5 +1,6 @@
 import { NODE_REGISTRY } from "../nodeRegistry";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { getAvailablePresets, type PresetMetadata } from "../utils/presetUtils";
 
 type NodePickerProps = {
   onAddNode: (nodeType: string) => void;
@@ -7,10 +8,18 @@ type NodePickerProps = {
   onToggleDarkMode: () => void;
   onExport: () => void;
   onImport: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onLoadPreset: (filename: string) => void;
 };
 
-export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, onExport, onImport }: NodePickerProps) {
+export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, onExport, onImport, onLoadPreset }: NodePickerProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [presets, setPresets] = useState<PresetMetadata[]>([]);
+
+  // Load preset list on mount
+  useEffect(() => {
+    setPresets(getAvailablePresets());
+  }, []);
+
   // Group nodes by category
   const sources = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'source');
   const transformers = Object.entries(NODE_REGISTRY).filter(([_, config]) => config.category === 'transformer');
@@ -53,6 +62,26 @@ export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, on
             </option>
           ))}
         </optgroup>
+      </select>
+      <select
+        className="node-picker-select"
+        onChange={(e) => {
+          const target = e.target as HTMLSelectElement;
+          if (target.value) {
+            onLoadPreset(target.value);
+            target.value = "";
+          }
+        }}
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Load preset...
+        </option>
+        {presets.map((preset) => (
+          <option key={preset.id} value={preset.id}>
+            {preset.displayName}
+          </option>
+        ))}
       </select>
       <button
         className="node-picker-button"

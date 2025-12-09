@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -11,10 +11,12 @@ import {
   type NodeChange,
   type EdgeChange,
   type Connection,
+  type ReactFlowInstance,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { getNodeTypes, getInitialNodeData } from "./nodeRegistry";
 import NodePicker from "./components/NodePicker";
+import { loadPresetFile, validatePresetData } from "./utils/presetUtils";
 
 export type NodeData = {
   value: string;
@@ -107,6 +109,8 @@ export default function App() {
     loadFromStorage(STORAGE_KEY_DARK_MODE, false)
   );
 
+  const reactFlowInstanceRef = useRef<ReactFlowInstance | null>(null);
+
   const addNode = useCallback((nodeType: string) => {
     const newNode: Node<NodeData> = {
       id: `${nodeType}-${Date.now()}`,
@@ -178,6 +182,65 @@ export default function App() {
 
     // Reset the input so the same file can be loaded again
     event.target.value = '';
+  }, [isDarkMode]);
+
+  const loadPreset = useCallback((presetId: string) => {
+    try {
+      // Load preset data from compiled registry
+      const presetData = loadPresetFile(presetId);
+
+      // Validate structure
+      if (!validatePresetData(presetData)) {
+        alert('Invalid preset file format');
+        return;
+      }
+
+      // Check if React Flow instance is available
+      if (!reactFlowInstanceRef.current) {
+        alert('React Flow instance not available');
+        return;
+      }
+
+      // Get current viewport to calculate offset
+      const viewport = reactFlowInstanceRef.current.getViewport();
+
+      // Calculate the center of the current view
+      const viewportCenterX = (-viewport.x + window.innerWidth / 2) / viewport.zoom;
+      const viewportCenterY = (-viewport.y + window.innerHeight / 2) / viewport.zoom;
+
+      // Calculate the bounding box of the preset nodes
+      let minX = Infinity, minY = Infinity;
+      presetData.nodes.forEach(node => {
+        minX = Math.min(minX, node.position.x);
+        minY = Math.min(minY, node.position.y);
+      });
+
+      // Calculate offset to center preset at viewport center
+      const offsetX = viewportCenterX - minX;
+      const offsetY = viewportCenterY - minY;
+
+      // Apply offset to all nodes (PRESERVE ORIGINAL IDs)
+      const offsetNodes = presetData.nodes.map(node => ({
+        ...node,
+        position: {
+          x: node.position.x + offsetX,
+          y: node.position.y + offsetY
+        },
+        // Apply current dark mode state to all nodes
+        data: {
+          ...node.data,
+          isDarkMode: isDarkMode
+        }
+      }));
+
+      // Clear canvas and load preset
+      setNodes(offsetNodes);
+      setEdges(presetData.edges);
+
+    } catch (error) {
+      console.error('Error loading preset:', error);
+      alert(`Failed to load preset: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }, [isDarkMode]);
 
   const clearCanvas = useCallback(() => {
@@ -260,6 +323,7 @@ export default function App() {
         onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
         onExport={exportFlow}
         onImport={importFlow}
+        onLoadPreset={loadPreset}
       />
       <button
         className="clear-canvas-button"
@@ -275,6 +339,7 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onInit={(instance) => reactFlowInstanceRef.current = instance}
         onConnectStart={(_, params) => {
           // When starting a connection, remove any existing edges on the target handle
           if (params.handleType === "source") {
