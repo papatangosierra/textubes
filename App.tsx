@@ -17,9 +17,10 @@ import "@xyflow/react/dist/style.css";
 import { getNodeTypes, getInitialNodeData } from "./nodeRegistry";
 import NodePicker from "./components/NodePicker";
 import { loadPresetFile, validatePresetData } from "./utils/presetUtils";
+import { HELP_TEXT } from "./components/HelpNode";
 
 export type NodeData = {
-  value: string;
+  value?: string;
   isDarkMode?: boolean;
   helpActive?: boolean;
 };
@@ -108,6 +109,7 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(() =>
     loadFromStorage(STORAGE_KEY_DARK_MODE, false)
   );
+  const [showHelp, setShowHelp] = useState(false);
 
   const reactFlowInstanceRef = useRef<ReactFlowInstance | null>(null);
 
@@ -326,6 +328,13 @@ export default function App() {
         onLoadPreset={loadPreset}
       />
       <button
+        className="help-button"
+        onClick={() => setShowHelp(true)}
+        title="Help"
+      >
+        ❓
+      </button>
+      <button
         className="clear-canvas-button"
         onClick={clearCanvas}
         title="Clear canvas"
@@ -353,6 +362,19 @@ export default function App() {
         <MiniMap nodeStrokeWidth={3} />
         <Controls />
       </ReactFlow>
+      {showHelp && (
+        <div className="help-modal-overlay" onClick={() => setShowHelp(false)}>
+          <div className="help-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="help-modal-close" onClick={() => setShowHelp(false)}>×</button>
+            <h2>Welcome to Textubes!</h2>
+            <div className="help-modal-content">
+              {HELP_TEXT.split('\n\n').slice(1).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

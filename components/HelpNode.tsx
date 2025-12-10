@@ -9,21 +9,21 @@ In Textubes, you connect boxes to each other to make text into different text. Y
 
 (Textubes does not currently work very well on smartphones.)
 
-There are three kinds of boxes:
+There are three kinds of boxes (or "nodes"):
 
 - Text Sources (Blue)
 - Text Transformers (Yellow)
 - Text Destinations (Green)
 
-Text STARTS in Sources, goes THROUGH Transformers, and FINISHES in Destinations.
+Text starts in Sources, goes through Transformers, and finishes in Destinations.
 
 The dots on the left side of a box are its inputs, and the dot on the right side is its output. You can click and drag on an output to connect it to an input (or vice versa).
 
 An output can connect to multiple inputs, but an input can only connect to one output.
 
-You can delete a node by clicking on it and pressing "delete", or by clicking the [x] button in the top left corner.
+You can delete a node by clicking on it and pressing your delete key, or by clicking the [x] button in the node's top left corner.
 
-You can delete a connection by clicking on it and pressing "delete", or by dragging a different output to its input.
+You can delete a connection by clicking on it and pressing your delete key, or by dragging a different output to its input.
 
 Textubes automatically saves the canvas in local browser storage as you work.
 `;

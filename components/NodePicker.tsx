@@ -68,7 +68,9 @@ export default function NodePicker({ onAddNode, isDarkMode, onToggleDarkMode, on
         onChange={(e) => {
           const target = e.target as HTMLSelectElement;
           if (target.value) {
-            onLoadPreset(target.value);
+            if (confirm('Load this preset? This will replace your current canvas.')) {
+              onLoadPreset(target.value);
+            }
             target.value = "";
           }
         }}
