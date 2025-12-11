@@ -92,7 +92,7 @@ export default function Rot13Node({ id, data, selected, type }: NodeProps<Node<R
           Rotate letters by {shift} {shift === 1 ? 'position' : 'positions'}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <label style={{ fontSize: '12px' }}>Shift:</label>
+          <label style={{ fontSize: '12px', color: data.isDarkMode ? '#e0e0e0' : '#000' }}>Shift:</label>
           <input
             type="range"
             className="nodrag"
@@ -102,7 +102,7 @@ export default function Rot13Node({ id, data, selected, type }: NodeProps<Node<R
             onChange={(e) => updateNodeData(id, { shift: parseInt(e.target.value) })}
             style={{ flex: 1 }}
           />
-          <span style={{ fontSize: '12px', minWidth: '25px' }}>{shift}</span>
+          <span style={{ fontSize: '12px', minWidth: '25px', color: data.isDarkMode ? '#e0e0e0' : '#000' }}>{shift}</span>
         </div>
         <HelpLabel
           type="source"

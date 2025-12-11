@@ -124,7 +124,7 @@ export default function ZalgoNode({ id, data, selected, type }: NodeProps<Node<Z
           H̷̢̰̦̓̓e̶̡̱̔ ̴͕̐̌c̶͙̿o̶̺̓m̶̰̈́ȅ̴̠s̶̱̈́
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <label style={{ fontSize: '12px' }}>Intensity:</label>
+          <label style={{ fontSize: '12px', color: data.isDarkMode ? '#e0e0e0' : '#000' }}>Intensity:</label>
           <input
             type="range"
             className="nodrag"
@@ -134,7 +134,7 @@ export default function ZalgoNode({ id, data, selected, type }: NodeProps<Node<Z
             onChange={(e) => updateNodeData(id, { intensity: parseInt(e.target.value) })}
             style={{ flex: 1 }}
           />
-          <span style={{ fontSize: '12px', minWidth: '20px' }}>{intensity}</span>
+          <span style={{ fontSize: '12px', minWidth: '20px', color: data.isDarkMode ? '#e0e0e0' : '#000' }}>{intensity}</span>
         </div>
         <HelpLabel
           type="source"
