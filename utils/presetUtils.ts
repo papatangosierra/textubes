@@ -5,6 +5,8 @@ import type { NodeData } from '../App';
 import quickUnicodeConverter from '../presets/quick-unicode-converter.json';
 import infiniteJest from '../presets/infinite-jest.json';
 import wippSignBunny from '../presets/wipp-sign-bunny.json';
+import theClapper from '../presets/the-clapper.json';
+
 
 export type PresetMetadata = {
   id: string;
@@ -26,6 +28,7 @@ const PRESET_REGISTRY: Record<string, PresetData> = {
   'quick-unicode-converter': quickUnicodeConverter as PresetData,
   'infinite-jest': infiniteJest as PresetData,
   'wipp-sign-bunny': wippSignBunny as PresetData,
+  'the-clapper': theClapper as PresetData,
 };
 
 /**
@@ -47,7 +50,12 @@ export function getAvailablePresets(): PresetMetadata[] {
       id: 'wipp-sign-bunny',
       displayName: 'WIPP Sign Bunny',
       description: 'ASCII art generation pipeline'
-    }
+    },
+    {
+      id: 'the-clapper',
+      displayName: 'The Clapper',
+      description: 'Per-word manual percussive emphasis'
+    }    
   ];
 }
 

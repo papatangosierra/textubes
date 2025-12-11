@@ -20,6 +20,8 @@ import RandomSelectionNode from "./components/RandomSelectionNode";
 import BoxNode from "./components/BoxNode";
 import HelpNode from "./components/HelpNode";
 import TemplateNode from "./components/TemplateNode";
+import ZalgoNode from "./components/ZalgoNode";
+import Rot13Node from "./components/Rot13Node";
 import { HELP_TEXT } from "./components/HelpNode";
 import type { NodeData } from "./App";
 
@@ -186,6 +188,36 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       ],
       outputs: [
         { label: "Output", description: "Text in the selected Unicode style" }
+      ]
+    }
+  },
+  zalgo: {
+    component: ZalgoNode,
+    label: "Zalgo",
+    category: 'transformer',
+    initialData: () => ({ value: "", intensity: 3 }),
+    help: {
+      description: "Adds chaotic combining diacritical marks above, below, and through text. Adjust intensity to control the amount of chaos. H̷̢̰̦̓̓e̶̡̱̔ ̴͕̐̌c̶͙̿o̶̺̓m̶̰̈́ȅ̴̠s̶̱̈́",
+      inputs: [
+        { label: "Input", description: "Text to zalgoify" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text with combining marks added" }
+      ]
+    }
+  },
+  rot13: {
+    component: Rot13Node,
+    label: "ROT13 / Caesar Cipher",
+    category: 'transformer',
+    initialData: () => ({ value: "", shift: 13 }),
+    help: {
+      description: "Applies a Caesar cipher rotation to letters. Classic ROT13 uses a shift of 13, but you can adjust from 1-25. Non-alphabetic characters remain unchanged.",
+      inputs: [
+        { label: "Input", description: "Text to encode/decode" }
+      ],
+      outputs: [
+        { label: "Output", description: "Text with letters rotated by the shift amount" }
       ]
     }
   },

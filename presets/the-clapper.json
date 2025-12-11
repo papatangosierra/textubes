@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "source-1765465321267",
+      "type": "source",
+      "position": {
+        "x": 860.6953160285246,
+        "y": 943.2124501025642
+      },
+      "data": {
+        "value": "In Xanadu did Kubla Khan a stately pleasure dome decree",
+        "isDarkMode": false
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "result-1765465326724",
+      "type": "result",
+      "position": {
+        "x": 1425.5931765488715,
+        "y": 946.7736921449572
+      },
+      "data": {
+        "value": "",
+        "isDarkMode": false
+      },
+      "measured": {
+        "width": 300,
+        "height": 303
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "replace-1765466183858",
+      "type": "replace",
+      "position": {
+        "x": 1152.4103376532357,
+        "y": 992.8619951589588
+      },
+      "data": {
+        "value": "In 👏 Xanadu 👏 did 👏 Kubla 👏 Khan 👏 a 👏 stately 👏 pleasure 👏 dome 👏 decree",
+        "isDarkMode": false,
+        "searchText": " "
+      },
+      "measured": {
+        "width": 200,
+        "height": 187
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "source-1765466202760",
+      "type": "source",
+      "position": {
+        "x": 857.6704082224427,
+        "y": 1150.0000129992309
+      },
+      "data": {
+        "value": " 👏 ",
+        "isDarkMode": false
+      },
+      "measured": {
+        "width": 200,
+        "height": 180
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "source-1765465321267",
+      "target": "replace-1765466183858",
+      "targetHandle": "text",
+      "id": "xy-edge__source-1765465321267-replace-1765466183858text"
+    },
+    {
+      "source": "replace-1765466183858",
+      "target": "result-1765465326724",
+      "id": "xy-edge__replace-1765466183858-result-1765465326724"
+    },
+    {
+      "source": "source-1765466202760",
+      "target": "replace-1765466183858",
+      "targetHandle": "replace",
+      "id": "xy-edge__source-1765466202760-replace-1765466183858replace"
+    }
+  ],
+  "darkMode": false
+}

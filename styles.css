@@ -242,7 +242,7 @@ button:active {
   border: 2px solid #777;
   border-radius: .65rem;
   background: white;
-  min-width: 150px;
+  min-width: 14rem;
 }
 
 .dark-mode .node-container {
