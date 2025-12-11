@@ -114,10 +114,22 @@ export default function App() {
   const reactFlowInstanceRef = useRef<ReactFlowInstance | null>(null);
 
   const addNode = useCallback((nodeType: string) => {
+    // Calculate viewport center for new node placement
+    let position = { x: 100, y: 100 }; // fallback default
+
+    if (reactFlowInstanceRef.current) {
+      const viewport = reactFlowInstanceRef.current.getViewport();
+      const offsetJitter = Math.floor(Math.random() * 25) - 25;
+      position = {
+        x: ((-viewport.x + window.innerWidth / 2) / viewport.zoom) + offsetJitter,
+        y: ((-viewport.y + window.innerHeight / 2) / viewport.zoom) + offsetJitter,
+      };
+    }
+
     const newNode: Node<NodeData> = {
       id: `${nodeType}-${Date.now()}`,
       type: nodeType,
-      position: { x: Math.random() * 200, y: Math.random() * 200 },
+      position,
       data: { ...getInitialNodeData(nodeType), isDarkMode },
     };
     setNodes((nodes) => [...nodes, newNode]);
@@ -225,7 +237,7 @@ export default function App() {
       const offsetNodes = presetData.nodes.map(node => ({
         ...node,
         position: {
-          x: node.position.x + offsetX,
+          x: node.position.x + offsetX ,
           y: node.position.y + offsetY
         },
         // Apply current dark mode state to all nodes
