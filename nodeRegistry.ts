@@ -22,6 +22,7 @@ import HelpNode from "./components/HelpNode";
 import TemplateNode from "./components/TemplateNode";
 import ZalgoNode from "./components/ZalgoNode";
 import Rot13Node from "./components/Rot13Node";
+import ShuffleNode from "./components/ShuffleNode";
 import { HELP_TEXT } from "./components/HelpNode";
 import type { NodeData } from "./App";
 
@@ -292,6 +293,21 @@ export const NODE_REGISTRY: Record<string, NodeConfig> = {
       ],
       outputs: [
         { label: "Output", description: "Text with characters in reverse order" }
+      ]
+    }
+  },
+  shuffle: {
+    component: ShuffleNode,
+    label: "Shuffle",
+    category: 'transformer',
+    initialData: () => ({ value: "", mode: "character" }),
+    help: {
+      description: "Randomly shuffles text by character, word, or line. Each time the input changes, a new random shuffle is generated.",
+      inputs: [
+        { label: "Input", description: "Text to shuffle" }
+      ],
+      outputs: [
+        { label: "Output", description: "Shuffled text" }
       ]
     }
   },
