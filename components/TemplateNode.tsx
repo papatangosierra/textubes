@@ -26,8 +26,8 @@ export default function TemplateNode({ id, data, selected, type }: NodeProps<Nod
     ? ((templateNodeData[0]?.data as NodeData | undefined)?.value ?? '')
     : '';
 
-  // Parse template for __TOKEN__ patterns
-  const regex = /__([^_]+)__/g;
+  // Parse template for __TOKEN__ patterns (lazy \w+? allows underscores inside tokens)
+  const regex = /__(\w+?)__/g;
   const matches = [...template.matchAll(regex)];
 
   // Build list of unique tokens and their handle IDs
